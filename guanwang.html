@@ -23,16 +23,16 @@ body{background:var(--bg);color:var(--text);font-family:-apple-system,"SF Pro Di
 .wrap{max-width:1200px;margin:0 auto;padding:0 32px}
 
 /* Nav */
-nav{position:fixed;top:0;left:0;right:0;z-index:100;backdrop-filter:blur(20px) saturate(1.8);-webkit-backdrop-filter:blur(20px) saturate(1.8);background:rgba(6,6,10,.7);border-bottom:1px solid var(--border)}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;backdrop-filter:blur(20px) saturate(1.8);-webkit-backdrop-filter:blur(20px) saturate(1.8);background:rgba(6,6,10,.72);border-bottom:1px solid rgba(255,255,255,.06)}
 .nav-inner{max-width:1200px;margin:0 auto;padding:0 32px;height:64px;display:flex;align-items:center;justify-content:space-between}
-.logo{font-size:1.15rem;font-weight:800;letter-spacing:-.5px;display:flex;align-items:center;gap:8px}
-.logo span{color:var(--blue)}
-.logo-cn{font-size:.7rem;color:var(--muted);font-weight:500;letter-spacing:1px}
+.logo{font-size:1.1rem;font-weight:800;letter-spacing:-.5px;display:flex;align-items:center;gap:8px;color:rgba(255,255,255,.9)}
+.logo span:not(.logo-cn){background:linear-gradient(135deg,#6ea8fe,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.logo-cn{font-size:1.3rem;color:rgba(255,255,255,.75);font-weight:700;letter-spacing:2px;background:linear-gradient(135deg,#6ea8fe,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-left:2px}
 .nav-links{display:flex;gap:24px;align-items:center}
-.nav-links a{color:var(--dim);text-decoration:none;font-size:.8rem;font-weight:500;transition:.2s}
-.nav-links a:hover{color:var(--text)}
-.nav-cta{background:var(--blue);color:#fff;padding:8px 18px;border-radius:10px;font-size:.8rem;font-weight:600;text-decoration:none;transition:.3s}
-.nav-cta:hover{box-shadow:0 4px 20px rgba(59,130,246,.4);transform:translateY(-1px)}
+.nav-links a{color:rgba(255,255,255,.5);text-decoration:none;font-size:.82rem;font-weight:500;transition:color .2s}
+.nav-links a:hover{color:rgba(255,255,255,.95)}
+.nav-cta{background:none!important;border:none!important;color:rgba(255,255,255,.5)!important;padding:0!important;font-size:.82rem!important;font-weight:500!important;text-decoration:none;transition:color .2s}
+.nav-cta:hover{background:none!important;color:rgba(255,255,255,.95)!important;box-shadow:none!important;transform:none!important}
 
 /* Hero */
 .hero{padding:160px 0 100px;text-align:center;position:relative;overflow:hidden}
@@ -198,7 +198,7 @@ footer a:hover{color:var(--blue)}
 
 /* Responsive */
 /* Radar canvas */
-.radar-container{position:relative;width:100%;max-width:960px;margin:0 auto 24px;border-radius:20px;overflow:hidden;border:1px solid rgba(40,80,160,.15);box-shadow:0 0 80px rgba(30,60,130,.08),inset 0 0 100px rgba(8,16,40,.6)}
+.radar-container{position:relative;width:100%;max-width:960px;margin:0 auto 24px;overflow:hidden}
 .radar-container canvas{display:block;width:100%}
 .radar-tooltip{position:absolute;display:none;background:rgba(8,12,24,.95);border:1px solid rgba(59,130,246,.3);backdrop-filter:blur(16px);border-radius:10px;padding:10px 14px;font-size:.75rem;color:var(--text);pointer-events:none;z-index:10;white-space:nowrap;box-shadow:0 8px 32px rgba(0,0,0,.6),0 0 12px rgba(59,130,246,.15)}
 .radar-tooltip.show{display:block}
@@ -239,14 +239,13 @@ footer a:hover{color:var(--blue)}
 <div class="nav-inner">
 <div class="logo">AGEN<span>AUTON</span> <span class="logo-cn">铸基</span></div>
 <div class="nav-links">
-<a href="#entry" data-zh="选路径" data-en="Paths">选路径</a>
-<a href="#dimensions" data-zh="26 维度" data-en="26 Dimensions">26 维度</a>
-<a href="#quickstart" data-zh="快速开始" data-en="Quick Start">快速开始</a>
-<a href="duoshe.html" data-zh="夺舍大法" data-en="Agent Autopsy">夺舍大法</a>
-<a href="zhujiliushi.html" data-zh="铸基六式" data-en="Forge Flow">铸基六式</a>
-<a href="Agenauton/guide/index.html" data-zh="引导问答" data-en="Guided Q&amp;A">引导问答</a>
+<a href="#quickstart" data-zh="快速上手" data-en="Quick Start">快速上手</a>
+<a href="#dimensions" data-zh="架构标准" data-en="The Standard">架构标准</a>
+<a href="duoshe.html" data-zh="商业拆解" data-en="Deconstruct">商业拆解</a>
+<a href="zhujiliushi.html" data-zh="马上开始" data-en="Get Started">马上开始</a>
+<a href="Agenauton/guide/index.html" data-zh="在线引导" data-en="Interactive Guide">在线引导</a>
 <a href="https://github.com/agenauton" class="nav-cta">GitHub</a>
-<button id="langToggle" onclick="agenautonLang.toggle()" style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);border-radius:6px;padding:4px 10px;color:var(--text);font-size:.75rem;cursor:pointer;letter-spacing:.5px;transition:.2s">EN</button>
+<button id="langToggle" onclick="agenautonLang.toggle()" style="background:none;border:none;color:rgba(255,255,255,.5);font-size:.82rem;cursor:pointer;font-weight:500;transition:color .2s;padding:0;letter-spacing:.5px" onmouseover="this.style.color='rgba(255,255,255,.95)'" onmouseout="this.style.color='rgba(255,255,255,.5)'">EN</button>
 </div>
 </div>
 </nav>
@@ -750,13 +749,10 @@ function initParts(){
 }
 
 function drawBg(){
-  var g=ctx.createRadialGradient(cx,cy,0,cx,cy,R*2.5);
-  g.addColorStop(0,'rgba(12,20,45,1)');
-  g.addColorStop(0.4,'rgba(8,14,30,1)');
-  g.addColorStop(1,'rgba(5,6,14,1)');
-  ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
-  var g2=ctx.createRadialGradient(W*0.7,H*0.7,0,W*0.7,H*0.7,R*1.5);
-  g2.addColorStop(0,'rgba(20,80,120,0.06)');
+  ctx.clearRect(0,0,W,H);
+  var g2=ctx.createRadialGradient(cx,cy,0,cx,cy,R*1.5);
+  g2.addColorStop(0,'rgba(59,130,246,0.04)');
+  g2.addColorStop(0.5,'rgba(139,92,246,0.02)');
   g2.addColorStop(1,'rgba(0,0,0,0)');
   ctx.fillStyle=g2; ctx.fillRect(0,0,W,H);
 }

@@ -1,0 +1,26 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Internal docs (not for public repo)
+推广选题库.md
+sheji.md
+Shipinwangzhan.md
+shipinwagnzhansheji.md
+
+# Marketing materials (not for public repo)
+marketing/
+
+# Environment
+.env
+.env.*
+*.log
+
+# Dependencies
+node_modules/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo

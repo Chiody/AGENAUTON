@@ -49,19 +49,19 @@
         }
 
         nav {
-            height: 80px;
+            height: 56px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid var(--border);
+            border-bottom: 1px solid rgba(255,255,255,.04);
         }
 
-        .brand { font-size: 1.3rem; font-weight: 800; letter-spacing: -0.5px; text-decoration:none; color:var(--text); }
-        .brand span { color: var(--primary); }
-        .nav-tag { font-size: 0.7rem; color: var(--dim); text-transform: uppercase; letter-spacing: 2px; }
+        .brand { font-size: 1.05rem; font-weight: 800; letter-spacing: .5px; text-decoration:none; color:rgba(255,255,255,.85); }
+        .brand span { background:linear-gradient(135deg,#6ea8fe,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent; }
+        .nav-tag { font-size: 0.65rem; color: rgba(255,255,255,.3); text-transform: uppercase; letter-spacing: 2px; }
         .nav-links-guide { display:flex; gap:16px; align-items:center; }
-        .nav-links-guide a { font-size:.75rem; color:var(--dim); text-decoration:none; transition:.2s; }
-        .nav-links-guide a:hover { color:var(--text); }
+        .nav-links-guide a { font-size:.78rem; color:rgba(255,255,255,.5); text-decoration:none; transition:color .2s; }
+        .nav-links-guide a:hover { color:rgba(255,255,255,.9); }
 
         /* Hero */
         .hero {
@@ -386,7 +386,7 @@
             <a href="../../guanwang.html" data-zh="主站" data-en="Home">主站</a>
             <a href="../../duoshe.html" data-zh="夺舍大法" data-en="Agent Autopsy">夺舍大法</a>
             <span class="nav-tag">Interactive Blueprint Guide</span>
-            <button id="langToggle" onclick="agenautonLang.toggle();location.reload()" style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);border-radius:6px;padding:4px 10px;color:var(--text);font-size:.75rem;cursor:pointer;letter-spacing:.5px;transition:.2s">EN</button>
+            <button id="langToggle" onclick="agenautonLang.toggle();location.reload()" style="background:none;border:none;color:rgba(255,255,255,.5);font-size:.82rem;cursor:pointer;font-weight:500;transition:color .2s;padding:0;letter-spacing:.5px" onmouseover="this.style.color='rgba(255,255,255,.95)'" onmouseout="this.style.color='rgba(255,255,255,.5)'">EN</button>
         </div>
     </nav>
 

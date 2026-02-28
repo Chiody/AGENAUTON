@@ -1,156 +1,160 @@
 <div align="center">
 
-# Agenauton
+# Agenauton 铸基
 
 ### The Agentic Standard
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](LICENSE)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=for-the-badge)](CONTRIBUTING.md)
+[![Website](https://img.shields.io/badge/Website-agenauton.com-8b5cf6?style=for-the-badge)](https://agenauton.com)
 
 **26 letters build every word. 26 dimensions build every Agent.**
 
-**26 个字母构成所有语言，26 个维度构成所有 Agent。**
+**英语有 26 个字母构成所有文字，Agenauton 有 26 个维度覆盖 Agent 构建的所有关键决策。**
 
-[30秒看懂](#30秒看懂) · [For Professionals](#26-dimension-matrix) · [For AI](#for-ai) · [Online Guide](./guide/index.html)
+[官网](https://agenauton.com) · [快速上手](#quick-start) · [架构标准](#the-standard) · [商业拆解](../duoshe.html) · [马上开始](../zhujiliushi.html) · [在线引导](./guide/index.html)
 
 </div>
 
 ---
 
-# 30秒看懂
+> [!WARNING]
+> **90% 的 Agent 项目死在 Demo 阶段。** 不是技术不行，是从一开始就没想清楚。
 
-## 这是什么？
+想一下你见过的 Agent 项目——
 
-一份 **AI Agent 构建清单**。
+- 聊两句还行，一上生产就崩
+- 写了三天 Prompt，换个模型全白费
+- 上线一周，Token 费用炸了，老板脸绿了
+- 用户一句奇怪的话，AI 开始胡说八道
 
-英语有 26 个字母——它们是所有单词、所有文章、所有伟大著作的基本组成单元。同样的道理，构建一个 AI Agent 也有 26 个基本维度——它们是所有 Agent 系统的底层构成。
-
-我们把这 26 个维度整理成了一份标准清单。**照着走，少走 80% 的弯路。**
-
-## 谁需要这个？
-
-| 你是谁 | 你的痛点 | 怎么用 |
-|--------|----------|--------|
-| **想做 AI 产品但没思路** | 不知道从哪开始 | 先看别人怎么做的，拆解学习，再照着清单构建自己的 |
-| **有想法但不知道怎么落地** | 脑子里有构想，但一写代码就乱 | 用清单把想法一条条具象化，然后丢给 AI 编程工具 |
-| **企业想上 AI Agent** | 业务复杂，怕搭出来的东西不靠谱 | 按清单逐项对照业务需求，确保不漏关键环节 |
-| **已经有 Agent 想优化** | 不知道哪里有问题 | 用清单做一次全面体检，找到薄弱环节 |
-
-## 26 件事是哪 26 件？
-
-用大白话说，就是这 6 类问题：
-
-### 🏗️ 第一类：地基 — 用什么工具、花多少钱、出错咋办
-
-> *盖房子之前，先想好用什么砖、请多少工人、塌了怎么补*
-
-1. **用什么模型和工具？** — GPT-4o 还是开源模型？部署在云上还是本地？
-2. **能扛多少人同时用？** — 10 个人用和 10000 个人用，架构完全不同
-3. **出错了怎么办？** — 模型抽风、工具调不通，你有没有 Plan B？
-4. **花多少钱？** — Token 不是免费的，怎么控制成本不爆炸？
-
-### 📦 第二类：记忆 — 能记住什么、知道什么、能看懂什么
-
-> *你的 AI 是金鱼记忆还是过目不忘？知识库是新鲜的还是过期的？*
-
-5. **数据长什么样？** — 输入输出的格式，内部怎么传递信息
-6. **能记住多少事？** — 聊完就忘，还是能记住用户的偏好和历史？
-7. **知识会过时吗？** — 去年的信息今年还能用吗？怎么保持新鲜？
-8. **能处理图片/音频/视频吗？** — 2026 年的 Agent 不只是聊天，要能看能听
-
-### 🧠 第三类：大脑 — 一个 Agent 还是一个 Agent 团队
-
-> *就像开公司：一个人单干快但能力有限，组团队强但要管好分工和沟通。你的 AI 团队谁是老板、谁是员工、谁负责检查？他们之间怎么传话才不会出错？*
-
-9. **一个 AI 还是多个 AI 配合？** — 简单任务一个就够，复杂任务需要组团队
-10. **每个 AI 负责什么？** — 谁是规划者、谁是执行者、谁是质检员？分工不清就会互相推诿
-11. **能调用什么工具？** — 搜索、计算、发邮件、查数据库...光会说不行，还得能干活
-12. **怎么拆解复杂任务？** — 用户说"帮我做个方案"，AI 怎么把它拆成 5 个小步骤一步步完成？
-
-### 💬 第四类：嘴巴 — 怎么说话、怎么听话、怎么表达
-
-> *你的 AI 说话像客服还是像朋友？用户说了句模糊的话，它能猜对意思吗？*
-
-13. **AI 的人设是什么？** — 角色设定、说话风格、哪些话绝对不能说
-14. **能听懂用户在说什么？** — 用户说的模糊，AI 能猜对意思还是会答非所问？
-15. **会根据不同人调整风格？** — 对小白说人话，对专家说术语，对老板说重点
-16. **回复的体验好不好？** — 是一次性吐一大段还是像打字一样逐字出现？有没有标注信息来源？
-
-### 🛡️ 第五类：免疫 — 怎么防止出错、胡说、被攻击
-
-> *AI 胡说八道了怎么办？有人故意套话怎么防？不确定的时候敢不敢说"我不知道"？*
-
-17. **会自己检查答案吗？** — 生成完了再审一遍，发现不对就重来
-18. **怎么防止胡编乱造？** — 有没有事实核查？会不会一本正经地瞎编？
-19. **敏感问题怎么处理？** — 该拒绝的拒绝，该转人工的转人工
-20. **什么时候承认"我不知道"？** — 不确定的时候别硬答，硬答就是埋雷
-
-### 📈 第六类：进化 — 怎么越用越好、合法合规、说得清为什么
-
-> *你的 AI 上线之后就不管了？还是能从用户反馈中学习，越用越聪明？*
-
-21. **有没有在收集反馈？** — 用户觉得好不好，你知道吗？
-22. **怎么测试效果？** — 改了 Prompt 之后是变好了还是变差了？有没有数据说话？
-23. **能自己进化吗？** — 根据反馈自动优化，越用越聪明
-24. **版本怎么管理？** — 新版本出问题了能一键回退吗？
-25. **合法合规吗？** — 数据隐私、AI 标识、监管要求，别挣了钱吃了官司
-26. **决策能解释吗？** — AI 做了一个决定，用户问"为什么"，你答得上来吗？
+**根本原因：没有标准。** 每个人都在凭感觉搭，搭完了才发现漏了关键环节。
 
 ---
 
-### 一句话记住 26 件事
+## Agenauton 是什么
+
+一份 **AI Agent 构建标准**。不是框架，不是 SDK，不写一行代码。
+
+6 层架构，26 个维度，覆盖从模型选择到合规伦理的所有关键决策。技术无关——适用于任何模型、任何框架、任何语言。
 
 > **「底子要硬，脑子要清，嘴巴要稳，出事要扛，上线要活。」**
+>
+> 5 句话，26 个维度，照着走，不翻车。
 
-5 句话，26 个维度，照着走，不翻车。
+| 层 | 一句话 | 维度 |
+|:---:|--------|------|
+| **基础设施** | 底子要硬 | 环境依赖 · 并发伸缩 · 容错恢复 · 成本管控 |
+| **数据状态** | 脑子要清 | 数据协议 · 状态记忆 · 知识时效 · 多模态 |
+| **核心逻辑** | 脑子要清 | 架构拓扑 · Agent 分工 · 工具能力 · 决策规划 |
+| **交互** | 嘴巴要稳 | 指令策略 · 意图理解 · 个性适配 · 输出体验 |
+| **治理** | 出事要扛 | 质量闭环 · 幻觉抑制 · 安全防御 · 信任边界 |
+| **演进** | 上线要活 | 遥测监控 · 评估测试 · 自演化 · 版本发布 · 合规伦理 · 可解释性 |
 
 ---
 
-## 怎么用？3 种方式
+<a name="quick-start"></a>
 
-### 方式一：自己填清单
+## 快速上手 Quick Start
+
+三种方式，选适合你的：
+
+### 方式一：在线引导（零门槛，2 分钟）
+
+打开 [在线引导](./guide/index.html)，回答 8 个选择题，自动生成你的 Agent 蓝图。
+
+### 方式二：一行命令，让 AI 帮你搭
+
+```bash
+curl -s https://agenauton.com/skill.md | pbcopy
+```
+
+粘贴给你的 AI 编程工具（Cursor / Windsurf / Cline），它会按 26 维度帮你搭好架构骨架。
+
+<details>
+<summary><b>或者直接复制这段 Quick Prompt 给 AI</b></summary>
+
+```
+你是一位 AI Agent 架构师。请基于 Agenauton 26 维度标准帮我设计 Agent 架构。
+
+在开始写任何代码之前，请先逐一确认以下 26 个维度的设计决策：
+
+【基础设施层】01 环境依赖 02 并发与伸缩 03 容错与恢复 04 成本管控
+【数据状态层】05 数据协议 06 状态与记忆 07 知识时效管理 08 多模态处理
+【核心逻辑层】09 架构拓扑 10 Agent分工 11 工具能力 12 决策与规划
+【交互层】13 指令策略 14 意图理解 15 个性化适配 16 输出体验
+【治理层】17 质量闭环 18 幻觉抑制 19 安全防御 20 信任边界
+【演进层】21 遥测监控 22 评估测试 23 自演化 24 版本发布 25 合规伦理 26 可解释性
+
+请先问我业务需求，然后逐层给出架构建议，最后生成代码骨架。
+```
+
+</details>
+
+### 方式三：下载清单自己填
 
 下载 [26 维度清单模板](./02_Spirit_Refining/26_Dimensions_Template.md)，逐条思考和填写。填完你就有了一份完整的 Agent 架构蓝图。
 
-### 方式二：在线引导（推荐新手）
-
-打开 [在线引导页面](./guide/index.html)，回答 8 个选择题，自动生成你的 Agent 蓝图。零门槛，2 分钟搞定。
-
-### 方式三：直接丢给 AI（推荐开发者）
-
-把 [AI 执行指令](./03_Soul_Forging/ai_architect_prompt.md) 喂给你的 AI 编程工具（Cursor/Windsurf/Cline），它会自动按照 26 维度帮你搭好架构骨架，你只需要根据业务查漏补缺。
-
 ```bash
-# 克隆项目
 git clone https://github.com/agenauton/agenauton.git
 cd agenauton
 
-# 方式二：打开在线引导
+# 打开在线引导
 open guide/index.html
 
-# 方式三：复制 AI 执行指令到你的项目
+# 或复制 AI 执行指令到你的项目
 cp 03_Soul_Forging/ai_architect_prompt.md your_project/
 ```
 
 ---
 
-## 还有一个"学习捷径"
+## 两大方法论
 
-如果你完全没有思路，可以先**拆解一个你觉得做得好的 AI 产品**，看看它在这 26 个维度上是怎么做的。
+不管你是有想法还是没想法，都有路走。
 
-我们准备了一套 [拆解指南](./01_Soul_Extraction/)，教你怎么通过和 AI 产品对话，理解它背后的设计逻辑。学会了别人的思路，再构建自己的。
+### 铸基六式 / The Forge Flow
 
-> *不是抄，是站在巨人肩膀上。把别人验证过的逻辑拆解成你能理解的参数，再用自己的方式重新构建。*
+> **有想法但不知道怎么落地？六步铸成。**
+
+口诀：**聊找理，投定铸。**
+
+| 步骤 | 关键词 | 做什么 |
+|:---:|--------|--------|
+| **聊** | Chat | 跟对话大模型聊透你的想法，搞清楚要做什么、怎么做 |
+| **找** | Find | 让 AI 找 5 轮开源对标项目，站在巨人肩膀上 |
+| **理** | Prep | 把所有对话和参考整理成一份 MD 文档 |
+| **投** | Feed | 把文档投喂给 AI 编程工具，这是你的实现思路 |
+| **定** | Frame | 用 26 维度标准定好架构骨架 |
+| **铸** | Forge | Vibe Coding，铸成产品 |
+
+**不烧 Token，先烧脑子。** 想清楚了，剩下的就是六步的事。
+
+**→ [查看完整铸基六式方法论 + 实战案例](../zhujiliushi.html)**
+
+### 夺舍大法 / Agent Autopsy
+
+> **没想法？先拆解别人的。**
+
+三步：**搜魂 → 炼魄 → 锻造**
+
+| 步骤 | 做什么 |
+|:---:|--------|
+| **搜魂** Probe | 用「炼魂 9 问」穿透目标 Agent，摸清底层机制 |
+| **炼魄** Map | 用 26 维度标准化测绘，把碎片信息结构化 |
+| **锻造** Forge | 基于测绘结果，用 AI 辅助生成你自己的代码骨架 |
+
+> *不是复制别人的产品，是理解别人的智慧，然后超越。*
+
+**→ [查看完整夺舍大法方法论 + 炼魂 9 问 + 案例库](../duoshe.html)**
 
 ---
 
-<a name="26-dimension-matrix"></a>
+<a name="the-standard"></a>
 
-# For Professionals / 专业矩阵
+## 26 维度专业矩阵 The 26-Dimension Matrix
 
-> *以下是 26 维度的专业版本，供工程师、架构师和技术决策者参考。*
-
-## The 26-Dimension Matrix
+<details>
+<summary><b>点击展开完整矩阵（供工程师、架构师和技术决策者参考）</b></summary>
 
 Six architectural layers. Twenty-six dimensions. One standard.
 
@@ -210,111 +214,135 @@ Six architectural layers. Twenty-six dimensions. One standard.
 | 25 | **Compliance & Ethics** 合规与伦理 | 数据隐私、AI 标识、监管合规 |
 | 26 | **Explainability** 可解释性 | 决策透明度、推理过程可追溯 |
 
-> 📥 [下载可填写的 26 维度专业模板 →](./02_Spirit_Refining/26_Dimensions_Template.md)
+> [下载可填写的 26 维度专业模板 →](./02_Spirit_Refining/26_Dimensions_Template.md)
+
+</details>
 
 ---
 
-<a name="for-ai"></a>
-
-# For AI / 给 AI 编程工具的指令
+## 给 AI 编程工具的指令 For AI
 
 > *以下内容专门设计给 AI 编程工具（Cursor、Windsurf、Cline 等）读取和执行。*
-> *把这段话或 [完整指令文件](./03_Soul_Forging/ai_architect_prompt.md) 丢给你的 AI，它就知道该怎么做。*
 
-### Quick Prompt（快速版，直接复制给 AI）
-
-```
-你是一位 AI Agent 架构师。请基于 Agenauton 26 维度标准帮我设计 Agent 架构。
-
-在开始写任何代码之前，请先逐一确认以下 26 个维度的设计决策：
-
-【基础设施层】01 环境依赖 02 并发与伸缩 03 容错与恢复 04 成本管控
-【数据状态层】05 数据协议 06 状态与记忆 07 知识时效管理 08 多模态处理
-【核心逻辑层】09 架构拓扑 10 Agent分工 11 工具能力 12 决策与规划
-【交互层】13 指令策略 14 意图理解 15 个性化适配 16 输出体验
-【治理层】17 质量闭环 18 幻觉抑制 19 安全防御 20 信任边界
-【演进层】21 遥测监控 22 评估测试 23 自演化 24 版本发布 25 合规伦理 26 可解释性
-
-请先问我业务需求，然后逐层给出架构建议，最后生成代码骨架。
-骨架确定后，后续的具体实现可以用更便宜的模型完成。
-```
-
-### Full Prompt
-
-完整的 AI 架构师指令（包含每个维度的详细检查项）：
-
-**→ [ai_architect_prompt.md](./03_Soul_Forging/ai_architect_prompt.md)**
-
-### Cursor Rules
-
-可直接复制到项目的 `.cursorrules` 文件：
-
-**→ [agenauton.cursorrules](./cursor_rules/agenauton.cursorrules)**
+| 资源 | 说明 |
+|------|------|
+| [ai_architect_prompt.md](./03_Soul_Forging/ai_architect_prompt.md) | 完整的 AI 架构师指令（每个维度的详细检查项） |
+| [forgebase.cursorrules](./cursor_rules/forgebase.cursorrules) | 可直接复制到项目的 `.cursorrules` 文件 |
+| [skeleton_generator.md](./03_Soul_Forging/skeleton_generator.md) | 架构骨架生成元指令 |
 
 ---
 
-# Project Structure / 项目结构
+## 项目结构 Project Structure
 
 ```
-Agenauton/
-├── README.md                          # 你在这里（三层入口：普通人/专业/AI）
-├── LICENSE                            # MIT 开源协议
-├── CONTRIBUTING.md                    # 参与贡献
+.
+├── guanwang.html                      # 官网首页（中英双语）
+├── duoshe.html                        # 夺舍大法 — 商业拆解方法论
+├── zhujiliushi.html                   # 铸基六式 — 从想法到产品的六步法
+├── lang.js                            # 全站双语切换模块
 │
-├── 01_Soul_Extraction/                # 拆解学习指南
-│   ├── README.md                      # 怎么拆解一个优秀的 AI 产品
-│   ├── identity_masks.md              # 提问角度和话术模板
-│   ├── probing_scripts.md             # 按维度分类的分析问题
-│   └── advanced_techniques.md         # 进阶分析技巧
+├── Agenauton/                         # 核心标准库
+│   ├── README.md                      # 你在这里
+│   ├── LICENSE                        # MIT 开源协议
+│   ├── CONTRIBUTING.md                # 参与贡献
+│   │
+│   ├── 01_Soul_Extraction/            # 搜魂 — 拆解学习指南
+│   │   ├── README.md
+│   │   ├── identity_masks.md          # 提问角度和话术模板
+│   │   ├── probing_scripts.md         # 按维度分类的探测问题
+│   │   └── advanced_techniques.md     # 进阶分析技巧
+│   │
+│   ├── 02_Spirit_Refining/            # 炼魄 — 26 维度清单
+│   │   ├── README.md
+│   │   ├── 26_Dimensions_Template.md  # 可填写的专业模板
+│   │   └── glossary.md               # 术语表（大白话解释）
+│   │
+│   ├── 03_Soul_Forging/              # 锻造 — 架构生成
+│   │   ├── README.md
+│   │   ├── ai_architect_prompt.md     # AI 专用完整执行指令
+│   │   ├── skeleton_generator.md      # 架构骨架生成元指令
+│   │   └── cursor_rules.md           # Cursor IDE 规则说明
+│   │
+│   ├── 04_Case_Studies/              # 实战案例
+│   │   └── README.md
+│   │
+│   ├── 05_Defensive_Lab/             # 防御实验室
+│   │   ├── anti_probing.md            # 怎么保护自己的 Agent
+│   │   └── safety_alignment.md        # 安全与伦理
+│   │
+│   ├── community/                     # 社区
+│   │   └── roadmap.md                 # 路线图
+│   │
+│   ├── cursor_rules/                  # Cursor 规则包
+│   │   └── forgebase.cursorrules      # 可直接使用的规则文件
+│   │
+│   └── guide/                         # 在线引导
+│       └── index.html                 # 交互式问答（8 题生成蓝图）
 │
-├── 02_Spirit_Refining/                # 26 维度清单
-│   ├── README.md                      # 清单使用指南
-│   ├── 26_Dimensions_Template.md      # 可填写的专业模板
-│   └── glossary.md                    # 术语表（大白话解释）
-│
-├── 03_Soul_Forging/                   # 架构生成
-│   ├── README.md                      # 架构生成指南
-│   ├── ai_architect_prompt.md         # AI 专用的完整执行指令
-│   ├── skeleton_generator.md          # 架构生成元指令
-│   └── cursor_rules.md               # Cursor IDE 规则说明
-│
-├── 04_Case_Studies/                   # 实战案例
-│   └── README.md                      # 案例索引
-│
-├── 05_Defensive_Lab/                  # 防御指南
-│   ├── anti_probing.md                # 怎么保护自己的 Agent
-│   └── safety_alignment.md            # 安全与伦理
-│
-├── community/                         # 社区
-│   └── roadmap.md                     # 路线图
-│
-├── cursor_rules/                      # Cursor 规则包
-│   └── agenauton.cursorrules          # 可直接使用的规则文件
-│
-└── guide/                             # 在线引导
-    └── index.html                     # 交互式问答引导（8题生成蓝图）
+└── marketing/                         # 推广素材
+    ├── slogans.md                     # 口号库
+    └── articles/                      # 中英文推广文章
 ```
 
 ---
 
-# Philosophy / 理念
+## 路线图 Roadmap
 
-> *"2026 年，每个人都在谈论 AI Agent，但大多数人构建 Agent 时仍在盲目试错。我们相信，一份好的清单，能让每一个创造者少走弯路，把精力花在真正重要的事情上。"*
->
-> *"In 2026, everyone talks about AI Agents, but most people still build them by trial and error. We believe a good checklist can save every builder from reinventing the wheel — so they can focus on what truly matters."*
+### v1.0 — Foundation 铸基 (Current)
 
-Agenauton 不是教你抄别人的作业。它是一张 **构建 Agent 的标准地图** — 无论你从哪里出发，都不会迷路。
+- [x] 26 维度矩阵定义
+- [x] 可填写蓝图模板
+- [x] 搜魂探测指令库 + 身份伪装库
+- [x] 架构生成元指令 + Cursor Rules
+- [x] 交互式在线引导（8 题生成蓝图）
+- [x] 防御实验室
+- [x] 双语 README
+- [x] 官网 (guanwang.html) + 中英双语
+- [x] 夺舍大法页面 + 炼魂 9 问 + 案例库
+- [x] 铸基六式页面 + 实战案例
+- [x] 交互式 26 维度雷达图
 
-26 个维度不是束缚，而是护栏。有了护栏，你才能放心地全速前进。
+### v1.1 — Automation 自动化
+
+- [ ] CLI 工具：命令行快速创建蓝图
+- [ ] VS Code / Cursor 扩展
+- [ ] 自动化探测 Agent
+
+### v2.0 — Intelligence 智能化
+
+- [ ] 自审计 Agent：AI 审计 AI
+- [ ] 实时维度评分
+- [ ] Agent 市场集成
+
+### v3.0 — Standard 标准化
+
+- [ ] 行业采纳合作
+- [ ] Agenauton 认证计划
+- [ ] 年度 "State of Agentic Intelligence" 报告
+
+---
+
+## 参与贡献 Contributing
+
+我们欢迎所有形式的贡献。详见 [CONTRIBUTING.md](./CONTRIBUTING.md)。
+
+最有价值的贡献方式：
+
+- **提交案例** — 用 26 维度分析一个 Agent，提交到 `04_Case_Studies/`
+- **提交铸基六式实战** — 分享你从想法到产品的六步过程
+- **完善标准** — 优化维度定义、添加探测话术、改进术语表
+- **翻译** — 帮助更多语言的开发者使用 Agenauton
 
 ---
 
 <div align="center">
 
+**每一个想法都值得被铸造。**
+
+**Think first. Build right. Build once.**
+
 **© 2026 Agenauton — The Agentic Standard.**
 
-**26 letters build every word. 26 dimensions build every Agent.**
-
-[⬆ Back to Top](#agenauton)
+[Back to Top](#agenauton-铸基)
 
 </div>

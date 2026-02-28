@@ -20,16 +20,16 @@ body{background:var(--bg);color:var(--text);font-family:-apple-system,"SF Pro Di
 
 .wrap{max-width:1200px;margin:0 auto;padding:0 32px}
 
-nav{position:fixed;top:0;left:0;right:0;z-index:100;backdrop-filter:blur(20px) saturate(1.8);-webkit-backdrop-filter:blur(20px) saturate(1.8);background:rgba(6,6,10,.7);border-bottom:1px solid var(--border)}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;backdrop-filter:blur(20px) saturate(1.8);-webkit-backdrop-filter:blur(20px) saturate(1.8);background:rgba(6,6,10,.72);border-bottom:1px solid rgba(255,255,255,.06)}
 .nav-inner{max-width:1200px;margin:0 auto;padding:0 32px;height:64px;display:flex;align-items:center;justify-content:space-between}
-.logo{font-size:1.15rem;font-weight:800;letter-spacing:-.5px;display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--text)}
-.logo span{color:var(--teal)}
-.logo-cn{font-size:.7rem;color:var(--muted);font-weight:500;letter-spacing:1px}
+.logo{font-size:1.1rem;font-weight:800;letter-spacing:-.5px;display:flex;align-items:center;gap:8px;text-decoration:none;color:rgba(255,255,255,.9)}
+.logo span:not(.logo-cn){background:linear-gradient(135deg,#5eead4,#2dd4bf);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.logo-cn{font-size:1.3rem;color:rgba(255,255,255,.75);font-weight:700;letter-spacing:2px;background:linear-gradient(135deg,#5eead4,#2dd4bf);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-left:2px}
 .nav-links{display:flex;gap:24px;align-items:center}
-.nav-links a{color:var(--dim);text-decoration:none;font-size:.8rem;font-weight:500;transition:.2s}
-.nav-links a:hover{color:var(--text)}
-.nav-cta{background:var(--teal);color:#fff;padding:8px 18px;border-radius:10px;font-size:.8rem;font-weight:600;text-decoration:none;transition:.3s}
-.nav-cta:hover{box-shadow:0 4px 20px rgba(20,184,166,.4);transform:translateY(-1px)}
+.nav-links a{color:rgba(255,255,255,.5);text-decoration:none;font-size:.82rem;font-weight:500;transition:color .2s}
+.nav-links a:hover{color:rgba(255,255,255,.95)}
+.nav-cta{background:none!important;border:none!important;color:rgba(255,255,255,.5)!important;padding:0!important;font-size:.82rem!important;font-weight:500!important;text-decoration:none;transition:color .2s}
+.nav-cta:hover{background:none!important;color:rgba(255,255,255,.95)!important;box-shadow:none!important;transform:none!important}
 
 /* Hero */
 .hero{padding:160px 0 100px;text-align:center;position:relative;overflow:hidden}
@@ -149,13 +149,13 @@ footer a:hover{color:var(--teal)}
 
 <nav>
 <div class="nav-inner">
-<a href="guanwang.html" class="logo"><span>AGENAUTON</span> <span class="logo-cn">铸基</span></a>
+<a href="guanwang.html" class="logo">AGEN<span>AUTON</span> <span class="logo-cn">铸基</span></a>
 <div class="nav-links">
 <a href="guanwang.html" data-zh="主站" data-en="Home">主站</a>
 <a href="duoshe.html" data-zh="夺舍大法" data-en="Agent Autopsy">夺舍大法</a>
 <a href="Agenauton/guide/index.html" data-zh="引导问答" data-en="Guided Q&amp;A">引导问答</a>
-<a href="https://github.com/agenauton" class="nav-cta">GitHub</a>
-<button id="langToggle" onclick="agenautonLang.toggle()" style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);border-radius:6px;padding:4px 10px;color:var(--text);font-size:.75rem;cursor:pointer;letter-spacing:.5px;transition:.2s">EN</button>
+<a href="https://github.com/agenauton">GitHub</a>
+<button id="langToggle" onclick="agenautonLang.toggle()" style="background:none;border:none;color:rgba(255,255,255,.5);font-size:.82rem;cursor:pointer;font-weight:500;transition:color .2s;padding:0;letter-spacing:.5px" onmouseover="this.style.color='rgba(255,255,255,.95)'" onmouseout="this.style.color='rgba(255,255,255,.5)'">EN</button>
 </div>
 </div>
 </nav>

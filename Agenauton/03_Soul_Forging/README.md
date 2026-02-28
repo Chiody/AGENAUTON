@@ -63,7 +63,7 @@ AI Agent 蓝图。请基于这份蓝图：
 
 ```bash
 # 将 Agenauton Cursor 规则复制到你的项目
-cp cursor_rules/agenauton.cursorrules /your/project/.cursorrules
+cp cursor_rules/forgebase.cursorrules /your/project/.cursorrules
 ```
 
 然后在 Cursor 中开始对话，AI 将自动遵循 Agenauton 标准进行架构设计。

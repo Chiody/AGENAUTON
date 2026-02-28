@@ -10,7 +10,7 @@
 
 ```bash
 # 在你的项目根目录执行
-cp /path/to/Agenauton/cursor_rules/agenauton.cursorrules .cursorrules
+cp /path/to/Agenauton/cursor_rules/forgebase.cursorrules .cursorrules
 ```
 
 或者直接复制以下内容：
