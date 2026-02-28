@@ -373,6 +373,7 @@
         .screenshot-footer-qr canvas { width:100%!important; height:100%!important; }
 </style>
 <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
+<script src="../../lang.js"></script>
 </head>
 <body>
 
@@ -382,16 +383,17 @@
     <nav>
         <a href="../../guanwang.html" class="brand">AGEN<span>AUTON</span></a>
         <div class="nav-links-guide">
-            <a href="../../guanwang.html">主站</a>
-            <a href="../../duoshe.html">夺舍大法</a>
+            <a href="../../guanwang.html" data-zh="主站" data-en="Home">主站</a>
+            <a href="../../duoshe.html" data-zh="夺舍大法" data-en="Agent Autopsy">夺舍大法</a>
             <span class="nav-tag">Interactive Blueprint Guide</span>
+            <button id="langToggle" onclick="agenautonLang.toggle();location.reload()" style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);border-radius:6px;padding:4px 10px;color:var(--text);font-size:.75rem;cursor:pointer;letter-spacing:.5px;transition:.2s">EN</button>
         </div>
     </nav>
 
     <!-- Hero -->
     <div class="hero" id="heroSection">
-        <h1>发现你的 Agent 灵魂</h1>
-        <p>通过 8 个选择题，Agenauton 将为你生成一份个性化的 Agent 构建蓝图。无需填空，只需选择。</p>
+        <h1 data-zh="发现你的 Agent 灵魂" data-en="Discover Your Agent's Soul">发现你的 Agent 灵魂</h1>
+        <p data-zh="通过 8 个选择题，Agenauton 将为你生成一份个性化的 Agent 构建蓝图。无需填空，只需选择。" data-en="Through 8 multiple-choice questions, Agenauton generates a personalized Agent blueprint for you. No fill-in-the-blanks — just choose.">通过 8 个选择题，Agenauton 将为你生成一份个性化的 Agent 构建蓝图。无需填空，只需选择。</p>
     </div>
 
     <!-- Progress -->
@@ -402,10 +404,10 @@
 
     <!-- Start Button -->
     <div style="text-align:center; padding-bottom: 80px;" id="startSection">
-        <button class="btn btn-primary" onclick="startGuide()" style="padding: 18px 48px; font-size: 1.1rem; border-radius: 18px;">
+        <button class="btn btn-primary" onclick="startGuide()" style="padding: 18px 48px; font-size: 1.1rem; border-radius: 18px;" data-zh="开始铸造引导" data-en="Start Forging Guide">
             开始铸造引导
         </button>
-        <p style="color: var(--dim); font-size: 0.8rem; margin-top: 16px;">约 2 分钟 · 8 个问题 · 0 个填空</p>
+        <p style="color: var(--dim); font-size: 0.8rem; margin-top: 16px;" data-zh="约 2 分钟 · 8 个问题 · 0 个填空" data-en="~2 minutes · 8 questions · 0 fill-in-the-blanks">约 2 分钟 · 8 个问题 · 0 个填空</p>
     </div>
 
     <!-- Questions -->
@@ -414,8 +416,8 @@
     <!-- Results -->
     <div class="results-section" id="resultsSection">
         <div class="result-header">
-            <h2>你的 Agentic 蓝图已生成</h2>
-            <p>基于你的选择，以下是 Agenauton 为你推荐的构建方案</p>
+            <h2 data-zh="你的 Agentic 蓝图已生成" data-en="Your Agentic Blueprint is Ready">你的 Agentic 蓝图已生成</h2>
+            <p data-zh="基于你的选择，以下是 Agenauton 为你推荐的构建方案" data-en="Based on your choices, here's the build plan Agenauton recommends">基于你的选择，以下是 Agenauton 为你推荐的构建方案</p>
         </div>
         <div id="resultsContent"></div>
         <div class="screenshot-footer" id="screenshotFooter">
@@ -426,13 +428,13 @@
             <div class="screenshot-footer-qr" id="qrcodeContainer"></div>
         </div>
         <div class="export-buttons">
-            <button class="btn-export btn-export-primary" onclick="exportScreenshot()">
+            <button class="btn-export btn-export-primary" onclick="exportScreenshot()" data-zh="截图导出（含网址 + 二维码）" data-en="Export Screenshot (with URL + QR code)">
                 截图导出（含网址 + 二维码）
             </button>
-            <button class="btn-export btn-export-secondary" onclick="exportBlueprint()">
+            <button class="btn-export btn-export-secondary" onclick="exportBlueprint()" data-zh="导出 Markdown 蓝图" data-en="Export Markdown Blueprint">
                 导出 Markdown 蓝图
             </button>
-            <button class="btn-export btn-export-secondary" onclick="restartGuide()">
+            <button class="btn-export btn-export-secondary" onclick="restartGuide()" data-zh="重新开始" data-en="Start Over">
                 重新开始
             </button>
         </div>
@@ -445,97 +447,113 @@ const questions = [
         id: 'scenario',
         dimension: 'FORGING SCENARIO',
         title: '你目前处于哪个阶段？',
+        title_en: 'What stage are you at?',
         desc: '选择最符合你当前状态的选项',
+        desc_en: 'Choose the option that best matches your current state',
         options: [
-            { value: 'extraction', label: '我没有明确想法', hint: '想做 AI Agent 但不知道从哪开始，想参考市面上成功的产品' },
-            { value: 'materialization', label: '我有想法但不会建', hint: '脑子里有清晰的构想，但不知道怎么落地成代码' },
-            { value: 'enterprise', label: '我有真实业务需求', hint: '企业/团队有具体的业务场景，需要 Agent 来提效' },
-            { value: 'evolution', label: '我已有 Agent 想优化', hint: '已经有一个运行中的 Agent，想让它更强、更智能' }
+            { value: 'extraction', label: '我没有明确想法', label_en: "I don't have a clear idea", hint: '想做 AI Agent 但不知道从哪开始，想参考市面上成功的产品', hint_en: 'Want to build an AI Agent but don\'t know where to start — looking at successful products for inspiration' },
+            { value: 'materialization', label: '我有想法但不会建', label_en: "I have an idea but can't build it", hint: '脑子里有清晰的构想，但不知道怎么落地成代码', hint_en: 'Clear vision in my head, but don\'t know how to turn it into code' },
+            { value: 'enterprise', label: '我有真实业务需求', label_en: 'I have real business needs', hint: '企业/团队有具体的业务场景，需要 Agent 来提效', hint_en: 'Enterprise/team has specific business scenarios that need Agents for efficiency' },
+            { value: 'evolution', label: '我已有 Agent 想优化', label_en: 'I have an Agent to optimize', hint: '已经有一个运行中的 Agent，想让它更强、更智能', hint_en: 'Already have a running Agent, want to make it stronger and smarter' }
         ]
     },
     {
         id: 'domain',
         dimension: 'LAYER 3 · CORE LOGIC',
         title: '你的 Agent 服务什么领域？',
+        title_en: 'What domain will your Agent serve?',
         desc: '这决定了核心层的架构设计',
+        desc_en: 'This determines the core layer architecture design',
         options: [
-            { value: 'content', label: '内容创作', hint: '写作、视频、图片、音乐等创意内容生成' },
-            { value: 'coding', label: '代码开发', hint: '代码生成、调试、重构、技术文档等' },
-            { value: 'business', label: '商业服务', hint: '客服、销售、数据分析、流程自动化等' },
-            { value: 'education', label: '教育培训', hint: '个性化教学、知识问答、技能训练等' },
-            { value: 'other', label: '其他领域', hint: '医疗、法律、金融或其他垂直领域' }
+            { value: 'content', label: '内容创作', label_en: 'Content Creation', hint: '写作、视频、图片、音乐等创意内容生成', hint_en: 'Writing, video, images, music, and other creative content generation' },
+            { value: 'coding', label: '代码开发', label_en: 'Code Development', hint: '代码生成、调试、重构、技术文档等', hint_en: 'Code generation, debugging, refactoring, technical documentation' },
+            { value: 'business', label: '商业服务', label_en: 'Business Services', hint: '客服、销售、数据分析、流程自动化等', hint_en: 'Customer service, sales, data analysis, process automation' },
+            { value: 'education', label: '教育培训', label_en: 'Education & Training', hint: '个性化教学、知识问答、技能训练等', hint_en: 'Personalized teaching, knowledge Q&A, skill training' },
+            { value: 'other', label: '其他领域', label_en: 'Other Domains', hint: '医疗、法律、金融或其他垂直领域', hint_en: 'Healthcare, legal, finance, or other vertical domains' }
         ]
     },
     {
         id: 'architecture',
         dimension: 'DIMENSION 08 · ARCHITECTURE TOPOLOGY',
         title: '你需要多复杂的架构？',
+        title_en: 'How complex an architecture do you need?',
         desc: '单体 Agent 简单但能力有限，多 Agent 协同强大但复杂',
+        desc_en: 'Single Agent is simple but limited; multi-Agent is powerful but complex',
         options: [
-            { value: 'single', label: '单体 Agent', hint: '一个 Agent 处理所有事情，适合简单场景' },
-            { value: 'pipeline', label: '流水线式', hint: '多个 Agent 按顺序处理，如：规划→执行→审查' },
-            { value: 'parallel', label: '并行协同', hint: '多个 Agent 同时工作，最后汇总结果' },
-            { value: 'graph', label: '图结构编排', hint: '复杂的条件路由和动态调度，最灵活也最复杂' }
+            { value: 'single', label: '单体 Agent', label_en: 'Single Agent', hint: '一个 Agent 处理所有事情，适合简单场景', hint_en: 'One Agent handles everything — suitable for simple scenarios' },
+            { value: 'pipeline', label: '流水线式', label_en: 'Pipeline', hint: '多个 Agent 按顺序处理，如：规划→执行→审查', hint_en: 'Multiple Agents process sequentially: plan → execute → review' },
+            { value: 'parallel', label: '并行协同', label_en: 'Parallel Collaboration', hint: '多个 Agent 同时工作，最后汇总结果', hint_en: 'Multiple Agents work simultaneously, results merged at the end' },
+            { value: 'graph', label: '图结构编排', label_en: 'Graph Orchestration', hint: '复杂的条件路由和动态调度，最灵活也最复杂', hint_en: 'Complex conditional routing and dynamic scheduling — most flexible, most complex' }
         ]
     },
     {
         id: 'memory',
         dimension: 'DIMENSION 05 · STATE & MEMORY',
         title: '你的 Agent 需要记忆吗？',
+        title_en: 'Does your Agent need memory?',
         desc: '记忆能力决定了 Agent 的个性化和持续学习能力',
+        desc_en: 'Memory capability determines personalization and continuous learning',
         options: [
-            { value: 'none', label: '不需要记忆', hint: '每次对话都是独立的，无需记住历史' },
-            { value: 'session', label: '会话级记忆', hint: '在一次对话中记住上下文，对话结束就忘记' },
-            { value: 'persistent', label: '持久化记忆', hint: '跨会话记住用户偏好和历史，提供个性化服务' },
-            { value: 'evolving', label: '进化式记忆', hint: '不仅记住，还能从历史中学习和进化' }
+            { value: 'none', label: '不需要记忆', label_en: 'No memory needed', hint: '每次对话都是独立的，无需记住历史', hint_en: 'Each conversation is independent, no need to remember history' },
+            { value: 'session', label: '会话级记忆', label_en: 'Session-level memory', hint: '在一次对话中记住上下文，对话结束就忘记', hint_en: 'Remembers context within a conversation, forgets when it ends' },
+            { value: 'persistent', label: '持久化记忆', label_en: 'Persistent memory', hint: '跨会话记住用户偏好和历史，提供个性化服务', hint_en: 'Remembers user preferences and history across sessions for personalized service' },
+            { value: 'evolving', label: '进化式记忆', label_en: 'Evolving memory', hint: '不仅记住，还能从历史中学习和进化', hint_en: 'Not just remembering — learning and evolving from history' }
         ]
     },
     {
         id: 'tools',
         dimension: 'DIMENSION 10 · TOOL MAPPING',
         title: '你的 Agent 需要调用外部工具吗？',
+        title_en: 'Does your Agent need external tools?',
         desc: '工具能力让 Agent 从"只会说"变成"能干活"',
+        desc_en: "Tool capability transforms an Agent from 'can only talk' to 'can get things done'",
         options: [
-            { value: 'none', label: '纯对话，不需要工具', hint: '只做文本交互，不调用任何外部服务' },
-            { value: 'search', label: '搜索和知识库', hint: '需要搜索互联网或查询内部知识库' },
-            { value: 'api', label: '调用外部 API', hint: '需要连接第三方服务（支付、邮件、数据库等）' },
-            { value: 'full', label: '完整工具链', hint: '需要代码执行、文件操作、多种 API 联动' }
+            { value: 'none', label: '纯对话，不需要工具', label_en: 'Pure conversation, no tools', hint: '只做文本交互，不调用任何外部服务', hint_en: 'Text interaction only, no external services' },
+            { value: 'search', label: '搜索和知识库', label_en: 'Search & knowledge base', hint: '需要搜索互联网或查询内部知识库', hint_en: 'Needs to search the internet or query internal knowledge bases' },
+            { value: 'api', label: '调用外部 API', label_en: 'External API calls', hint: '需要连接第三方服务（支付、邮件、数据库等）', hint_en: 'Needs to connect third-party services (payment, email, database, etc.)' },
+            { value: 'full', label: '完整工具链', label_en: 'Full tool chain', hint: '需要代码执行、文件操作、多种 API 联动', hint_en: 'Needs code execution, file operations, multiple API integrations' }
         ]
     },
     {
         id: 'safety',
         dimension: 'LAYER 5 · GOVERNANCE',
         title: '安全和质量要求有多高？',
+        title_en: 'How high are your safety and quality requirements?',
         desc: '这决定了治理层的复杂度',
+        desc_en: 'This determines the governance layer complexity',
         options: [
-            { value: 'basic', label: '基础防护', hint: '简单的内容过滤，适合个人项目或内部工具' },
-            { value: 'moderate', label: '中等防护', hint: '需要幻觉抑制和基本的安全过滤' },
-            { value: 'strict', label: '严格防护', hint: '面向公众的产品，需要完善的审核和合规机制' },
-            { value: 'enterprise', label: '企业级防护', hint: '金融/医疗等高风险领域，需要人工审核和审计追踪' }
+            { value: 'basic', label: '基础防护', label_en: 'Basic protection', hint: '简单的内容过滤，适合个人项目或内部工具', hint_en: 'Simple content filtering — suitable for personal projects or internal tools' },
+            { value: 'moderate', label: '中等防护', label_en: 'Moderate protection', hint: '需要幻觉抑制和基本的安全过滤', hint_en: 'Needs hallucination control and basic safety filtering' },
+            { value: 'strict', label: '严格防护', label_en: 'Strict protection', hint: '面向公众的产品，需要完善的审核和合规机制', hint_en: 'Public-facing product — needs comprehensive review and compliance' },
+            { value: 'enterprise', label: '企业级防护', label_en: 'Enterprise-grade', hint: '金融/医疗等高风险领域，需要人工审核和审计追踪', hint_en: 'Finance/healthcare high-risk domains — needs human review and audit trails' }
         ]
     },
     {
         id: 'scale',
         dimension: 'LAYER 1 · INFRASTRUCTURE',
         title: '预期用户规模是多少？',
+        title_en: "What's your expected user scale?",
         desc: '这决定了物理层的基础设施需求',
+        desc_en: 'This determines infrastructure requirements',
         options: [
-            { value: 'personal', label: '个人使用', hint: '只有自己或几个人用，无需考虑并发' },
-            { value: 'small', label: '小团队 (10-100人)', hint: '内部团队使用，低并发' },
-            { value: 'medium', label: '中等规模 (100-10000人)', hint: '面向特定用户群，需要基本的扩展能力' },
-            { value: 'large', label: '大规模 (10000+人)', hint: '面向公众的产品，需要完善的弹性伸缩' }
+            { value: 'personal', label: '个人使用', label_en: 'Personal use', hint: '只有自己或几个人用，无需考虑并发', hint_en: 'Just yourself or a few people — no concurrency concerns' },
+            { value: 'small', label: '小团队 (10-100人)', label_en: 'Small team (10-100)', hint: '内部团队使用，低并发', hint_en: 'Internal team use, low concurrency' },
+            { value: 'medium', label: '中等规模 (100-10000人)', label_en: 'Medium scale (100-10K)', hint: '面向特定用户群，需要基本的扩展能力', hint_en: 'Specific user group — needs basic scaling' },
+            { value: 'large', label: '大规模 (10000+人)', label_en: 'Large scale (10K+)', hint: '面向公众的产品，需要完善的弹性伸缩', hint_en: 'Public-facing product — needs full elastic scaling' }
         ]
     },
     {
         id: 'budget',
         dimension: 'DIMENSION 06 · COST CONTROL',
         title: '你的成本预算是？',
+        title_en: "What's your cost budget?",
         desc: '这决定了模型选择和成本管控策略',
+        desc_en: 'This determines model selection and cost control strategy',
         options: [
-            { value: 'free', label: '尽量免费', hint: '使用开源模型，本地部署或免费 API 额度' },
-            { value: 'low', label: '低成本 (<$100/月)', hint: '可以使用付费 API，但需要严格控制用量' },
-            { value: 'moderate', label: '中等预算 ($100-1000/月)', hint: '可以使用强模型，但需要智能路由降本' },
-            { value: 'unlimited', label: '预算充足 (>$1000/月)', hint: '可以使用最强模型，追求最佳效果' }
+            { value: 'free', label: '尽量免费', label_en: 'As free as possible', hint: '使用开源模型，本地部署或免费 API 额度', hint_en: 'Open-source models, local deployment or free API quotas' },
+            { value: 'low', label: '低成本 (<$100/月)', label_en: 'Low cost (<$100/mo)', hint: '可以使用付费 API，但需要严格控制用量', hint_en: 'Can use paid APIs but need strict usage control' },
+            { value: 'moderate', label: '中等预算 ($100-1000/月)', label_en: 'Moderate ($100-1000/mo)', hint: '可以使用强模型，但需要智能路由降本', hint_en: 'Can use strong models but need smart routing for cost' },
+            { value: 'unlimited', label: '预算充足 (>$1000/月)', label_en: 'Ample budget (>$1000/mo)', hint: '可以使用最强模型，追求最佳效果', hint_en: 'Can use the strongest models, prioritizing best results' }
         ]
     }
 ];
@@ -553,30 +571,37 @@ function startGuide() {
 }
 
 function renderQuestions() {
+    var lang = window.__lang || 'zh';
     const container = document.getElementById('questionsContainer');
     container.innerHTML = '';
     questions.forEach((q, idx) => {
+        var title = lang === 'en' && q.title_en ? q.title_en : q.title;
+        var desc = lang === 'en' && q.desc_en ? q.desc_en : q.desc;
         const section = document.createElement('div');
         section.className = 'question-section';
         section.id = `step-${idx}`;
         section.innerHTML = `
             <div class="dimension-tag">${q.dimension}</div>
-            <div class="question-title">${q.title}</div>
-            <div class="question-desc">${q.desc}</div>
+            <div class="question-title">${title}</div>
+            <div class="question-desc">${desc}</div>
             <div class="options">
-                ${q.options.map(opt => `
+                ${q.options.map(opt => {
+                    var olabel = lang === 'en' && opt.label_en ? opt.label_en : opt.label;
+                    var ohint = lang === 'en' && opt.hint_en ? opt.hint_en : opt.hint;
+                    return `
                     <div class="option" data-question="${q.id}" data-value="${opt.value}" onclick="selectOption(this, '${q.id}', '${opt.value}')">
                         <div class="option-radio"></div>
                         <div class="option-content">
-                            <div class="option-label">${opt.label}</div>
-                            <div class="option-hint">${opt.hint}</div>
+                            <div class="option-label">${olabel}</div>
+                            <div class="option-hint">${ohint}</div>
                         </div>
                     </div>
-                `).join('')}
+                    `;
+                }).join('')}
             </div>
             <div class="nav-buttons">
-                <button class="btn btn-secondary" onclick="prevStep()" ${idx === 0 ? 'style="visibility:hidden"' : ''}>上一步</button>
-                <button class="btn btn-primary" id="nextBtn-${idx}" onclick="nextStep()" disabled>${idx === questions.length - 1 ? '生成蓝图' : '下一步'}</button>
+                <button class="btn btn-secondary" onclick="prevStep()" ${idx === 0 ? 'style="visibility:hidden"' : ''}>${lang === 'en' ? 'Previous' : '上一步'}</button>
+                <button class="btn btn-primary" id="nextBtn-${idx}" onclick="nextStep()" disabled>${idx === questions.length - 1 ? (lang === 'en' ? 'Generate Blueprint' : '生成蓝图') : (lang === 'en' ? 'Next' : '下一步')}</button>
             </div>
         `;
         container.appendChild(section);
@@ -613,6 +638,8 @@ function prevStep() {
 }
 
 function showResults() {
+    var lang = window.__lang || 'zh';
+    var en = lang === 'en';
     document.getElementById('questionsContainer').style.display = 'none';
     document.getElementById('progressBar').style.display = 'none';
     document.getElementById('stepIndicator').style.display = 'none';
@@ -624,7 +651,7 @@ function showResults() {
     // Scenario Card
     container.innerHTML += `
         <div class="result-card">
-            <h3><span class="badge badge-scenario">推荐路径</span> ${results.scenario.name}</h3>
+            <h3><span class="badge badge-scenario">${en ? 'Recommended Path' : '推荐路径'}</span> ${results.scenario.name}</h3>
             <p style="color: var(--dim); font-size: 0.9rem; line-height: 1.6;">${results.scenario.desc}</p>
             <p style="color: var(--primary); font-size: 0.85rem; margin-top: 12px; font-weight: 600;">${results.scenario.steps}</p>
         </div>
@@ -633,15 +660,15 @@ function showResults() {
     // Architecture Card
     container.innerHTML += `
         <div class="result-card">
-            <h3><span class="badge badge-layer">架构建议</span> 你的 Agentic 架构</h3>
+            <h3><span class="badge badge-layer">${en ? 'Architecture' : '架构建议'}</span> ${en ? 'Your Agentic Architecture' : '你的 Agentic 架构'}</h3>
             <ul class="result-list">
-                <li><span class="label">架构类型</span><span>${results.architecture}</span></li>
-                <li><span class="label">推荐模型</span><span>${results.model}</span></li>
-                <li><span class="label">记忆方案</span><span>${results.memory}</span></li>
-                <li><span class="label">工具能力</span><span>${results.tools}</span></li>
-                <li><span class="label">安全等级</span><span>${results.safety}</span></li>
-                <li><span class="label">基础设施</span><span>${results.infra}</span></li>
-                <li><span class="label">成本策略</span><span>${results.cost}</span></li>
+                <li><span class="label">${en ? 'Architecture Type' : '架构类型'}</span><span>${results.architecture}</span></li>
+                <li><span class="label">${en ? 'Recommended Model' : '推荐模型'}</span><span>${results.model}</span></li>
+                <li><span class="label">${en ? 'Memory Plan' : '记忆方案'}</span><span>${results.memory}</span></li>
+                <li><span class="label">${en ? 'Tool Capability' : '工具能力'}</span><span>${results.tools}</span></li>
+                <li><span class="label">${en ? 'Safety Level' : '安全等级'}</span><span>${results.safety}</span></li>
+                <li><span class="label">${en ? 'Infrastructure' : '基础设施'}</span><span>${results.infra}</span></li>
+                <li><span class="label">${en ? 'Cost Strategy' : '成本策略'}</span><span>${results.cost}</span></li>
             </ul>
         </div>
     `;
@@ -649,7 +676,7 @@ function showResults() {
     // Priority Dimensions
     container.innerHTML += `
         <div class="result-card">
-            <h3><span class="badge badge-layer">优先维度</span> 你应该重点关注的维度</h3>
+            <h3><span class="badge badge-layer">${en ? 'Priority Dimensions' : '优先维度'}</span> ${en ? 'Dimensions you should focus on' : '你应该重点关注的维度'}</h3>
             <ul class="result-list">
                 ${results.priorities.map(p => `<li><span class="label">${p.dim}</span><span>${p.reason}</span></li>`).join('')}
             </ul>
@@ -659,7 +686,7 @@ function showResults() {
     // Next Steps
     container.innerHTML += `
         <div class="result-card">
-            <h3>下一步行动</h3>
+            <h3>${en ? 'Next Steps' : '下一步行动'}</h3>
             <ul class="result-list">
                 ${results.nextSteps.map((s, i) => `<li><span class="label">Step ${i+1}</span><span style="text-align:right;">${s}</span></li>`).join('')}
             </ul>
@@ -670,76 +697,110 @@ function showResults() {
 }
 
 function generateBlueprint(a) {
+    var lang = window.__lang || 'zh';
+    var en = lang === 'en';
+
     const scenarios = {
         extraction: { name: '夺舍法 · Soul Extraction', desc: '通过逆向工程探测顶层商业 AI 的运行逻辑，跨越研发门槛，直接收割成熟的元神。就像普通人直接学习大宗门的武功，炼化己用。', steps: '搜魂 → 炼魄 → 锻造' },
         materialization: { name: '具象化路径 · Materialization', desc: '将你模糊的天才想法，通过 26 维度标准强制具象化为逻辑实体。解决"想得出却做不出"的工程困境。', steps: '意图锚定 → 经络映射 → 架构生成' },
         enterprise: { name: '实证方案 · Production Forging', desc: '深植于真实商业流程的 Agent 建设。将复杂的企业 SOP 转化为 26 维度稳健运行的生产力工具。', steps: '业务对齐 → 闭环治理 → 私有化锻造' },
         evolution: { name: '自演化 · Auto-Evolution', desc: '让 Agent 具备自我迭代的能力。基于 26 维度的反馈层，实现逻辑的动态进化。', steps: '遥测分析 → 逻辑漂移 → 元神迭代' }
     };
+    const scenarios_en = {
+        extraction: { name: 'Agent Autopsy · Soul Extraction', desc: "Reverse-engineer top commercial AIs to understand their core logic, then forge your own. Like learning a master's technique and making it yours.", steps: 'Probe → Map → Forge' },
+        materialization: { name: 'Materialization Path', desc: "Force your vague brilliant idea into a logical entity through 26 dimensions. Solving the 'can think it but can't build it' engineering gap.", steps: 'Intent Anchoring → Mapping → Architecture Generation' },
+        enterprise: { name: 'Production Forging', desc: 'Agent building deeply rooted in real business processes. Transform complex enterprise SOPs into production-grade tools running across 26 dimensions.', steps: 'Business Alignment → Governance Loop → Private Forging' },
+        evolution: { name: 'Auto-Evolution', desc: 'Give your Agent self-iteration capability. Based on the 26-dimension feedback layer, achieve dynamic logic evolution.', steps: 'Telemetry Analysis → Logic Drift → Core Iteration' }
+    };
 
     const archMap = { single: '单体 Agent', pipeline: '流水线多 Agent', parallel: '并行协同 Agent', graph: '图结构编排 Agent' };
+    const archMap_en = { single: 'Single Agent', pipeline: 'Pipeline Multi-Agent', parallel: 'Parallel Collaborative Agent', graph: 'Graph Orchestration Agent' };
     const memMap = { none: '无记忆（无状态）', session: '会话级记忆（Context Window）', persistent: '持久化记忆（VectorDB）', evolving: '进化式记忆（VectorDB + 动态学习）' };
+    const memMap_en = { none: 'No memory (stateless)', session: 'Session-level (Context Window)', persistent: 'Persistent (VectorDB)', evolving: 'Evolving (VectorDB + Dynamic Learning)' };
     const toolMap = { none: '纯对话，无工具', search: '搜索 + RAG 知识库', api: '外部 API 集成', full: '完整工具链（代码执行 + API + 文件）' };
+    const toolMap_en = { none: 'Pure conversation, no tools', search: 'Search + RAG Knowledge Base', api: 'External API Integration', full: 'Full Tool Chain (Code Exec + API + Files)' };
     const safetyMap = { basic: '基础（Prompt 内置过滤）', moderate: '中等（幻觉抑制 + 内容审核）', strict: '严格（独立审核层 + 注入防御）', enterprise: '企业级（人工审核 + 审计追踪 + 合规）' };
+    const safetyMap_en = { basic: 'Basic (Prompt-built-in filtering)', moderate: 'Moderate (Hallucination control + Content review)', strict: 'Strict (Independent review layer + Injection defense)', enterprise: 'Enterprise (Human review + Audit trail + Compliance)' };
     const infraMap = { personal: '本地部署 / 单实例', small: '单服务器 + 基础监控', medium: '云服务 + 自动扩容', large: '分布式集群 + 全球 CDN' };
+    const infraMap_en = { personal: 'Local / Single instance', small: 'Single server + Basic monitoring', medium: 'Cloud + Auto-scaling', large: 'Distributed cluster + Global CDN' };
 
     let modelRec = '';
-    if (a.budget === 'free') modelRec = '开源模型（DeepSeek / Llama 3）';
-    else if (a.budget === 'low') modelRec = 'GPT-4o-mini / DeepSeek API';
-    else if (a.budget === 'moderate') modelRec = '强模型定骨架（Claude 3.5）+ 弱模型填代码（GPT-4o-mini）';
-    else modelRec = 'Claude 3.5 Sonnet / GPT-4o（全流程）';
+    if (a.budget === 'free') modelRec = en ? 'Open-source (DeepSeek / Llama 3)' : '开源模型（DeepSeek / Llama 3）';
+    else if (a.budget === 'low') modelRec = en ? 'GPT-4o-mini / DeepSeek API' : 'GPT-4o-mini / DeepSeek API';
+    else if (a.budget === 'moderate') modelRec = en ? 'Strong model for skeleton (Claude 3.5) + Weak model for code (GPT-4o-mini)' : '强模型定骨架（Claude 3.5）+ 弱模型填代码（GPT-4o-mini）';
+    else modelRec = en ? 'Claude 3.5 Sonnet / GPT-4o (full pipeline)' : 'Claude 3.5 Sonnet / GPT-4o（全流程）';
 
     let costStrategy = '';
-    if (a.budget === 'free') costStrategy = '全开源方案，本地推理';
-    else if (a.budget === 'low') costStrategy = '智能路由：简单任务用弱模型，复杂任务用强模型';
-    else if (a.budget === 'moderate') costStrategy = 'Token 预算制 + 模型降级策略';
-    else costStrategy = '效果优先，成本次之';
+    if (a.budget === 'free') costStrategy = en ? 'Full open-source, local inference' : '全开源方案，本地推理';
+    else if (a.budget === 'low') costStrategy = en ? 'Smart routing: weak model for simple tasks, strong model for complex' : '智能路由：简单任务用弱模型，复杂任务用强模型';
+    else if (a.budget === 'moderate') costStrategy = en ? 'Token budget + Model degradation strategy' : 'Token 预算制 + 模型降级策略';
+    else costStrategy = en ? 'Quality first, cost second' : '效果优先，成本次之';
 
     let priorities = [];
     if (a.architecture === 'graph' || a.architecture === 'parallel') {
-        priorities.push({ dim: '维度 08 架构拓扑', reason: '多 Agent 编排是你的核心挑战' });
-        priorities.push({ dim: '维度 09 子Agent分工', reason: '明确每个 Agent 的职责边界' });
+        priorities.push({ dim: en ? 'Dim 08 Architecture Topology' : '维度 08 架构拓扑', reason: en ? 'Multi-agent orchestration is your core challenge' : '多 Agent 编排是你的核心挑战' });
+        priorities.push({ dim: en ? 'Dim 09 Agent Division' : '维度 09 子Agent分工', reason: en ? "Define each Agent's responsibility boundaries" : '明确每个 Agent 的职责边界' });
     }
     if (a.tools === 'api' || a.tools === 'full') {
-        priorities.push({ dim: '维度 10 工具映射', reason: '工具调用的触发条件和错误处理' });
+        priorities.push({ dim: en ? 'Dim 10 Tool Mapping' : '维度 10 工具映射', reason: en ? 'Tool invocation triggers and error handling' : '工具调用的触发条件和错误处理' });
     }
     if (a.memory === 'persistent' || a.memory === 'evolving') {
-        priorities.push({ dim: '维度 05 状态记忆', reason: '长期记忆的存储和检索策略' });
+        priorities.push({ dim: en ? 'Dim 05 State & Memory' : '维度 05 状态记忆', reason: en ? 'Long-term memory storage and retrieval strategy' : '长期记忆的存储和检索策略' });
     }
     if (a.safety === 'strict' || a.safety === 'enterprise') {
-        priorities.push({ dim: '维度 18 安全防御', reason: '面向公众需要完善的安全机制' });
-        priorities.push({ dim: '维度 17 幻觉抑制', reason: '确保输出的准确性和可靠性' });
+        priorities.push({ dim: en ? 'Dim 18 Security Defense' : '维度 18 安全防御', reason: en ? 'Public-facing products need robust security' : '面向公众需要完善的安全机制' });
+        priorities.push({ dim: en ? 'Dim 17 Hallucination Control' : '维度 17 幻觉抑制', reason: en ? 'Ensure output accuracy and reliability' : '确保输出的准确性和可靠性' });
     }
     if (a.scale === 'large') {
-        priorities.push({ dim: '维度 02 并发策略', reason: '大规模用户需要异步队列和负载均衡' });
+        priorities.push({ dim: en ? 'Dim 02 Concurrency' : '维度 02 并发策略', reason: en ? 'Large-scale users need async queues and load balancing' : '大规模用户需要异步队列和负载均衡' });
     }
-    priorities.push({ dim: '维度 12 指令策略', reason: 'System Prompt 是 Agent 的灵魂' });
+    priorities.push({ dim: en ? 'Dim 12 Instruction Strategy' : '维度 12 指令策略', reason: en ? "System Prompt is the Agent's soul" : 'System Prompt 是 Agent 的灵魂' });
     if (priorities.length > 5) priorities = priorities.slice(0, 5);
 
     let nextSteps = [];
     if (a.scenario === 'extraction') {
-        nextSteps = [
+        nextSteps = en ? [
+            'Choose a target Agent to analyze',
+            'Use Soul Extraction probe techniques',
+            'Fill results into the 26-dimension mapping',
+            'Use Soul Forging to generate code skeleton'
+        ] : [
             '选择一个目标 Agent 进行分析',
             '使用 01_Soul_Extraction 中的探测话术',
             '将结果填入 26 维度测绘表',
             '使用 03_Soul_Forging 生成代码骨架'
         ];
     } else if (a.scenario === 'materialization') {
-        nextSteps = [
+        nextSteps = en ? [
+            'Download the 26-dimension template',
+            'Fill in your Agent vision dimension by dimension',
+            'Use forging meta-prompt to generate architecture',
+            'Start coding in Cursor'
+        ] : [
             '下载 26 维度测绘表模板',
             '逐维度填写你的 Agent 构想',
             '使用锻造元指令生成架构骨架',
             '在 Cursor 中开始编码'
         ];
     } else if (a.scenario === 'enterprise') {
-        nextSteps = [
+        nextSteps = en ? [
+            'Map out business SOP processes',
+            'Map business flows to 26 dimensions',
+            'Focus on governance layer (security/quality/compliance)',
+            'Use forging prompt to generate enterprise skeleton'
+        ] : [
             '梳理业务 SOP 流程',
             '将业务流程映射到 26 维度',
             '重点设计治理层（安全/质量/合规）',
             '使用锻造指令生成企业级骨架'
         ];
     } else {
-        nextSteps = [
+        nextSteps = en ? [
+            "Audit existing Agent's 26-dimension coverage",
+            'Identify weak dimensions and plan optimizations',
+            'Deploy telemetry to collect user feedback',
+            'Data-driven iterative optimization'
+        ] : [
             '审计现有 Agent 的 26 维度覆盖度',
             '识别薄弱维度并制定优化计划',
             '部署遥测日志收集用户反馈',
@@ -748,13 +809,13 @@ function generateBlueprint(a) {
     }
 
     return {
-        scenario: scenarios[a.scenario],
-        architecture: archMap[a.architecture],
+        scenario: en ? scenarios_en[a.scenario] : scenarios[a.scenario],
+        architecture: en ? archMap_en[a.architecture] : archMap[a.architecture],
         model: modelRec,
-        memory: memMap[a.memory],
-        tools: toolMap[a.tools],
-        safety: safetyMap[a.safety],
-        infra: infraMap[a.scale],
+        memory: en ? memMap_en[a.memory] : memMap[a.memory],
+        tools: en ? toolMap_en[a.tools] : toolMap[a.tools],
+        safety: en ? safetyMap_en[a.safety] : safetyMap[a.safety],
+        infra: en ? infraMap_en[a.scale] : infraMap[a.scale],
         cost: costStrategy,
         priorities,
         nextSteps
@@ -762,24 +823,28 @@ function generateBlueprint(a) {
 }
 
 function exportBlueprint() {
+    var lang = window.__lang || 'zh';
+    var en = lang === 'en';
     const results = generateBlueprint(answers);
-    let md = `# Agenauton Agentic Blueprint\n# 我的 Agentic 铸造蓝图\n\n`;
-    md += `> Generated by Agenauton Interactive Guide\n> 生成时间: ${new Date().toLocaleDateString()}\n\n---\n\n`;
-    md += `## 推荐路径: ${results.scenario.name}\n\n${results.scenario.desc}\n\n**步骤:** ${results.scenario.steps}\n\n---\n\n`;
-    md += `## 架构概览\n\n`;
-    md += `| 维度 | 选择 |\n|------|------|\n`;
-    md += `| 架构类型 | ${results.architecture} |\n`;
-    md += `| 推荐模型 | ${results.model} |\n`;
-    md += `| 记忆方案 | ${results.memory} |\n`;
-    md += `| 工具能力 | ${results.tools} |\n`;
-    md += `| 安全等级 | ${results.safety} |\n`;
-    md += `| 基础设施 | ${results.infra} |\n`;
-    md += `| 成本策略 | ${results.cost} |\n\n`;
-    md += `## 优先关注维度\n\n`;
+    let md = `# Agenauton Agentic Blueprint\n\n`;
+    md += `> Generated by Agenauton Interactive Guide\n> ${en ? 'Date' : '生成时间'}: ${new Date().toLocaleDateString()}\n\n---\n\n`;
+    md += `## ${en ? 'Recommended Path' : '推荐路径'}: ${results.scenario.name}\n\n${results.scenario.desc}\n\n**${en ? 'Steps' : '步骤'}:** ${results.scenario.steps}\n\n---\n\n`;
+    md += `## ${en ? 'Architecture Overview' : '架构概览'}\n\n`;
+    md += `| ${en ? 'Dimension' : '维度'} | ${en ? 'Choice' : '选择'} |\n|------|------|\n`;
+    md += `| ${en ? 'Architecture Type' : '架构类型'} | ${results.architecture} |\n`;
+    md += `| ${en ? 'Recommended Model' : '推荐模型'} | ${results.model} |\n`;
+    md += `| ${en ? 'Memory Plan' : '记忆方案'} | ${results.memory} |\n`;
+    md += `| ${en ? 'Tool Capability' : '工具能力'} | ${results.tools} |\n`;
+    md += `| ${en ? 'Safety Level' : '安全等级'} | ${results.safety} |\n`;
+    md += `| ${en ? 'Infrastructure' : '基础设施'} | ${results.infra} |\n`;
+    md += `| ${en ? 'Cost Strategy' : '成本策略'} | ${results.cost} |\n\n`;
+    md += `## ${en ? 'Priority Dimensions' : '优先关注维度'}\n\n`;
     results.priorities.forEach(p => { md += `- **${p.dim}** — ${p.reason}\n`; });
-    md += `\n## 下一步行动\n\n`;
+    md += `\n## ${en ? 'Next Steps' : '下一步行动'}\n\n`;
     results.nextSteps.forEach((s, i) => { md += `${i+1}. ${s}\n`; });
-    md += `\n---\n\n> 下一步：下载完整的 [26 维度测绘表](../02_Spirit_Refining/26_Dimensions_Template.md) 进行详细填写。\n>\n> *— Agenauton: The Agentic Standard*\n`;
+    md += en
+        ? `\n---\n\n> Next: Download the full [26-Dimension Template](../02_Spirit_Refining/26_Dimensions_Template.md) for detailed mapping.\n>\n> *— Agenauton: The Agentic Standard*\n`
+        : `\n---\n\n> 下一步：下载完整的 [26 维度测绘表](../02_Spirit_Refining/26_Dimensions_Template.md) 进行详细填写。\n>\n> *— Agenauton: The Agentic Standard*\n`;
 
     const blob = new Blob([md], { type: 'text/markdown' });
     const url = URL.createObjectURL(blob);
@@ -803,6 +868,8 @@ function restartGuide() {
 }
 
 function exportScreenshot() {
+    var lang = window.__lang || 'zh';
+    var en = lang === 'en';
     var results = generateBlueprint(answers);
     var DPR = 3;
     var PW = 390; // iPhone width in pt
@@ -830,13 +897,13 @@ function exportScreenshot() {
     // Build sections
     var sections = [
         { type: 'header' },
-        { type: 'card', badgeText: '推荐路径', badgeColor: green, title: results.scenario.name, desc: results.scenario.desc, extra: results.scenario.steps },
-        { type: 'table', badgeText: '架构建议', badgeColor: blue, title: '你的 Agentic 架构', rows: [
-            ['架构类型', results.architecture], ['推荐模型', results.model], ['记忆方案', results.memory],
-            ['工具能力', results.tools], ['安全等级', results.safety], ['基础设施', results.infra], ['成本策略', results.cost]
+        { type: 'card', badgeText: en ? 'Recommended Path' : '推荐路径', badgeColor: green, title: results.scenario.name, desc: results.scenario.desc, extra: results.scenario.steps },
+        { type: 'table', badgeText: en ? 'Architecture' : '架构建议', badgeColor: blue, title: en ? 'Your Agentic Architecture' : '你的 Agentic 架构', rows: [
+            [en ? 'Architecture Type' : '架构类型', results.architecture], [en ? 'Recommended Model' : '推荐模型', results.model], [en ? 'Memory Plan' : '记忆方案', results.memory],
+            [en ? 'Tool Capability' : '工具能力', results.tools], [en ? 'Safety Level' : '安全等级', results.safety], [en ? 'Infrastructure' : '基础设施', results.infra], [en ? 'Cost Strategy' : '成本策略', results.cost]
         ]},
-        { type: 'table', badgeText: '优先维度', badgeColor: blue, title: '重点关注的维度', rows: results.priorities.map(function(p) { return [p.dim, p.reason]; }) },
-        { type: 'table', badgeText: null, badgeColor: null, title: '下一步行动', rows: results.nextSteps.map(function(s, i) { return ['Step ' + (i + 1), s]; }) },
+        { type: 'table', badgeText: en ? 'Priority Dimensions' : '优先维度', badgeColor: blue, title: en ? 'Dimensions to Focus On' : '重点关注的维度', rows: results.priorities.map(function(p) { return [p.dim, p.reason]; }) },
+        { type: 'table', badgeText: null, badgeColor: null, title: en ? 'Next Steps' : '下一步行动', rows: results.nextSteps.map(function(s, i) { return ['Step ' + (i + 1), s]; }) },
         { type: 'footer' }
     ];
 
@@ -892,10 +959,10 @@ function exportScreenshot() {
             grdT.addColorStop(0, '#58a6ff');
             grdT.addColorStop(1, '#3fb950');
             ctx.fillStyle = grdT;
-            ctx.fillText('你的 Agentic 蓝图已生成', W / 2, y + 44 * DPR);
+            ctx.fillText(en ? 'Your Agentic Blueprint is Ready' : '你的 Agentic 蓝图已生成', W / 2, y + 44 * DPR);
             ctx.font = font('normal', 13);
             ctx.fillStyle = dim;
-            ctx.fillText('基于你的选择 · Agenauton 铸基', W / 2, y + 70 * DPR);
+            ctx.fillText(en ? 'Based on your choices · Agenauton Forging' : '基于你的选择 · Agenauton 铸基', W / 2, y + 70 * DPR);
             ctx.textAlign = 'left';
         }
 

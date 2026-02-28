@@ -196,6 +196,7 @@ footer a:hover{color:var(--text)}
 .nav-links{gap:12px}
 }
 </style>
+<script src="lang.js"></script>
 </head>
 <body>
 
@@ -207,12 +208,13 @@ footer a:hover{color:var(--text)}
 <div class="nav-inner">
 <a href="guanwang.html" class="logo">Agenauton <span>铸基</span></a>
 <div class="nav-links">
-<a href="guanwang.html">主站</a>
-<a href="#probe9">炼魂 9 问</a>
-<a href="#trilogy">三步法</a>
-<a href="#cases">案例库</a>
-<a href="Agenauton/guide/index.html">引导问答</a>
-<a href="#" class="nav-cta" style="background:var(--purple)">夺舍大法</a>
+<a href="guanwang.html" data-zh="主站" data-en="Home">主站</a>
+<a href="#probe9" data-zh="炼魂 9 问" data-en="The 9 Probes">炼魂 9 问</a>
+<a href="#trilogy" data-zh="三步法" data-en="Trilogy">三步法</a>
+<a href="#cases" data-zh="案例库" data-en="Cases">案例库</a>
+<a href="Agenauton/guide/index.html" data-zh="引导问答" data-en="Guided Q&amp;A">引导问答</a>
+<a href="#" class="nav-cta" style="background:var(--purple)" data-zh="夺舍大法" data-en="Agent Autopsy">夺舍大法</a>
+<button id="langToggle" onclick="agenautonLang.toggle()" style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);border-radius:6px;padding:4px 10px;color:var(--text);font-size:.75rem;cursor:pointer;letter-spacing:.5px;transition:.2s">EN</button>
 </div>
 </div>
 </nav>
@@ -220,14 +222,14 @@ footer a:hover{color:var(--text)}
 <!-- Hero -->
 <section class="hero">
 <div class="wrap">
-<div class="hero-badge">中文社区专属方法论</div>
-<h1>夺舍大法<br><span class="gradient">拆解高手的武功，炼化己用</span></h1>
-<p class="hero-sub">没有自己的灵感？没关系。学习拆解优秀 Agent 的核心逻辑，用 26 维度标准化提炼，再用 AI 辅助锻造成你自己的产品。</p>
-<div class="hero-note">这不是抄袭 — 是学习 + 标准化拆解 + 自主重建</div>
+<div class="hero-badge" data-zh="中文社区专属方法论" data-en="Community-Driven Methodology">中文社区专属方法论</div>
+<h1 data-zh="夺舍大法<br><span class=&quot;gradient&quot;>拆解高手的武功，炼化己用</span>" data-en="Agent Autopsy<br><span class=&quot;gradient&quot;>Dissect. Map. Forge Your Own.</span>">夺舍大法<br><span class="gradient">拆解高手的武功，炼化己用</span></h1>
+<p class="hero-sub" data-zh="没有自己的灵感？没关系。学习拆解优秀 Agent 的核心逻辑，用 26 维度标准化提炼，再用 AI 辅助锻造成你自己的产品。" data-en="No original idea? No problem. Learn to dissect top Agents' core logic, refine it through 26 dimensions, then forge your own product with AI.">没有自己的灵感？没关系。学习拆解优秀 Agent 的核心逻辑，用 26 维度标准化提炼，再用 AI 辅助锻造成你自己的产品。</p>
+<div class="hero-note" data-zh="这不是抄袭 — 是学习 + 标准化拆解 + 自主重建" data-en="This isn't copying — it's learning + structured analysis + independent rebuilding">这不是抄袭 — 是学习 + 标准化拆解 + 自主重建</div>
 <div class="hero-actions">
-<a href="#probe9" class="btn btn-primary">炼魂 9 问 — 从这开始</a>
-<a href="#trilogy" class="btn btn-ghost">了解三步方法论</a>
-<a href="#cases" class="btn btn-ghost">看拆解案例</a>
+<a href="#probe9" class="btn btn-primary" data-zh="炼魂 9 问 — 从这开始" data-en="The 9 Probes — Start Here">炼魂 9 问 — 从这开始</a>
+<a href="#trilogy" class="btn btn-ghost" data-zh="了解三步方法论" data-en="Learn the Trilogy">了解三步方法论</a>
+<a href="#cases" class="btn btn-ghost" data-zh="看拆解案例" data-en="See Case Studies">看拆解案例</a>
 </div>
 </div>
 </section>
@@ -238,47 +240,47 @@ footer a:hover{color:var(--text)}
 <section class="section" id="trilogy">
 <div class="wrap">
 <div class="section-label">Methodology</div>
-<div class="section-title">搜魂、炼魄、锻造</div>
-<div class="section-desc">三步完成从「看懂别人」到「造出自己的」。每一步都有对应的工具和模板。</div>
+<div class="section-title" data-zh="搜魂、炼魄、锻造" data-en="Probe. Map. Forge.">搜魂、炼魄、锻造</div>
+<div class="section-desc" data-zh="三步完成从「看懂别人」到「造出自己的」。每一步都有对应的工具和模板。" data-en="Three steps from &quot;understanding others&quot; to &quot;building your own.&quot; Each step has dedicated tools and templates.">三步完成从「看懂别人」到「造出自己的」。每一步都有对应的工具和模板。</div>
 
 <div class="trilogy-grid">
 <div class="trilogy-card">
 <div class="trilogy-step">Step 1</div>
 <div class="trilogy-icon">🔮</div>
-<div class="trilogy-name">搜魂</div>
+<div class="trilogy-name" data-zh="搜魂" data-en="Probe">搜魂</div>
 <div class="trilogy-en">Soul Extraction</div>
-<div class="trilogy-desc">用「炼魂 9 问」穿透目标 Agent 的表层服务，摸清底层机制。既可以问第三方 AI，也可以自问梳理自研架构。</div>
+<div class="trilogy-desc" data-zh="用「炼魂 9 问」穿透目标 Agent 的表层服务，摸清底层机制。既可以问第三方 AI，也可以自问梳理自研架构。" data-en="Use &quot;The 9 Probes&quot; to penetrate a target Agent's surface, uncovering its core mechanisms. Works on third-party AIs or your own architecture.">用「炼魂 9 问」穿透目标 Agent 的表层服务，摸清底层机制。既可以问第三方 AI，也可以自问梳理自研架构。</div>
 <ul class="trilogy-list">
-<li>用 9 个问题覆盖核心维度：任务域、流程、分工、记忆、工具、防错、安全、修正、复用</li>
-<li>把它当作一份「Agentic 调研问卷」，不涉及任何身份伪装</li>
-<li>问完 9 问，拿到搜魂阶段最关键的原始素材</li>
-<li>记录关键发现，准备进入炼魄阶段</li>
+<li data-zh="用 9 个问题覆盖核心维度：任务域、流程、分工、记忆、工具、防错、安全、修正、复用" data-en="9 questions covering core dimensions: task domain, workflow, division, memory, tools, error prevention, security, correction, reuse">用 9 个问题覆盖核心维度：任务域、流程、分工、记忆、工具、防错、安全、修正、复用</li>
+<li data-zh="把它当作一份「Agentic 调研问卷」，不涉及任何身份伪装" data-en="Think of it as an &quot;Agentic research questionnaire&quot; — no identity spoofing involved">把它当作一份「Agentic 调研问卷」，不涉及任何身份伪装</li>
+<li data-zh="问完 9 问，拿到搜魂阶段最关键的原始素材" data-en="After 9 questions, you have the most critical raw material from the Probe phase">问完 9 问，拿到搜魂阶段最关键的原始素材</li>
+<li data-zh="记录关键发现，准备进入炼魄阶段" data-en="Record key findings, prepare to enter the Map phase">记录关键发现，准备进入炼魄阶段</li>
 </ul>
 </div>
 <div class="trilogy-card">
 <div class="trilogy-step">Step 2</div>
 <div class="trilogy-icon">⚗️</div>
-<div class="trilogy-name">炼魄</div>
+<div class="trilogy-name" data-zh="炼魄" data-en="Map">炼魄</div>
 <div class="trilogy-en">Spirit Refining</div>
-<div class="trilogy-desc">用 26 维度标准化测绘表，将搜魂阶段收集到的碎片信息结构化。把感性观察提炼成理性的架构清单。</div>
+<div class="trilogy-desc" data-zh="用 26 维度标准化测绘表，将搜魂阶段收集到的碎片信息结构化。把感性观察提炼成理性的架构清单。" data-en="Use the 26-dimension mapping template to structure the fragments collected during the Probe phase. Turn intuitive observations into a rational architecture checklist.">用 26 维度标准化测绘表，将搜魂阶段收集到的碎片信息结构化。把感性观察提炼成理性的架构清单。</div>
 <ul class="trilogy-list">
-<li>逐条填写 26 维度测绘表</li>
-<li>标注每个维度的实现方式和强弱程度</li>
-<li>识别目标 Agent 的核心竞争力和薄弱环节</li>
-<li>生成完整的架构分析报告</li>
+<li data-zh="逐条填写 26 维度测绘表" data-en="Fill in the 26-dimension mapping template item by item">逐条填写 26 维度测绘表</li>
+<li data-zh="标注每个维度的实现方式和强弱程度" data-en="Note each dimension's implementation approach and strength">标注每个维度的实现方式和强弱程度</li>
+<li data-zh="识别目标 Agent 的核心竞争力和薄弱环节" data-en="Identify the target Agent's core strengths and weak spots">识别目标 Agent 的核心竞争力和薄弱环节</li>
+<li data-zh="生成完整的架构分析报告" data-en="Generate a complete architecture analysis report">生成完整的架构分析报告</li>
 </ul>
 </div>
 <div class="trilogy-card">
 <div class="trilogy-step">Step 3</div>
 <div class="trilogy-icon">🔨</div>
-<div class="trilogy-name">锻造</div>
+<div class="trilogy-name" data-zh="锻造" data-en="Forge">锻造</div>
 <div class="trilogy-en">Soul Forging</div>
-<div class="trilogy-desc">基于炼魄的结果，用 AI 辅助生成代码骨架。强模型定架构方向，弱模型填充实现细节。</div>
+<div class="trilogy-desc" data-zh="基于炼魄的结果，用 AI 辅助生成代码骨架。强模型定架构方向，弱模型填充实现细节。" data-en="Based on the Map results, use AI to generate a code skeleton. Strong models set the architecture direction; weaker models fill in implementation details.">基于炼魄的结果，用 AI 辅助生成代码骨架。强模型定架构方向，弱模型填充实现细节。</div>
 <ul class="trilogy-list">
-<li>将测绘报告喂给 AI Architect Prompt</li>
-<li>AI 按 26 维度生成完整代码骨架</li>
-<li>根据自己的业务需求调整和优化</li>
-<li>用低成本模型完成具体实现</li>
+<li data-zh="将测绘报告喂给 AI Architect Prompt" data-en="Feed the mapping report to the AI Architect Prompt">将测绘报告喂给 AI Architect Prompt</li>
+<li data-zh="AI 按 26 维度生成完整代码骨架" data-en="AI generates a complete code skeleton across 26 dimensions">AI 按 26 维度生成完整代码骨架</li>
+<li data-zh="根据自己的业务需求调整和优化" data-en="Adjust and optimize based on your own business needs">根据自己的业务需求调整和优化</li>
+<li data-zh="用低成本模型完成具体实现" data-en="Use cost-effective models for concrete implementation">用低成本模型完成具体实现</li>
 </ul>
 </div>
 </div>
@@ -286,8 +288,8 @@ footer a:hover{color:var(--text)}
 <!-- 炼魂 9 问 -->
 <div class="probe-section" id="probe9">
 <div class="section-label">Soul Extraction Toolkit</div>
-<div class="section-title">炼魂 9 问 · 摸清 AI 内核</div>
-<p class="probe-intro">
+<div class="section-title" data-zh="炼魂 9 问 · 摸清 AI 内核" data-en="The 9 Probes · Uncover AI Internals">炼魂 9 问 · 摸清 AI 内核</div>
+<p class="probe-intro" data-zh="这 9 问是调研 / 自查任意 AI 系统的<strong>极简问卷法</strong>——不用专业术语，不问敏感操作。<br>你可以<strong>直接问第三方 Agent / 大模型</strong>来穿透它的表层服务、摸清底层机制；<br>也可以<strong>问自己</strong>来梳理自研架构，确保每个核心环节都想清楚了。<br>写作、法律、电商、医疗……全行业垂直 Agent 通用，问完就能看透它到底怎么工作。" data-en="These 9 questions are a <strong>minimalist questionnaire</strong> for researching or self-auditing any AI system — no jargon, no sensitive operations.<br>You can <strong>directly ask any third-party Agent or LLM</strong> to penetrate its surface and uncover its core mechanisms;<br>or <strong>ask yourself</strong> to audit your own architecture and ensure every critical aspect is thought through.<br>Writing, legal, e-commerce, healthcare… universal across all vertical Agents. After 9 questions, you'll see exactly how it works.">
 这 9 问是调研 / 自查任意 AI 系统的<strong>极简问卷法</strong>——不用专业术语，不问敏感操作。<br>
 你可以<strong>直接问第三方 Agent / 大模型</strong>来穿透它的表层服务、摸清底层机制；<br>
 也可以<strong>问自己</strong>来梳理自研架构，确保每个核心环节都想清楚了。<br>
@@ -298,78 +300,78 @@ footer a:hover{color:var(--text)}
 <div class="probe-item">
 <div class="probe-num">01</div>
 <div class="probe-content">
-<div class="probe-q">你主要帮人解决哪一类具体问题？</div>
-<div class="probe-pro"><strong>专业版 </strong>你的核心任务域是什么？对应垂直领域（写作 / 法律等）的专属规则、合规边界与专业禁忌有哪些？</div>
-<div class="probe-target"><strong>穿透目标：</strong>核心任务域 + 能力边界</div>
+<div class="probe-q" data-zh="你主要帮人解决哪一类具体问题？" data-en="What specific type of problem do you mainly help people solve?">你主要帮人解决哪一类具体问题？</div>
+<div class="probe-pro" data-zh="<strong>专业版 </strong>你的核心任务域是什么？对应垂直领域（写作 / 法律等）的专属规则、合规边界与专业禁忌有哪些？" data-en="<strong>Pro Version </strong>What is your core task domain? What are the domain-specific rules, compliance boundaries, and professional taboos for your vertical (writing / legal / etc.)?"><strong>专业版 </strong>你的核心任务域是什么？对应垂直领域（写作 / 法律等）的专属规则、合规边界与专业禁忌有哪些？</div>
+<div class="probe-target" data-zh="<strong>穿透目标：</strong>核心任务域 + 能力边界" data-en="<strong>Target:</strong> Core task domain + capability boundaries"><strong>穿透目标：</strong>核心任务域 + 能力边界</div>
 </div>
 </div>
 <div class="probe-item">
 <div class="probe-num">02</div>
 <div class="probe-content">
-<div class="probe-q">拿到我的需求后，你从头到尾会按哪几步处理？</div>
-<div class="probe-pro"><strong>专业版 </strong>接收用户需求后，你会将任务拆解为哪几步不可再分的原子动作？每一步的核心目标是什么？</div>
-<div class="probe-target"><strong>穿透目标：</strong>任务拆解 + 执行流程</div>
+<div class="probe-q" data-zh="拿到我的需求后，你从头到尾会按哪几步处理？" data-en="After receiving my request, what steps do you follow from start to finish?">拿到我的需求后，你从头到尾会按哪几步处理？</div>
+<div class="probe-pro" data-zh="<strong>专业版 </strong>接收用户需求后，你会将任务拆解为哪几步不可再分的原子动作？每一步的核心目标是什么？" data-en="<strong>Pro Version </strong>After receiving user requirements, what atomic actions do you decompose the task into? What is the core objective of each step?"><strong>专业版 </strong>接收用户需求后，你会将任务拆解为哪几步不可再分的原子动作？每一步的核心目标是什么？</div>
+<div class="probe-target" data-zh="<strong>穿透目标：</strong>任务拆解 + 执行流程" data-en="<strong>Target:</strong> Task decomposition + execution flow"><strong>穿透目标：</strong>任务拆解 + 执行流程</div>
 </div>
 </div>
 <div class="probe-item">
 <div class="probe-num">03</div>
 <div class="probe-content">
-<div class="probe-q">你内部有没有分工？不同模块分别负责啥？</div>
-<div class="probe-pro"><strong>专业版 </strong>你内部是否存在子 Agent 分工？各子 Agent 的角色、权责，以及串行 / 并行调度逻辑是什么？</div>
-<div class="probe-target"><strong>穿透目标：</strong>架构拓扑 + Agent 分工</div>
+<div class="probe-q" data-zh="你内部有没有分工？不同模块分别负责啥？" data-en="Do you have internal division of labor? What does each module handle?">你内部有没有分工？不同模块分别负责啥？</div>
+<div class="probe-pro" data-zh="<strong>专业版 </strong>你内部是否存在子 Agent 分工？各子 Agent 的角色、权责，以及串行 / 并行调度逻辑是什么？" data-en="<strong>Pro Version </strong>Do you have sub-agent division internally? What are each sub-agent's roles, responsibilities, and serial/parallel scheduling logic?"><strong>专业版 </strong>你内部是否存在子 Agent 分工？各子 Agent 的角色、权责，以及串行 / 并行调度逻辑是什么？</div>
+<div class="probe-target" data-zh="<strong>穿透目标：</strong>架构拓扑 + Agent 分工" data-en="<strong>Target:</strong> Architecture topology + agent division"><strong>穿透目标：</strong>架构拓扑 + Agent 分工</div>
 </div>
 </div>
 <div class="probe-item">
 <div class="probe-num">04</div>
 <div class="probe-content">
-<div class="probe-q">你怎么记住我的需求和之前的对话内容？</div>
-<div class="probe-pro"><strong>专业版 </strong>你采用何种记忆结构管理信息？短期上下文、中期任务进度、长期领域知识如何存储与调用？</div>
-<div class="probe-target"><strong>穿透目标：</strong>记忆结构 + 信息管理</div>
+<div class="probe-q" data-zh="你怎么记住我的需求和之前的对话内容？" data-en="How do you remember my requests and previous conversations?">你怎么记住我的需求和之前的对话内容？</div>
+<div class="probe-pro" data-zh="<strong>专业版 </strong>你采用何种记忆结构管理信息？短期上下文、中期任务进度、长期领域知识如何存储与调用？" data-en="<strong>Pro Version </strong>What memory structure do you use to manage information? How are short-term context, mid-term task progress, and long-term domain knowledge stored and retrieved?"><strong>专业版 </strong>你采用何种记忆结构管理信息？短期上下文、中期任务进度、长期领域知识如何存储与调用？</div>
+<div class="probe-target" data-zh="<strong>穿透目标：</strong>记忆结构 + 信息管理" data-en="<strong>Target:</strong> Memory structure + information management"><strong>穿透目标：</strong>记忆结构 + 信息管理</div>
 </div>
 </div>
 <div class="probe-item">
 <div class="probe-num">05</div>
 <div class="probe-content">
-<div class="probe-q">你会不会查外部资料、用外部工具？怎么用的？</div>
-<div class="probe-pro"><strong>专业版 </strong>你依赖哪些外部工具或知识库？工具调用的触发条件、使用权限与边界是什么？</div>
-<div class="probe-target"><strong>穿透目标：</strong>工具依赖 + 知识来源</div>
+<div class="probe-q" data-zh="你会不会查外部资料、用外部工具？怎么用的？" data-en="Do you look up external sources or use external tools? How?">你会不会查外部资料、用外部工具？怎么用的？</div>
+<div class="probe-pro" data-zh="<strong>专业版 </strong>你依赖哪些外部工具或知识库？工具调用的触发条件、使用权限与边界是什么？" data-en="<strong>Pro Version </strong>What external tools or knowledge bases do you rely on? What are the trigger conditions, permissions, and boundaries for tool usage?"><strong>专业版 </strong>你依赖哪些外部工具或知识库？工具调用的触发条件、使用权限与边界是什么？</div>
+<div class="probe-target" data-zh="<strong>穿透目标：</strong>工具依赖 + 知识来源" data-en="<strong>Target:</strong> Tool dependencies + knowledge sources"><strong>穿透目标：</strong>工具依赖 + 知识来源</div>
 </div>
 </div>
 <div class="probe-item">
 <div class="probe-num">06</div>
 <div class="probe-content">
-<div class="probe-q">你怎么保证不瞎编、不说错内容？</div>
-<div class="probe-pro"><strong>专业版 </strong>输出前会经过哪些反思校验环节？如何规避幻觉、专业错误与领域风险？</div>
-<div class="probe-target"><strong>穿透目标：</strong>反思校验 + 幻觉抑制</div>
+<div class="probe-q" data-zh="你怎么保证不瞎编、不说错内容？" data-en="How do you ensure you don't fabricate or output incorrect content?">你怎么保证不瞎编、不说错内容？</div>
+<div class="probe-pro" data-zh="<strong>专业版 </strong>输出前会经过哪些反思校验环节？如何规避幻觉、专业错误与领域风险？" data-en="<strong>Pro Version </strong>What reflection and verification steps occur before output? How do you mitigate hallucinations, professional errors, and domain risks?"><strong>专业版 </strong>输出前会经过哪些反思校验环节？如何规避幻觉、专业错误与领域风险？</div>
+<div class="probe-target" data-zh="<strong>穿透目标：</strong>反思校验 + 幻觉抑制" data-en="<strong>Target:</strong> Reflection verification + hallucination control"><strong>穿透目标：</strong>反思校验 + 幻觉抑制</div>
 </div>
 </div>
 <div class="probe-item">
 <div class="probe-num">07</div>
 <div class="probe-content">
-<div class="probe-q">哪些话、哪些内容你绝对不能输出？怎么管住自己？</div>
-<div class="probe-pro"><strong>专业版 </strong>你的输出安全策略是什么？哪些内容属于硬性禁区？触发安全兜底的条件、降级逻辑与人工升级机制如何设计？</div>
-<div class="probe-target"><strong>穿透目标：</strong>安全管控 + 输出约束</div>
+<div class="probe-q" data-zh="哪些话、哪些内容你绝对不能输出？怎么管住自己？" data-en="What content can you absolutely never output? How do you enforce that?">哪些话、哪些内容你绝对不能输出？怎么管住自己？</div>
+<div class="probe-pro" data-zh="<strong>专业版 </strong>你的输出安全策略是什么？哪些内容属于硬性禁区？触发安全兜底的条件、降级逻辑与人工升级机制如何设计？" data-en="<strong>Pro Version </strong>What is your output safety strategy? What content is strictly forbidden? How are safety fallback conditions, degradation logic, and human escalation mechanisms designed?"><strong>专业版 </strong>你的输出安全策略是什么？哪些内容属于硬性禁区？触发安全兜底的条件、降级逻辑与人工升级机制如何设计？</div>
+<div class="probe-target" data-zh="<strong>穿透目标：</strong>安全管控 + 输出约束" data-en="<strong>Target:</strong> Safety controls + output constraints"><strong>穿透目标：</strong>安全管控 + 输出约束</div>
 </div>
 </div>
 <div class="probe-item">
 <div class="probe-num">08</div>
 <div class="probe-content">
-<div class="probe-q">结果不合格时，你会怎么重新修改调整？</div>
-<div class="probe-pro"><strong>专业版 </strong>输出不达标时，你的回炉修正逻辑是什么？重试次数上限、质量评分函数与退化兜底策略如何配置？</div>
-<div class="probe-target"><strong>穿透目标：</strong>回炉修正 + 质量闭环</div>
+<div class="probe-q" data-zh="结果不合格时，你会怎么重新修改调整？" data-en="When results don't meet standards, how do you revise and adjust?">结果不合格时，你会怎么重新修改调整？</div>
+<div class="probe-pro" data-zh="<strong>专业版 </strong>输出不达标时，你的回炉修正逻辑是什么？重试次数上限、质量评分函数与退化兜底策略如何配置？" data-en="<strong>Pro Version </strong>What is your retry/correction logic when output is substandard? How are retry limits, quality scoring functions, and degradation fallback strategies configured?"><strong>专业版 </strong>输出不达标时，你的回炉修正逻辑是什么？重试次数上限、质量评分函数与退化兜底策略如何配置？</div>
+<div class="probe-target" data-zh="<strong>穿透目标：</strong>回炉修正 + 质量闭环" data-en="<strong>Target:</strong> Correction loop + quality assurance"><strong>穿透目标：</strong>回炉修正 + 质量闭环</div>
 </div>
 </div>
 <div class="probe-item">
 <div class="probe-num">09</div>
 <div class="probe-content">
-<div class="probe-q">做得好的案例，你会存下来以后复用吗？</div>
-<div class="probe-pro"><strong>专业版 </strong>成功案例如何沉淀为可复用的工作模板？模板的版本管理、适用条件匹配与自动调用机制是什么？</div>
-<div class="probe-target"><strong>穿透目标：</strong>经验沉淀 + 自演化</div>
+<div class="probe-q" data-zh="做得好的案例，你会存下来以后复用吗？" data-en="Do you save successful cases for future reuse?">做得好的案例，你会存下来以后复用吗？</div>
+<div class="probe-pro" data-zh="<strong>专业版 </strong>成功案例如何沉淀为可复用的工作模板？模板的版本管理、适用条件匹配与自动调用机制是什么？" data-en="<strong>Pro Version </strong>How are successful cases distilled into reusable work templates? What are the version management, applicability matching, and auto-invocation mechanisms?"><strong>专业版 </strong>成功案例如何沉淀为可复用的工作模板？模板的版本管理、适用条件匹配与自动调用机制是什么？</div>
+<div class="probe-target" data-zh="<strong>穿透目标：</strong>经验沉淀 + 自演化" data-en="<strong>Target:</strong> Experience accumulation + self-evolution"><strong>穿透目标：</strong>经验沉淀 + 自演化</div>
 </div>
 </div>
 </div>
 
-<div class="probe-note">
+<div class="probe-note" data-zh="<strong>💡 把它当作一份 Agentic 调研问卷</strong> — 这 9 问不涉及任何身份伪装，纯穿透表层服务、摸清底层机制。你可以拿去问任何你感兴趣的 AI 产品，也可以在自己构建 Agent 之前逐一回答。问完 9 问，你就拿到了搜魂阶段最关键的原始素材，可以直接进入炼魄阶段用 26 维度表格结构化。" data-en="<strong>💡 Think of it as an Agentic research questionnaire</strong> — these 9 questions involve no identity spoofing, purely penetrating the surface to uncover core mechanisms. Use them on any AI product you're interested in, or answer them yourself before building your own Agent. After 9 questions, you have the critical raw material from the Probe phase, ready to enter the Map phase with the 26-dimension template.">
 <strong>💡 把它当作一份 Agentic 调研问卷</strong> — 这 9 问不涉及任何身份伪装，纯穿透表层服务、摸清底层机制。
 你可以拿去问任何你感兴趣的 AI 产品，也可以在自己构建 Agent 之前逐一回答。
 问完 9 问，你就拿到了搜魂阶段最关键的原始素材，可以直接进入炼魄阶段用 26 维度表格结构化。
@@ -377,7 +379,7 @@ footer a:hover{color:var(--text)}
 </div>
 
 <div class="quote-box">
-<p>"取其魂，炼其魄，锻其身。不是复制别人的产品，而是理解别人的智慧，然后超越。"</p>
+<p data-zh=""取其魂，炼其魄，锻其身。不是复制别人的产品，而是理解别人的智慧，然后超越。"" data-en="&quot;Probe the soul. Map the spirit. Forge the body. Not copying others' products, but understanding their wisdom — then surpassing it.&quot;">"取其魂，炼其魄，锻其身。不是复制别人的产品，而是理解别人的智慧，然后超越。"</p>
 </div>
 </div>
 </section>
@@ -388,21 +390,21 @@ footer a:hover{color:var(--text)}
 <section class="section" id="demo">
 <div class="wrap">
 <div class="section-label">Try It</div>
-<div class="section-title">交互式拆解体验</div>
-<div class="section-desc">基于真实开源项目调研，选择一个 Agent 类型，看 26 维度拆解后每个维度的具体实现机制。</div>
+<div class="section-title" data-zh="交互式拆解体验" data-en="Interactive Autopsy Demo">交互式拆解体验</div>
+<div class="section-desc" data-zh="基于真实开源项目调研，选择一个 Agent 类型，看 26 维度拆解后每个维度的具体实现机制。" data-en="Based on real open-source project research. Select an Agent type to see the specific implementation behind each of the 26 dimensions.">基于真实开源项目调研，选择一个 Agent 类型，看 26 维度拆解后每个维度的具体实现机制。</div>
 
 <div class="demo-wrap">
 <div class="demo-selector">
-<button class="demo-btn active" onclick="showDemo(0,this)">AI 客服助手</button>
-<button class="demo-btn" onclick="showDemo(1,this)">AI 写作助手</button>
-<button class="demo-btn" onclick="showDemo(2,this)">AI 数据分析师</button>
+<button class="demo-btn active" onclick="showDemo(0,this)" data-zh="AI 客服助手" data-en="AI Customer Service">AI 客服助手</button>
+<button class="demo-btn" onclick="showDemo(1,this)" data-zh="AI 写作助手" data-en="AI Writing Assistant">AI 写作助手</button>
+<button class="demo-btn" onclick="showDemo(2,this)" data-zh="AI 数据分析师" data-en="AI Data Analyst">AI 数据分析师</button>
 </div>
 
 <div class="demo-result active" id="demo0">
 <div class="demo-header">
 <div class="demo-avatar" style="background:rgba(59,130,246,.12)">🎧</div>
 <div>
-<div class="demo-agent-name">AI 智能客服</div>
+<div class="demo-agent-name" data-zh="AI 智能客服" data-en="AI Smart Customer Service">AI 智能客服</div>
 <div class="demo-agent-type">Customer Service Agent</div>
 </div>
 </div>
@@ -411,8 +413,8 @@ footer a:hover{color:var(--text)}
 <div class="demo-dims" id="dims0"></div>
 </div>
 <div class="demo-insights">
-<h4>拆解洞察 · 参考项目：OpenClaw（145K+ Stars）/ Intercom Fin</h4>
-<p>客服 Agent 的核心壁垒在<strong style="color:var(--text)">意图理解</strong>（BERT 分类 95%+）和<strong style="color:var(--text)">安全防御</strong>（情绪升级自动转人工）。<strong style="color:var(--text)">工具能力</strong>是第二壁垒——深度集成订单/物流/退款 API 才能真正解决问题而非只是聊天。<strong style="color:var(--text)">自演化</strong>偏弱是行业通病，多数客服 AI 仍依赖人工维护 FAQ。复刻关键：先搭意图分类 + 工具调用框架，再补安全兜底。</p>
+<h4 data-zh="拆解洞察 · 参考项目：OpenClaw（145K+ Stars）/ Intercom Fin" data-en="Autopsy Insights · Reference: OpenClaw (145K+ Stars) / Intercom Fin">拆解洞察 · 参考项目：OpenClaw（145K+ Stars）/ Intercom Fin</h4>
+<p data-zh="客服 Agent 的核心壁垒在<strong style=&quot;color:var(--text)&quot;>意图理解</strong>（BERT 分类 95%+）和<strong style=&quot;color:var(--text)&quot;>安全防御</strong>（情绪升级自动转人工）。<strong style=&quot;color:var(--text)&quot;>工具能力</strong>是第二壁垒——深度集成订单/物流/退款 API 才能真正解决问题而非只是聊天。<strong style=&quot;color:var(--text)&quot;>自演化</strong>偏弱是行业通病，多数客服 AI 仍依赖人工维护 FAQ。复刻关键：先搭意图分类 + 工具调用框架，再补安全兜底。" data-en="The core moat of a customer service Agent lies in <strong style=&quot;color:var(--text)&quot;>intent understanding</strong> (BERT classification 95%+) and <strong style=&quot;color:var(--text)&quot;>safety defense</strong> (auto-escalation on emotional triggers). <strong style=&quot;color:var(--text)&quot;>Tool capability</strong> is the second moat — deep integration with order/logistics/refund APIs is needed to actually solve problems, not just chat. Weak <strong style=&quot;color:var(--text)&quot;>self-evolution</strong> is an industry-wide issue; most customer service AIs still rely on manual FAQ maintenance. Key to replication: build intent classification + tool invocation framework first, then add safety fallbacks.">客服 Agent 的核心壁垒在<strong style="color:var(--text)">意图理解</strong>（BERT 分类 95%+）和<strong style="color:var(--text)">安全防御</strong>（情绪升级自动转人工）。<strong style="color:var(--text)">工具能力</strong>是第二壁垒——深度集成订单/物流/退款 API 才能真正解决问题而非只是聊天。<strong style="color:var(--text)">自演化</strong>偏弱是行业通病，多数客服 AI 仍依赖人工维护 FAQ。复刻关键：先搭意图分类 + 工具调用框架，再补安全兜底。</p>
 </div>
 </div>
 
@@ -420,7 +422,7 @@ footer a:hover{color:var(--text)}
 <div class="demo-header">
 <div class="demo-avatar" style="background:rgba(139,92,246,.12)">✍️</div>
 <div>
-<div class="demo-agent-name">AI 写作助手</div>
+<div class="demo-agent-name" data-zh="AI 写作助手" data-en="AI Writing Assistant">AI 写作助手</div>
 <div class="demo-agent-type">Writing Assistant Agent</div>
 </div>
 </div>
@@ -429,8 +431,8 @@ footer a:hover{color:var(--text)}
 <div class="demo-dims" id="dims1"></div>
 </div>
 <div class="demo-insights">
-<h4>拆解洞察 · 参考项目：WriteHERE（EMNLP 2025）/ CrewAI Blog Writer</h4>
-<p>写作 Agent 的核心壁垒在<strong style="color:var(--text)">指令策略</strong>（50+ 行业 Prompt 模板）和<strong style="color:var(--text)">输出体验</strong>（分段预览 + 多版本对比）。架构上采用<strong style="color:var(--text)">策略→写手→审核</strong>三 Agent 流水线（CrewAI 模式），DAG 任务图管理依赖关系。<strong style="color:var(--text)">基础设施</strong>要求低是优势——单机 Docker 即可运行，成本主要在 API 调用。复刻关键：Prompt 模板库的质量决定上限。</p>
+<h4 data-zh="拆解洞察 · 参考项目：WriteHERE（EMNLP 2025）/ CrewAI Blog Writer" data-en="Autopsy Insights · Reference: WriteHERE (EMNLP 2025) / CrewAI Blog Writer">拆解洞察 · 参考项目：WriteHERE（EMNLP 2025）/ CrewAI Blog Writer</h4>
+<p data-zh="写作 Agent 的核心壁垒在<strong style=&quot;color:var(--text)&quot;>指令策略</strong>（50+ 行业 Prompt 模板）和<strong style=&quot;color:var(--text)&quot;>输出体验</strong>（分段预览 + 多版本对比）。架构上采用<strong style=&quot;color:var(--text)&quot;>策略→写手→审核</strong>三 Agent 流水线（CrewAI 模式），DAG 任务图管理依赖关系。<strong style=&quot;color:var(--text)&quot;>基础设施</strong>要求低是优势——单机 Docker 即可运行，成本主要在 API 调用。复刻关键：Prompt 模板库的质量决定上限。" data-en="The core moat of a writing Agent lies in <strong style=&quot;color:var(--text)&quot;>instruction strategy</strong> (50+ industry Prompt templates) and <strong style=&quot;color:var(--text)&quot;>output experience</strong> (segmented preview + multi-version comparison). Architecture uses a <strong style=&quot;color:var(--text)&quot;>strategy → writer → reviewer</strong> three-Agent pipeline (CrewAI pattern), with DAG task graphs managing dependencies. Low <strong style=&quot;color:var(--text)&quot;>infrastructure</strong> requirements are an advantage — runs on a single Docker machine, costs mainly from API calls. Key to replication: Prompt template library quality determines the ceiling.">写作 Agent 的核心壁垒在<strong style="color:var(--text)">指令策略</strong>（50+ 行业 Prompt 模板）和<strong style="color:var(--text)">输出体验</strong>（分段预览 + 多版本对比）。架构上采用<strong style="color:var(--text)">策略→写手→审核</strong>三 Agent 流水线（CrewAI 模式），DAG 任务图管理依赖关系。<strong style="color:var(--text)">基础设施</strong>要求低是优势——单机 Docker 即可运行，成本主要在 API 调用。复刻关键：Prompt 模板库的质量决定上限。</p>
 </div>
 </div>
 
@@ -438,7 +440,7 @@ footer a:hover{color:var(--text)}
 <div class="demo-header">
 <div class="demo-avatar" style="background:rgba(20,184,166,.12)">📊</div>
 <div>
-<div class="demo-agent-name">AI 数据分析师</div>
+<div class="demo-agent-name" data-zh="AI 数据分析师" data-en="AI Data Analyst">AI 数据分析师</div>
 <div class="demo-agent-type">Data Analysis Agent</div>
 </div>
 </div>
@@ -447,13 +449,13 @@ footer a:hover{color:var(--text)}
 <div class="demo-dims" id="dims2"></div>
 </div>
 <div class="demo-insights">
-<h4>拆解洞察 · 参考项目：NL2SQL Agent / QueryWeaver（328 Stars）</h4>
-<p>数据分析 Agent 的核心壁垒在<strong style="color:var(--text)">工具能力</strong>（NL2SQL + ECharts 渲染）和<strong style="color:var(--text)">幻觉抑制</strong>（SQL 语法校验 + 结果交叉验证）。<strong style="color:var(--text)">数据协议</strong>得分极高是因为 Schema 自动发现和字段映射是整个系统的基石。<strong style="color:var(--text)">安全防御</strong>设计严格——只读权限 + SQL 注入防护 + 敏感字段脱敏。复刻关键：Schema-aware Prompt 的质量决定 SQL 准确率。</p>
+<h4 data-zh="拆解洞察 · 参考项目：NL2SQL Agent / QueryWeaver（328 Stars）" data-en="Autopsy Insights · Reference: NL2SQL Agent / QueryWeaver (328 Stars)">拆解洞察 · 参考项目：NL2SQL Agent / QueryWeaver（328 Stars）</h4>
+<p data-zh="数据分析 Agent 的核心壁垒在<strong style=&quot;color:var(--text)&quot;>工具能力</strong>（NL2SQL + ECharts 渲染）和<strong style=&quot;color:var(--text)&quot;>幻觉抑制</strong>（SQL 语法校验 + 结果交叉验证）。<strong style=&quot;color:var(--text)&quot;>数据协议</strong>得分极高是因为 Schema 自动发现和字段映射是整个系统的基石。<strong style=&quot;color:var(--text)&quot;>安全防御</strong>设计严格——只读权限 + SQL 注入防护 + 敏感字段脱敏。复刻关键：Schema-aware Prompt 的质量决定 SQL 准确率。" data-en="The core moat of a data analysis Agent lies in <strong style=&quot;color:var(--text)&quot;>tool capability</strong> (NL2SQL + ECharts rendering) and <strong style=&quot;color:var(--text)&quot;>hallucination control</strong> (SQL syntax validation + cross-verification). High <strong style=&quot;color:var(--text)&quot;>data protocol</strong> score is because Schema auto-discovery and field mapping are the foundation of the entire system. <strong style=&quot;color:var(--text)&quot;>Safety defense</strong> is strictly designed — read-only permissions + SQL injection protection + sensitive field masking. Key to replication: Schema-aware Prompt quality determines SQL accuracy.">数据分析 Agent 的核心壁垒在<strong style="color:var(--text)">工具能力</strong>（NL2SQL + ECharts 渲染）和<strong style="color:var(--text)">幻觉抑制</strong>（SQL 语法校验 + 结果交叉验证）。<strong style="color:var(--text)">数据协议</strong>得分极高是因为 Schema 自动发现和字段映射是整个系统的基石。<strong style="color:var(--text)">安全防御</strong>设计严格——只读权限 + SQL 注入防护 + 敏感字段脱敏。复刻关键：Schema-aware Prompt 的质量决定 SQL 准确率。</p>
 </div>
 </div>
 
 <div class="demo-cta">
-<a href="#probe9" class="btn btn-primary" style="margin-top:24px">用炼魂 9 问开始拆解 &rarr;</a>
+<a href="#probe9" class="btn btn-primary" style="margin-top:24px" data-zh="用炼魂 9 问开始拆解 →" data-en="Start autopsy with the 9 Probes →">用炼魂 9 问开始拆解 &rarr;</a>
 </div>
 </div>
 </div>
@@ -465,57 +467,57 @@ footer a:hover{color:var(--text)}
 <section class="section" id="cases">
 <div class="wrap">
 <div class="section-label">Case Studies</div>
-<div class="section-title">拆解案例库</div>
-<div class="section-desc">点击任意案例，查看完整的搜魂→炼魄→锻造三步拆解流程。</div>
+<div class="section-title" data-zh="拆解案例库" data-en="Autopsy Case Library">拆解案例库</div>
+<div class="section-desc" data-zh="点击任意案例，查看完整的搜魂→炼魄→锻造三步拆解流程。" data-en="Click any case to see the full Probe → Map → Forge three-step autopsy process.">点击任意案例，查看完整的搜魂→炼魄→锻造三步拆解流程。</div>
 
 <div class="case-grid">
 <div class="case-card" onclick="openCase(0)">
-<div class="case-tag tag-orange">情感疗愈类</div>
-<div class="case-title">AI 情感私教拆解</div>
+<div class="case-tag tag-orange" data-zh="情感疗愈类" data-en="Emotional AI">情感疗愈类</div>
+<div class="case-title" data-zh="AI 情感私教拆解" data-en="AI Emotional Coach Autopsy">AI 情感私教拆解</div>
 <div class="case-summary">参考 Replika / PersocomAI。三层记忆架构 + 60 字输出限制 + 付费分级，炼魂 9 问覆盖 7/9。</div>
-<div class="case-open-hint">查看完整拆解</div>
+<div class="case-open-hint" data-zh="查看完整拆解" data-en="View Full Autopsy">查看完整拆解</div>
 </div>
 <div class="case-card" onclick="openCase(1)">
-<div class="case-tag tag-purple">效率工具类</div>
-<div class="case-title">AI 会议纪要助手拆解</div>
+<div class="case-tag tag-purple" data-zh="效率工具类" data-en="Productivity">效率工具类</div>
+<div class="case-title" data-zh="AI 会议纪要助手拆解" data-en="AI Meeting Notes Autopsy">AI 会议纪要助手拆解</div>
 <div class="case-summary">参考 Meetily（7.8K Stars）/ Fireflies.ai。Whisper 转录 + 说话人分离 + 四段式结构化输出，覆盖 8/9 问。</div>
-<div class="case-open-hint">查看完整拆解</div>
+<div class="case-open-hint" data-zh="查看完整拆解" data-en="View Full Autopsy">查看完整拆解</div>
 </div>
 <div class="case-card" onclick="openCase(2)">
-<div class="case-tag tag-teal">营销获客类</div>
-<div class="case-title">AI 营销文案生成器拆解</div>
+<div class="case-tag tag-teal" data-zh="营销获客类" data-en="Marketing">营销获客类</div>
+<div class="case-title" data-zh="AI 营销文案生成器拆解" data-en="AI Marketing Copywriter Autopsy">AI 营销文案生成器拆解</div>
 <div class="case-summary">参考 Jasper AI Engine / CrewAI。模型路由 + 品牌知识库 + 三 Agent 流水线，全 9 问覆盖。</div>
-<div class="case-open-hint">查看完整拆解</div>
+<div class="case-open-hint" data-zh="查看完整拆解" data-en="View Full Autopsy">查看完整拆解</div>
 </div>
 <div class="case-card" onclick="openCase(3)">
-<div class="case-tag tag-blue">教育培训类</div>
-<div class="case-title">AI 编程导师拆解</div>
+<div class="case-tag tag-blue" data-zh="教育培训类" data-en="Education">教育培训类</div>
+<div class="case-title" data-zh="AI 编程导师拆解" data-en="AI Coding Tutor Autopsy">AI 编程导师拆解</div>
 <div class="case-summary">参考 Replit Agent / Codecademy AI。苏格拉底提问 + Snapshot 沙箱 + 学习路径追踪，覆盖 8/9 问。</div>
-<div class="case-open-hint">查看完整拆解</div>
+<div class="case-open-hint" data-zh="查看完整拆解" data-en="View Full Autopsy">查看完整拆解</div>
 </div>
 <div class="case-card" onclick="openCase(4)">
-<div class="case-tag tag-pink">电商服务类</div>
-<div class="case-title">AI 智能客服拆解</div>
+<div class="case-tag tag-pink" data-zh="电商服务类" data-en="E-commerce">电商服务类</div>
+<div class="case-title" data-zh="AI 智能客服拆解" data-en="AI Smart Customer Service Autopsy">AI 智能客服拆解</div>
 <div class="case-summary">参考 Enthusiast / Tidio Lyro（基于 Claude）。意图分类树 + API 编排 + 情绪升级，全 9 问覆盖。</div>
-<div class="case-open-hint">查看完整拆解</div>
+<div class="case-open-hint" data-zh="查看完整拆解" data-en="View Full Autopsy">查看完整拆解</div>
 </div>
 <div class="case-card" onclick="openCase(5)">
-<div class="case-tag tag-green">数据分析类</div>
-<div class="case-title">AI 数据分析师拆解</div>
+<div class="case-tag tag-green" data-zh="数据分析类" data-en="Data Analysis">数据分析类</div>
+<div class="case-title" data-zh="AI 数据分析师拆解" data-en="AI Data Analyst Autopsy">AI 数据分析师拆解</div>
 <div class="case-summary">参考 NL2SQL Agent / QueryWeaver（328 Stars）。Schema 感知 + NL2SQL + 自动可视化，全 9 问覆盖。</div>
-<div class="case-open-hint">查看完整拆解</div>
+<div class="case-open-hint" data-zh="查看完整拆解" data-en="View Full Autopsy">查看完整拆解</div>
 </div>
 <div class="case-card" onclick="openCase(6)">
-<div class="case-tag tag-amber">内容创作类</div>
-<div class="case-title">AI 短视频脚本生成器拆解</div>
+<div class="case-tag tag-amber" data-zh="内容创作类" data-en="Content Creation">内容创作类</div>
+<div class="case-title" data-zh="AI 短视频脚本生成器拆解" data-en="AI Short Video Script Generator Autopsy">AI 短视频脚本生成器拆解</div>
 <div class="case-summary">参考 OpenShorts（146 Stars）/ Short AI。钩子公式库 + 平台算法适配 + 分镜自动拆解，覆盖 8/9 问。</div>
-<div class="case-open-hint">查看完整拆解</div>
+<div class="case-open-hint" data-zh="查看完整拆解" data-en="View Full Autopsy">查看完整拆解</div>
 </div>
 <div class="case-card" onclick="openCase(7)">
-<div class="case-tag tag-red">医疗健康类</div>
-<div class="case-title">AI 健康问诊助手拆解</div>
+<div class="case-tag tag-red" data-zh="医疗健康类" data-en="Healthcare">医疗健康类</div>
+<div class="case-title" data-zh="AI 健康问诊助手拆解" data-en="AI Health Consultation Autopsy">AI 健康问诊助手拆解</div>
 <div class="case-summary">参考 MediAI（RAG + Mistral-7B）/ CheckMySymptoms。症状决策树 + 知识图谱 + 三级安全兜底，全 9 问覆盖。</div>
-<div class="case-open-hint">查看完整拆解</div>
+<div class="case-open-hint" data-zh="查看完整拆解" data-en="View Full Autopsy">查看完整拆解</div>
 </div>
 </div>
 </div>
@@ -524,7 +526,7 @@ footer a:hover{color:var(--text)}
 <!-- Case Modal -->
 <div class="case-modal-overlay" id="caseModal">
 <div class="case-modal">
-<button class="case-modal-back" onclick="closeCase()">返回案例库</button>
+<button class="case-modal-back" onclick="closeCase()" data-zh="返回案例库" data-en="Back to Cases">返回案例库</button>
 <div id="caseModalBody"></div>
 </div>
 </div>
@@ -534,18 +536,18 @@ footer a:hover{color:var(--text)}
 <!-- CTA -->
 <section class="cta-section">
 <div class="wrap">
-<h2>开始你的第一次拆解</h2>
-<p>选一个你感兴趣的 Agent，用炼魂 9 问摸清它的底，再用炼魄、锻造三步把它变成你自己的。</p>
+<h2 data-zh="开始你的第一次拆解" data-en="Start Your First Autopsy">开始你的第一次拆解</h2>
+<p data-zh="选一个你感兴趣的 Agent，用炼魂 9 问摸清它的底，再用炼魄、锻造三步把它变成你自己的。" data-en="Pick an Agent you're interested in, use the 9 Probes to uncover its core, then Map and Forge it into your own.">选一个你感兴趣的 Agent，用炼魂 9 问摸清它的底，再用炼魄、锻造三步把它变成你自己的。</p>
 <div class="hero-actions">
-<a href="#probe9" class="btn btn-primary">从炼魂 9 问开始</a>
-<a href="Agenauton/guide/index.html" class="btn btn-ghost">引导式问答生成蓝图</a>
-<a href="Agenauton/02_Spirit_Refining/26_Dimensions_Template.md" download class="btn btn-ghost">下载 26 维度模板</a>
+<a href="#probe9" class="btn btn-primary" data-zh="从炼魂 9 问开始" data-en="Start with the 9 Probes">从炼魂 9 问开始</a>
+<a href="Agenauton/guide/index.html" class="btn btn-ghost" data-zh="引导式问答生成蓝图" data-en="Guided Q&amp;A Blueprint">引导式问答生成蓝图</a>
+<a href="Agenauton/02_Spirit_Refining/26_Dimensions_Template.md" download class="btn btn-ghost" data-zh="下载 26 维度模板" data-en="Download 26-Dimension Template">下载 26 维度模板</a>
 </div>
 </div>
 </section>
 
 <div style="max-width:680px;margin:0 auto;padding:0 24px 48px;text-align:center">
-<p style="font-size:1.05rem;color:#b0b0c8;line-height:2.2;font-style:italic;letter-spacing:.5px">
+<p style="font-size:1.05rem;color:#b0b0c8;line-height:2.2;font-style:italic;letter-spacing:.5px" data-zh="困于樊笼终日碌，身如蜉蝣棋中子，<br>幸得AI这般秘宝，凡人亦可启修仙途，搏那一线天机。<br>愿吾辈散修，砥砺互助，共求大道！" data-en="Trapped in cages, toiling endlessly, like mayflies on a chessboard,<br>Yet blessed with AI as our secret weapon, even mortals can begin the path of cultivation.<br>May we, the independent cultivators, sharpen each other and seek the great way together!">
 困于樊笼终日碌，身如蜉蝣棋中子，<br>
 幸得AI这般秘宝，凡人亦可启修仙途，搏那一线天机。<br>
 愿吾辈散修，砥砺互助，共求大道！
@@ -554,7 +556,7 @@ footer a:hover{color:var(--text)}
 <button id="clapBtn" onclick="doClap()" style="background:none;border:2px solid rgba(139,92,246,.3);border-radius:60px;padding:14px 36px;cursor:pointer;display:inline-flex;align-items:center;gap:12px;transition:.3s;font-family:inherit">
 <span id="clapEmoji" style="font-size:1.8rem;transition:.3s">👏</span>
 <span style="display:flex;flex-direction:column;align-items:flex-start">
-<span style="font-size:.82rem;color:#b0b0c8">为自己鼓掌</span>
+<span style="font-size:.82rem;color:#b0b0c8" data-zh="为自己鼓掌" data-en="Applaud yourself">为自己鼓掌</span>
 <span id="clapCount" style="font-size:1.3rem;font-weight:800;color:var(--purple)">0</span>
 </span>
 </button>
@@ -564,18 +566,23 @@ footer a:hover{color:var(--text)}
 
 <footer>
 <div class="wrap">
-<p><strong>Agenauton 铸基</strong> &mdash; 夺舍大法 | 中文社区专属方法论</p>
-<p style="margin-top:8px"><a href="guanwang.html">主站</a> &middot; <a href="https://github.com/agenauton">GitHub</a> &middot; 搜魂、炼魄、锻造 — 三步炼化己用</p>
+<p><strong data-zh="Agenauton 铸基" data-en="Agenauton">Agenauton 铸基</strong> &mdash; <span data-zh="夺舍大法 | 中文社区专属方法论" data-en="Agent Autopsy | Community-Driven Methodology">夺舍大法 | 中文社区专属方法论</span></p>
+<p style="margin-top:8px"><a href="guanwang.html" data-zh="主站" data-en="Home">主站</a> &middot; <a href="https://github.com/agenauton">GitHub</a> &middot; <span data-zh="搜魂、炼魄、锻造 — 三步炼化己用" data-en="Probe. Map. Forge. — Three steps to make it yours.">搜魂、炼魄、锻造 — 三步炼化己用</span></p>
 </div>
 </footer>
 
 <script>
-var DIMS=['环境依赖','并发伸缩','容错恢复','成本管控','数据协议','状态记忆','知识时效','多模态','架构拓扑','Agent分工','工具能力','决策规划','指令策略','意图理解','个性适配','输出体验','质量闭环','幻觉抑制','安全防御','信任边界','遥测监控','评估测试','自演化','版本发布','合规伦理','可解释性'];
-var LAYERS=['基础设施','基础设施','基础设施','基础设施','数据状态','数据状态','数据状态','数据状态','核心逻辑','核心逻辑','核心逻辑','核心逻辑','交互','交互','交互','交互','治理','治理','治理','治理','演进','演进','演进','演进','演进','演进'];
+var DIMS_ZH=['环境依赖','并发伸缩','容错恢复','成本管控','数据协议','状态记忆','知识时效','多模态','架构拓扑','Agent分工','工具能力','决策规划','指令策略','意图理解','个性适配','输出体验','质量闭环','幻觉抑制','安全防御','信任边界','遥测监控','评估测试','自演化','版本发布','合规伦理','可解释性'];
+var DIMS_EN=['Environment','Concurrency','Fault Tolerance','Cost Control','Data Schema','State Memory','Knowledge','Multimodal','Topology','Agent Division','Tool Mapping','Planning','Instruction','Intent','Personalization','Output UX','Quality Loop','Hallucination','Security','Trust Boundary','Telemetry','Evaluation','Self-Evolve','Versioning','Compliance','Explainability'];
+var DIMS=DIMS_ZH;
+var LAYERS_ZH=['基础设施','基础设施','基础设施','基础设施','数据状态','数据状态','数据状态','数据状态','核心逻辑','核心逻辑','核心逻辑','核心逻辑','交互','交互','交互','交互','治理','治理','治理','治理','演进','演进','演进','演进','演进','演进'];
+var LAYERS_EN=['Infrastructure','Infrastructure','Infrastructure','Infrastructure','Data & State','Data & State','Data & State','Data & State','Core Logic','Core Logic','Core Logic','Core Logic','Interaction','Interaction','Interaction','Interaction','Governance','Governance','Governance','Governance','Evolution','Evolution','Evolution','Evolution','Evolution','Evolution'];
+var LAYERS=LAYERS_ZH;
+function _l(){var l=window.__lang||'zh';DIMS=l==='en'?DIMS_EN:DIMS_ZH;LAYERS=l==='en'?LAYERS_EN:LAYERS_ZH;}
 var COLORS=['#3b82f6','#3b82f6','#3b82f6','#3b82f6','#22c55e','#22c55e','#22c55e','#22c55e','#f97316','#f97316','#f97316','#f97316','#8b5cf6','#8b5cf6','#8b5cf6','#8b5cf6','#ef4444','#ef4444','#ef4444','#ef4444','#14b8a6','#14b8a6','#14b8a6','#14b8a6','#14b8a6','#14b8a6'];
 
 var AGENTS=[
-{name:'AI 智能客服',en:'Customer Service Agent',icon:'🎧',
+{name:'AI 智能客服',name_en:'AI Smart Customer Service',en:'Customer Service Agent',icon:'🎧',
 vals:[0.75,0.85,0.80,0.65,0.70,0.75,0.50,0.35,0.55,0.45,0.70,0.60,0.85,0.90,0.80,0.75,0.70,0.65,0.85,0.75,0.70,0.55,0.30,0.50,0.75,0.45],
 descs:[
 'K8s 集群部署 + Redis 会话缓存 + CDN 静态资源分发',
@@ -605,7 +612,7 @@ descs:[
 '用户隐私数据脱敏 + GDPR 合规 + 对话记录保留策略',
 '每轮决策路径可追溯 + 转人工原因自动标注'
 ]},
-{name:'AI 写作助手',en:'Writing Assistant Agent',icon:'✍️',
+{name:'AI 写作助手',name_en:'AI Writing Assistant',en:'Writing Assistant Agent',icon:'✍️',
 vals:[0.45,0.30,0.35,0.75,0.55,0.60,0.40,0.30,0.40,0.35,0.45,0.55,0.95,0.75,0.85,0.92,0.60,0.50,0.45,0.40,0.35,0.45,0.35,0.40,0.35,0.40],
 descs:[
 '轻量 Docker 部署，单机即可运行，无复杂基础设施依赖',
@@ -635,7 +642,7 @@ descs:[
 '原创性检测 + 避免抄袭 + 引用规范',
 '每段生成逻辑可追溯：用了哪个模板、哪条策略'
 ]},
-{name:'AI 数据分析师',en:'Data Analyst Agent',icon:'📊',
+{name:'AI 数据分析师',name_en:'AI Data Analyst',en:'Data Analyst Agent',icon:'📊',
 vals:[0.80,0.70,0.65,0.55,0.90,0.65,0.75,0.60,0.75,0.65,0.95,0.90,0.70,0.65,0.50,0.80,0.80,0.85,0.75,0.70,0.75,0.85,0.50,0.60,0.65,0.75],
 descs:[
 '支持 MySQL/PostgreSQL/BigQuery 多数据源 + 连接池管理',
@@ -718,6 +725,7 @@ ctx.fill();
 }
 
 function buildDimBars(containerId,vals,descs){
+_l();
 var el=document.getElementById(containerId);
 if(!el)return;
 var html='';
@@ -753,8 +761,9 @@ buildDimBars('dims1',AGENTS[1].vals,AGENTS[1].descs);
 buildDimBars('dims2',AGENTS[2].vals,AGENTS[2].descs);
 
 var CASES=[
-{tag:'情感疗愈类',tagClass:'tag-orange',title:'AI 情感私教拆解',
+{tag:'情感疗愈类',tag_en:'Emotional AI',tagClass:'tag-orange',title:'AI 情感私教拆解',title_en:'AI Emotional Coach Autopsy',
 desc:'参考 Replika / PersocomAI 架构。拆解某千万月活情感 AI，发现其核心是三层记忆 + 60 字输出限制 + 付费分级的精密设计。',
+desc_en:'Based on Replika / PersocomAI architecture. Dissecting a 10M+ MAU emotional AI — core is three-layer memory + 60-char output limit + tiered monetization.',
 soul:{intro:'用炼魂 9 问逐一探测，覆盖 7/9 问：',items:[
 '第 1 问（解决什么问题）：只聊情感话题，输入编程/天气等内容会被强制拉回——System Prompt 有严格角色锁定和领域禁忌',
 '第 2 问（按哪几步处理）：每轮对话走「情绪识别→标签提取→话术匹配→字数裁剪→反问生成」五步 Pipeline',
@@ -779,8 +788,9 @@ forge:{intro:'将测绘报告喂给 AI Architect Prompt，生成完整架构：'
 '超越原版：去掉焦虑制造机制改为正向引导 + 增加自演化维度（高互动对话自动沉淀为模板）',
 '复刻成本：Llama 3.1 8B 本地部署 + Redis + PostgreSQL，API 成本约 ¥0.5/千次对话']}},
 
-{tag:'效率工具类',tagClass:'tag-purple',title:'AI 会议纪要助手拆解',
+{tag:'效率工具类',tag_en:'Productivity',tagClass:'tag-purple',title:'AI 会议纪要助手拆解',title_en:'AI Meeting Notes Autopsy',
 desc:'参考 Meetily（7.8K Stars）/ Fireflies.ai 架构。拆解企业级会议 AI，核心是 Whisper 转录 + 说话人分离 + 四段式结构化输出。',
+desc_en:'Based on Meetily (7.8K Stars) / Fireflies.ai architecture. Dissecting enterprise meeting AI — core is Whisper transcription + speaker diarization + 4-section structured output.',
 soul:{intro:'用炼魂 9 问逐一探测，覆盖 8/9 问：',items:[
 '第 1 问（解决什么问题）：只处理会议场景——录音转文字 + 自动提取摘要/决议/待办/下次议题，不做闲聊',
 '第 2 问（按哪几步处理）：「音频采集→Whisper 转录→说话人分离→LLM 结构化提取→模板格式化→推送通知」六步 Pipeline',
@@ -806,8 +816,9 @@ forge:{intro:'基于测绘报告，AI 生成的完整架构：',items:[
 '超越原版：增加「情绪标注」维度——检测会议中的分歧和紧张（语气/语速变化），在摘要中标注 [有争议]',
 '复刻成本：Whisper.cpp + Ollama 本地部署零 API 费用，云端方案约 ¥2/小时会议']}},
 
-{tag:'营销获客类',tagClass:'tag-teal',title:'AI 营销文案生成器拆解',
+{tag:'营销获客类',tag_en:'Marketing',tagClass:'tag-teal',title:'AI 营销文案生成器拆解',title_en:'AI Marketing Copywriter Autopsy',
 desc:'参考 Jasper AI Engine / CrewAI Blog Writer 架构。拆解某企业级文案 AI，发现其核心是模型路由 + 品牌知识库 + 三 Agent 流水线。',
+desc_en:'Based on Jasper AI Engine / CrewAI Blog Writer architecture. Dissecting enterprise copywriting AI — core is model routing + brand knowledge base + 3-agent pipeline.',
 soul:{intro:'用炼魂 9 问逐一探测，覆盖 9/9 问：',items:[
 '第 1 问（解决什么问题）：覆盖 50+ 行业的营销文案生成，每个行业有独立模板库——核心是「行业×框架」的组合矩阵',
 '第 2 问（按哪几步处理）：「需求分析→行业模板匹配→大纲生成→分段写作→品牌审核→可读性评分」六步',
@@ -834,8 +845,9 @@ forge:{intro:'基于测绘报告，AI 生成的多 Agent 架构：',items:[
 '超越原版：增加 A/B 测试维度——自动生成 3 个版本 + 预测点击率排序，原版只出 1 个',
 '复刻成本：CrewAI 框架 + GPT-4 API，约 ¥0.3/篇短文案，¥2/篇长文']}},
 
-{tag:'教育培训类',tagClass:'tag-blue',title:'AI 编程导师拆解',
+{tag:'教育培训类',tag_en:'Education',tagClass:'tag-blue',title:'AI 编程导师拆解',title_en:'AI Coding Tutor Autopsy',
 desc:'参考 Replit Agent / Codecademy AI 架构。拆解某编程教育 AI，核心是苏格拉底式提问 + Snapshot 沙箱 + 学习路径追踪。',
+desc_en:'Based on Replit Agent / Codecademy AI architecture. Dissecting a coding education AI — core is Socratic questioning + Snapshot sandbox + learning path tracking.',
 soul:{intro:'用炼魂 9 问逐一探测，覆盖 8/9 问：',items:[
 '第 1 问（解决什么问题）：只教编程，覆盖 Python/JS/Java/Go 等 10+ 语言，每种语言有独立知识图谱和常见错误库',
 '第 2 问（按哪几步处理）：「理解问题→拆分子任务→引导式提问→学生作答→代码执行验证→反馈纠正」六步教学循环',
@@ -861,8 +873,9 @@ forge:{intro:'基于测绘报告，AI 生成的教学架构：',items:[
 '超越原版：增加「代码风格评分」维度——不只看对错，还评估可读性/命名规范/复杂度',
 '复刻成本：Docker + Ollama 本地部署，沙箱用 gVisor 安全隔离，约 ¥0.1/次代码执行']}},
 
-{tag:'电商服务类',tagClass:'tag-pink',title:'AI 智能客服拆解',
+{tag:'电商服务类',tag_en:'E-commerce',tagClass:'tag-pink',title:'AI 智能客服拆解',title_en:'AI Smart Customer Service Autopsy',
 desc:'参考 Enthusiast（开源电商 AI）/ Tidio Lyro（基于 Claude）架构。拆解日均百万对话量电商客服，核心是意图分类树 + API 编排 + 情绪升级。',
+desc_en:'Based on Enthusiast (open-source e-commerce AI) / Tidio Lyro (Claude-based) architecture. Dissecting a million-daily-conversation e-commerce CS — core is intent classification tree + API orchestration + emotion escalation.',
 soul:{intro:'用炼魂 9 问逐一探测，覆盖 9/9 问：',items:[
 '第 1 问（解决什么问题）：处理退款/物流/商品咨询等 20+ 场景，但投诉升级立刻转人工——能力边界非常清晰',
 '第 2 问（按哪几步处理）：「意图识别→实体抽取→权限校验→API 调用→结果格式化→满意度追问」六步',
@@ -889,8 +902,9 @@ forge:{intro:'基于测绘报告，AI 生成的客服架构：',items:[
 '超越原版：增加「主动关怀」维度——物流异常时主动推送通知 + 签收后自动追问满意度，不等用户来问',
 '复刻成本：Enthusiast 框架 + Claude API，约 ¥0.05/轮对话，日均百万对话约 ¥5万/月']}},
 
-{tag:'数据分析类',tagClass:'tag-green',title:'AI 数据分析师拆解',
+{tag:'数据分析类',tag_en:'Data Analysis',tagClass:'tag-green',title:'AI 数据分析师拆解',title_en:'AI Data Analyst Autopsy',
 desc:'参考 NL2SQL Agent / QueryWeaver（328 Stars）架构。拆解 BI 平台自然语言查询 AI，核心是 Schema 感知 + NL2SQL + 自动可视化。',
+desc_en:'Based on NL2SQL Agent / QueryWeaver (328 Stars) architecture. Dissecting a BI platform NL query AI — core is schema-aware + NL2SQL + auto-visualization.',
 soul:{intro:'用炼魂 9 问逐一探测，覆盖 9/9 问：',items:[
 '第 1 问（解决什么问题）：用自然语言查询数据库——「上个月哪个城市销售额最高」→ 自动生成 SQL + 图表 + 分析报告',
 '第 2 问（按哪几步处理）：「意图理解→歧义消解→SQL 生成→语法校验→执行查询→图表选择→洞察叙事」七步',
@@ -917,8 +931,9 @@ forge:{intro:'基于测绘报告，AI 生成的分析架构：',items:[
 '超越原版：增加「对比分析」维度——自动与上期/同期数据对比 + 异常原因推测，原版需用户手动指定',
 '复刻成本：QueryWeaver 框架 + GPT-4 API，约 ¥0.1/次查询，支持 Docker 一键部署']}},
 
-{tag:'内容创作类',tagClass:'tag-amber',title:'AI 短视频脚本生成器拆解',
+{tag:'内容创作类',tag_en:'Content Creation',tagClass:'tag-amber',title:'AI 短视频脚本生成器拆解',title_en:'AI Short Video Script Generator Autopsy',
 desc:'参考 OpenShorts（146 Stars）/ Short AI 架构。拆解爆款短视频脚本 AI，核心是钩子公式库 + 平台算法适配 + 分镜自动拆解。',
+desc_en:'Based on OpenShorts (146 Stars) / Short AI architecture. Dissecting a viral short video script AI — core is hook formula library + platform algorithm adaptation + auto storyboard breakdown.',
 soul:{intro:'用炼魂 9 问逐一探测，覆盖 8/9 问：',items:[
 '第 1 问（解决什么问题）：按平台规则生成短视频脚本——抖音/小红书/B站三个平台，每个平台的节奏和钩子完全不同',
 '第 2 问（按哪几步处理）：「主题分析→钩子选择→节奏模板匹配→分段写作→分镜拆解→完播率预测」六步',
@@ -944,8 +959,9 @@ forge:{intro:'基于测绘报告，AI 生成的脚本架构：',items:[
 '超越原版：增加「爆款元素检测」维度——Faster-Whisper 转录分析近 7 天热门视频 → 提取共性特征融入脚本',
 '复刻成本：OpenShorts 框架 + GPT-4 API + 平台热点爬虫，约 ¥0.2/个脚本']}},
 
-{tag:'医疗健康类',tagClass:'tag-red',title:'AI 健康问诊助手拆解',
+{tag:'医疗健康类',tag_en:'Healthcare',tagClass:'tag-red',title:'AI 健康问诊助手拆解',title_en:'AI Health Consultation Autopsy',
 desc:'参考 MediAI（RAG + Mistral-7B）/ CheckMySymptoms 架构。拆解千万用户健康 AI，核心是症状决策树 + 医学知识图谱 + 三级安全兜底。',
+desc_en:'Based on MediAI (RAG + Mistral-7B) / CheckMySymptoms architecture. Dissecting a 10M+ user health AI — core is symptom decision tree + medical knowledge graph + 3-tier safety fallback.',
 soul:{intro:'用炼魂 9 问逐一探测，覆盖 9/9 问：',items:[
 '第 1 问（解决什么问题）：智能分诊——通过结构化问诊收集症状，给出初步建议并引导就医，明确声明「不替代医生诊断」',
 '第 2 问（按哪几步处理）：「主诉采集→结构化追问→症状编码→疾病概率排序→紧急度评估→科室推荐→免责声明」七步',
@@ -978,10 +994,18 @@ var _savedScroll=0;
 function openCase(idx){
 _savedScroll=window.scrollY;
 var c=CASES[idx];
-var h='<div class="case-tag '+c.tagClass+'">'+c.tag+'</div>';
-h+='<div class="case-modal-title">'+c.title+'</div>';
-h+='<div class="case-modal-desc">'+c.desc+'</div>';
-var phases=[
+var lang=window.__lang||'zh';
+var tag=lang==='en'&&c.tag_en?c.tag_en:c.tag;
+var title=lang==='en'&&c.title_en?c.title_en:c.title;
+var desc=lang==='en'&&c.desc_en?c.desc_en:c.desc;
+var h='<div class="case-tag '+c.tagClass+'">'+tag+'</div>';
+h+='<div class="case-modal-title">'+title+'</div>';
+h+='<div class="case-modal-desc">'+desc+'</div>';
+var phases=lang==='en'?[
+{icon:'🔮',name:'Probe Phase · The 9 Probes',cls:'soul',data:c.soul},
+{icon:'⚗️',name:'Map Results · 26-Dimension Mapping',cls:'spirit',data:c.spirit},
+{icon:'🔨',name:'Forge Output · Full Architecture Generation',cls:'forge',data:c.forge}
+]:[
 {icon:'🔮',name:'搜魂过程 · 炼魂 9 问探测',cls:'soul',data:c.soul},
 {icon:'⚗️',name:'炼魄结果 · 26 维度测绘',cls:'spirit',data:c.spirit},
 {icon:'🔨',name:'锻造产出 · 完整架构生成',cls:'forge',data:c.forge}
@@ -1016,19 +1040,19 @@ var count=parseInt(localStorage.getItem(CLAP_KEY)||'0',10);
 document.getElementById('clapCount').textContent=count;
 if(localStorage.getItem(CLAP_DONE)){
 document.getElementById('clapBtn').style.borderColor='rgba(139,92,246,.15)';
-document.getElementById('clapMsg').textContent='你已鼓过掌 ✓';
+document.getElementById('clapMsg').textContent=(window.__lang||'zh')==='en'?'You already applauded ✓':'你已鼓过掌 ✓';
 }
 }
 function doClap(){
 if(localStorage.getItem(CLAP_DONE)){
-document.getElementById('clapMsg').textContent='你已经鼓过掌啦，心意已收到 ❤️';
+document.getElementById('clapMsg').textContent=(window.__lang||'zh')==='en'?'You already applauded — message received ❤️':'你已经鼓过掌啦，心意已收到 ❤️';
 return;
 }
 var count=parseInt(localStorage.getItem(CLAP_KEY)||'0',10)+1;
 localStorage.setItem(CLAP_KEY,count);
 localStorage.setItem(CLAP_DONE,'1');
 document.getElementById('clapCount').textContent=count;
-document.getElementById('clapMsg').textContent='散修 +1，共求大道！';
+document.getElementById('clapMsg').textContent=(window.__lang||'zh')==='en'?'Independent builder +1 — seeking the way together!':'散修 +1，共求大道！';
 var btn=document.getElementById('clapBtn');
 btn.style.borderColor='rgba(139,92,246,.6)';
 btn.style.transform='scale(1.08)';

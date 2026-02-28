@@ -139,6 +139,7 @@ footer a:hover{color:var(--teal)}
 .relation-map{flex-direction:column}
 }
 </style>
+<script src="lang.js"></script>
 </head>
 <body>
 
@@ -150,10 +151,11 @@ footer a:hover{color:var(--teal)}
 <div class="nav-inner">
 <a href="guanwang.html" class="logo"><span>AGENAUTON</span> <span class="logo-cn">铸基</span></a>
 <div class="nav-links">
-<a href="guanwang.html">主站</a>
-<a href="duoshe.html">夺舍大法</a>
-<a href="Agenauton/guide/index.html">引导问答</a>
+<a href="guanwang.html" data-zh="主站" data-en="Home">主站</a>
+<a href="duoshe.html" data-zh="夺舍大法" data-en="Agent Autopsy">夺舍大法</a>
+<a href="Agenauton/guide/index.html" data-zh="引导问答" data-en="Guided Q&amp;A">引导问答</a>
 <a href="https://github.com/agenauton" class="nav-cta">GitHub</a>
+<button id="langToggle" onclick="agenautonLang.toggle()" style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);border-radius:6px;padding:4px 10px;color:var(--text);font-size:.75rem;cursor:pointer;letter-spacing:.5px;transition:.2s">EN</button>
 </div>
 </div>
 </nav>
@@ -162,13 +164,13 @@ footer a:hover{color:var(--teal)}
 <section class="hero">
 <canvas id="heroCanvas"></canvas>
 <div class="wrap">
-<div class="hero-badge">Agenauton 方法论 · 有想法的人专属</div>
-<h1>铸基六式<br><span class="gradient">The Forge Flow</span></h1>
-<p class="hero-sub">你已经有了想法，但不知道怎么从 0 到 1 落地。<br>六个步骤，一个人 + AI，把脑子里的东西铸成真正能跑的产品。</p>
-<p class="hero-slogan"><em>先聊透，再铸造。</em> 不烧 Token，先烧脑子。</p>
+<div class="hero-badge" data-zh="Agenauton 方法论 · 有想法的人专属" data-en="Agenauton Methodology · For Those with Ideas">Agenauton 方法论 · 有想法的人专属</div>
+<h1 data-zh="铸基六式&lt;br&gt;&lt;span class=&quot;gradient&quot;&gt;The Forge Flow&lt;/span&gt;" data-en="The Forge Flow&lt;br&gt;&lt;span class=&quot;gradient&quot;&gt;Six Steps to Ship&lt;/span&gt;">铸基六式<br><span class="gradient">The Forge Flow</span></h1>
+<p class="hero-sub" data-zh="你已经有了想法，但不知道怎么从 0 到 1 落地。&lt;br&gt;六个步骤，一个人 + AI，把脑子里的东西铸成真正能跑的产品。" data-en="You have an idea but don't know how to ship it from zero to one.&lt;br&gt;Six steps, one person + AI — forge what's in your head into a real, working product.">你已经有了想法，但不知道怎么从 0 到 1 落地。<br>六个步骤，一个人 + AI，把脑子里的东西铸成真正能跑的产品。</p>
+<p class="hero-slogan" data-zh="&lt;em&gt;聊找理，投定铸。&lt;/em&gt; 不烧 Token，先烧脑子。" data-en="&lt;em&gt;Ask. Find. Prep. Feed. Frame. Forge.&lt;/em&gt; Think first, then build."><em>聊找理，投定铸。</em> 不烧 Token，先烧脑子。</p>
 <div class="hero-actions">
-<a href="#steps" class="btn btn-primary">开始六式</a>
-<a href="#cases" class="btn btn-ghost">看案例</a>
+<a href="#steps" class="btn btn-primary" data-zh="开始六式" data-en="Start the Flow">开始六式</a>
+<a href="#cases" class="btn btn-ghost" data-zh="看案例" data-en="See Cases">看案例</a>
 </div>
 </div>
 </section>
@@ -179,44 +181,44 @@ footer a:hover{color:var(--teal)}
 <section class="section reveal" id="steps">
 <div class="wrap" style="text-align:center">
 <div class="section-label">The Forge Flow</div>
-<div class="section-title" style="text-align:center">六步，从想法到产品</div>
-<p class="section-desc" style="text-align:center;margin:0 auto 16px">每一步都有明确的输入和输出。不跳步，不返工。</p>
+<div class="section-title" style="text-align:center" data-zh="六步，从想法到产品" data-en="Six steps, from idea to product">六步，从想法到产品</div>
+<p class="section-desc" style="text-align:center;margin:0 auto 16px" data-zh="每一步都有明确的输入和输出。不跳步，不返工。" data-en="Each step has clear inputs and outputs. No skipping, no rework.">每一步都有明确的输入和输出。不跳步，不返工。</p>
 
 <div class="flow">
 <div class="flow-step">
 <div class="flow-num">聊</div>
 <div class="flow-char">聊</div>
-<div class="flow-label">跟 AI 聊透需求</div>
+<div class="flow-label" data-zh="聊透需求" data-en="Ask">聊透需求</div>
 <span class="flow-arrow">→</span>
 </div>
 <div class="flow-step">
-<div class="flow-num">探</div>
-<div class="flow-char">探</div>
-<div class="flow-label">找 5 轮开源对标</div>
+<div class="flow-num">找</div>
+<div class="flow-char">找</div>
+<div class="flow-label" data-zh="找到对标" data-en="Find">找到对标</div>
 <span class="flow-arrow">→</span>
 </div>
 <div class="flow-step">
-<div class="flow-num">录</div>
-<div class="flow-char">录</div>
-<div class="flow-label">整理成一份 MD</div>
+<div class="flow-num">理</div>
+<div class="flow-char">理</div>
+<div class="flow-label" data-zh="理清文档" data-en="Prep">理清文档</div>
+<span class="flow-arrow">→</span>
+</div>
+<div class="flow-step">
+<div class="flow-num">投</div>
+<div class="flow-char">投</div>
+<div class="flow-label" data-zh="投喂 AI" data-en="Feed">投喂 AI</div>
+<span class="flow-arrow">→</span>
+</div>
+<div class="flow-step">
+<div class="flow-num">定</div>
+<div class="flow-char">定</div>
+<div class="flow-label" data-zh="定好骨架" data-en="Frame">定好骨架</div>
 <span class="flow-arrow">→</span>
 </div>
 <div class="flow-step">
 <div class="flow-num">铸</div>
 <div class="flow-char">铸</div>
-<div class="flow-label">喂给 AI 编程工具</div>
-<span class="flow-arrow">→</span>
-</div>
-<div class="flow-step">
-<div class="flow-num">骨</div>
-<div class="flow-char">骨</div>
-<div class="flow-label">26 维度定骨架</div>
-<span class="flow-arrow">→</span>
-</div>
-<div class="flow-step">
-<div class="flow-num">造</div>
-<div class="flow-char">造</div>
-<div class="flow-label">Vibe Coding 构建</div>
+<div class="flow-label" data-zh="铸成产品" data-en="Forge">铸成产品</div>
 </div>
 </div>
 </div>
@@ -228,8 +230,8 @@ footer a:hover{color:var(--teal)}
 <section class="section reveal" id="detail">
 <div class="wrap">
 <div class="section-label">Step by Step</div>
-<div class="section-title">每一式，怎么做</div>
-<div class="section-desc">不是鸡汤，是可执行的操作手册。每一步告诉你：做什么、怎么做、产出什么。</div>
+<div class="section-title" data-zh="每一式，怎么做" data-en="Each step, how to do it">每一式，怎么做</div>
+<div class="section-desc" data-zh="不是鸡汤，是可执行的操作手册。每一步告诉你：做什么、怎么做、产出什么。" data-en="Not motivational fluff — an actionable playbook. Each step tells you: what to do, how to do it, what comes out.">不是鸡汤，是可执行的操作手册。每一步告诉你：做什么、怎么做、产出什么。</div>
 
 <div class="detail-grid">
 
@@ -240,16 +242,16 @@ footer a:hover{color:var(--teal)}
 <div class="detail-char">聊</div>
 </div>
 <div>
-<div class="detail-title">跟对话大模型聊透你的想法</div>
-<div class="detail-sub">打开豆包、ChatGPT、Gemini 或任何对话大模型。不要急着写代码，先把你想做的事情聊清楚：这个业务是什么？用户是谁？核心流程怎么走？可能遇到什么问题？有哪些规则和边界？<br><br>这个过程不只是在问 AI，更是在问自己。很多人以为自己想清楚了，聊完才发现有一半没想到。</div>
+<div class="detail-title" data-zh="跟对话大模型聊透你的想法" data-en="Talk through your idea with an LLM">跟对话大模型聊透你的想法</div>
+<div class="detail-sub" data-zh="打开豆包、ChatGPT、Gemini 或任何对话大模型。不要急着写代码，先把你想做的事情聊清楚：这个业务是什么？用户是谁？核心流程怎么走？可能遇到什么问题？有哪些规则和边界？&lt;br&gt;&lt;br&gt;这个过程不只是在问 AI，更是在问自己。很多人以为自己想清楚了，聊完才发现有一半没想到。" data-en="Open ChatGPT, Gemini, or any conversational LLM. Don't rush to code — first clarify what you're building: What's the business? Who are the users? What's the core flow? What could go wrong? What are the rules and boundaries?&lt;br&gt;&lt;br&gt;This process isn't just asking AI — it's asking yourself. Many think they've figured it out, only to realize half was missing after the conversation.">打开豆包、ChatGPT、Gemini 或任何对话大模型。不要急着写代码，先把你想做的事情聊清楚：这个业务是什么？用户是谁？核心流程怎么走？可能遇到什么问题？有哪些规则和边界？<br><br>这个过程不只是在问 AI，更是在问自己。很多人以为自己想清楚了，聊完才发现有一半没想到。</div>
 <div class="detail-how">
-<div class="detail-how-title">实操要点</div>
-<p>1. 用自然语言描述你想做什么，不需要技术术语</p>
-<p>2. 让 AI 反问你——「你觉得这个场景下用户会怎么用？」</p>
-<p>3. 讨论清楚：核心功能、用户画像、业务规则、可能的坑</p>
-<p>4. 至少聊 <code>3-5 轮</code> 深度对话，直到你觉得「我真的想清楚了」</p>
+<div class="detail-how-title" data-zh="实操要点" data-en="Key Actions">实操要点</div>
+<p data-zh="1. 用自然语言描述你想做什么，不需要技术术语" data-en="1. Describe what you want in plain language — no jargon needed">1. 用自然语言描述你想做什么，不需要技术术语</p>
+<p data-zh="2. 让 AI 反问你——「你觉得这个场景下用户会怎么用？」" data-en="2. Let AI challenge you — &quot;How would users actually use this?&quot;">2. 让 AI 反问你——「你觉得这个场景下用户会怎么用？」</p>
+<p data-zh="3. 讨论清楚：核心功能、用户画像、业务规则、可能的坑" data-en="3. Clarify: core features, user personas, business rules, potential pitfalls">3. 讨论清楚：核心功能、用户画像、业务规则、可能的坑</p>
+<p data-zh="4. 至少聊 &lt;code&gt;3-5 轮&lt;/code&gt; 深度对话，直到你觉得「我真的想清楚了」" data-en="4. At least &lt;code&gt;3-5 rounds&lt;/code&gt; of deep conversation until you truly feel &quot;I've thought this through&quot;">4. 至少聊 <code>3-5 轮</code> 深度对话，直到你觉得「我真的想清楚了」</p>
 </div>
-<div class="detail-tip">产出：一段清晰的需求描述 + 你对这件事的完整理解。跟大模型对话的同时，也是在跟自己对话。</div>
+<div class="detail-tip" data-zh="产出：一段清晰的需求描述 + 你对这件事的完整理解。跟大模型对话的同时，也是在跟自己对话。" data-en="Output: A clear requirements description + your complete understanding of the project. Talking to the LLM is also talking to yourself.">产出：一段清晰的需求描述 + 你对这件事的完整理解。跟大模型对话的同时，也是在跟自己对话。</div>
 </div>
 </div>
 
@@ -257,21 +259,21 @@ footer a:hover{color:var(--teal)}
 <div class="detail-card">
 <div>
 <div class="detail-num">02</div>
-<div class="detail-char">探</div>
+<div class="detail-char">找</div>
 </div>
 <div>
-<div class="detail-title">让 AI 找 5 轮开源对标项目</div>
-<div class="detail-sub">聊清楚之后，让大模型帮你找对标。不是找一个完全一样的项目，而是分层找——有的对标整体产品，有的对标某个技术方案，有的对标某个具体问题的最佳实践。<br><br>为什么是 5 轮？因为一轮找不全，每轮换个角度问，AI 会给出不同维度的参考。</div>
+<div class="detail-title" data-zh="让 AI 找 5 轮开源对标项目" data-en="Have AI find open-source benchmarks in 5 rounds">让 AI 找 5 轮开源对标项目</div>
+<div class="detail-sub" data-zh="聊清楚之后，让大模型帮你找对标。不是找一个完全一样的项目，而是分层找——有的对标整体产品，有的对标某个技术方案，有的对标某个具体问题的最佳实践。&lt;br&gt;&lt;br&gt;为什么是 5 轮？因为一轮找不全，每轮换个角度问，AI 会给出不同维度的参考。" data-en="After clarifying your idea, ask the LLM to find benchmarks. Not one identical project — layer your search: some for the overall product, some for specific technical approaches, some for best practices on particular problems.&lt;br&gt;&lt;br&gt;Why 5 rounds? One round won't cover everything. Each round from a different angle yields different references.">聊清楚之后，让大模型帮你找对标。不是找一个完全一样的项目，而是分层找——有的对标整体产品，有的对标某个技术方案，有的对标某个具体问题的最佳实践。<br><br>为什么是 5 轮？因为一轮找不全，每轮换个角度问，AI 会给出不同维度的参考。</div>
 <div class="detail-how">
-<div class="detail-how-title">实操要点</div>
-<p>1. 第 1 轮：「有没有跟我这个类似的开源项目？」</p>
-<p>2. 第 2 轮：「这个项目的 XX 部分，有没有更好的开源实现？」</p>
-<p>3. 第 3 轮：「XX 问题的业界最佳实践是什么？有没有开源方案？」</p>
-<p>4. 第 4 轮：「这个架构模式，有没有生产级的开源参考？」</p>
-<p>5. 第 5 轮：「还有没有我没想到的、但很关键的开源工具或库？」</p>
-<p>如果你在第 1 步用了<a href="duoshe.html#probe9" style="color:var(--teal)">「炼魂 9 问」</a>拆解过对标产品，这里的探索会更精准。</p>
+<div class="detail-how-title" data-zh="实操要点" data-en="Key Actions">实操要点</div>
+<p data-zh="1. 第 1 轮：「有没有跟我这个类似的开源项目？」" data-en="1. Round 1: &quot;Any open-source projects similar to mine?&quot;">1. 第 1 轮：「有没有跟我这个类似的开源项目？」</p>
+<p data-zh="2. 第 2 轮：「这个项目的 XX 部分，有没有更好的开源实现？」" data-en="2. Round 2: &quot;Is there a better open-source implementation for the XX part?&quot;">2. 第 2 轮：「这个项目的 XX 部分，有没有更好的开源实现？」</p>
+<p data-zh="3. 第 3 轮：「XX 问题的业界最佳实践是什么？有没有开源方案？」" data-en="3. Round 3: &quot;What's the industry best practice for XX? Any open-source solutions?&quot;">3. 第 3 轮：「XX 问题的业界最佳实践是什么？有没有开源方案？」</p>
+<p data-zh="4. 第 4 轮：「这个架构模式，有没有生产级的开源参考？」" data-en="4. Round 4: &quot;Any production-grade open-source references for this architecture pattern?&quot;">4. 第 4 轮：「这个架构模式，有没有生产级的开源参考？」</p>
+<p data-zh="5. 第 5 轮：「还有没有我没想到的、但很关键的开源工具或库？」" data-en="5. Round 5: &quot;Any critical open-source tools or libraries I might have missed?&quot;">5. 第 5 轮：「还有没有我没想到的、但很关键的开源工具或库？」</p>
+<p data-zh="如果你在第 1 步用了&lt;a href=&quot;duoshe.html#probe9&quot; style=&quot;color:var(--teal)&quot;&gt;「炼魂 9 问」&lt;/a&gt;拆解过对标产品，这里的探索会更精准。" data-en="If you used &lt;a href=&quot;duoshe.html#probe9&quot; style=&quot;color:var(--teal)&quot;&gt;&quot;The 9 Probes&quot;&lt;/a&gt; to dissect a benchmark product in step 1, this search will be even more precise.">如果你在第 1 步用了<a href="duoshe.html#probe9" style="color:var(--teal)">「炼魂 9 问」</a>拆解过对标产品，这里的探索会更精准。</p>
 </div>
-<div class="detail-tip">产出：5+ 个开源项目/方案的链接、简介、以及它们跟你项目的对应关系。</div>
+<div class="detail-tip" data-zh="产出：5+ 个开源项目/方案的链接、简介、以及它们跟你项目的对应关系。" data-en="Output: Links, summaries, and relevance mapping for 5+ open-source projects/solutions.">产出：5+ 个开源项目/方案的链接、简介、以及它们跟你项目的对应关系。</div>
 </div>
 </div>
 
@@ -279,21 +281,21 @@ footer a:hover{color:var(--teal)}
 <div class="detail-card">
 <div>
 <div class="detail-num">03</div>
-<div class="detail-char">录</div>
+<div class="detail-char">理</div>
 </div>
 <div>
-<div class="detail-title">把所有对话整理成一份 MD 文件</div>
-<div class="detail-sub">新建一个 <code>context.md</code>，把前两步的所有对话记录、开源项目信息、你的思考笔记全部复制进去。这不是随便堆，而是有结构地整理——需求描述、技术选型、对标分析、待解决问题。<br><br>这份文件就是你项目的「大脑」，后面 AI 编程工具的所有决策都基于它。</div>
+<div class="detail-title" data-zh="把所有对话整理成一份 MD 文件" data-en="Organize all conversations into one MD file">把所有对话整理成一份 MD 文件</div>
+<div class="detail-sub" data-zh="新建一个 &lt;code&gt;context.md&lt;/code&gt;，把前两步的所有对话记录、开源项目信息、你的思考笔记全部复制进去。这不是随便堆，而是有结构地整理——需求描述、技术选型、对标分析、待解决问题。&lt;br&gt;&lt;br&gt;这份文件就是你项目的「大脑」，后面 AI 编程工具的所有决策都基于它。" data-en="Create a &lt;code&gt;context.md&lt;/code&gt; file. Copy in all conversation logs, open-source project info, and your thinking notes from the first two steps. Don't just dump — organize with structure: requirements, tech choices, benchmark analysis, open questions.&lt;br&gt;&lt;br&gt;This file becomes your project's &quot;brain&quot; — every decision the AI coding tool makes will be based on it.">新建一个 <code>context.md</code>，把前两步的所有对话记录、开源项目信息、你的思考笔记全部复制进去。这不是随便堆，而是有结构地整理——需求描述、技术选型、对标分析、待解决问题。<br><br>这份文件就是你项目的「大脑」，后面 AI 编程工具的所有决策都基于它。</div>
 <div class="detail-how">
-<div class="detail-how-title">建议的 MD 结构</div>
-<p><code># 项目概述</code> — 一句话说清楚做什么</p>
-<p><code># 需求详情</code> — 第 1 步聊出来的完整需求</p>
-<p><code># 对标项目</code> — 第 2 步找到的 5+ 个开源参考</p>
-<p><code># 技术决策</code> — 选什么框架、为什么</p>
-<p><code># 待解决问题</code> — 已知的坑和风险</p>
-<p><code># 对话记录</code> — 关键对话片段（不用全部，挑重要的）</p>
+<div class="detail-how-title" data-zh="建议的 MD 结构" data-en="Recommended MD Structure">建议的 MD 结构</div>
+<p data-zh="&lt;code&gt;# 项目概述&lt;/code&gt; — 一句话说清楚做什么" data-en="&lt;code&gt;# Project Overview&lt;/code&gt; — One sentence on what you're building"><code># 项目概述</code> — 一句话说清楚做什么</p>
+<p data-zh="&lt;code&gt;# 需求详情&lt;/code&gt; — 第 1 步聊出来的完整需求" data-en="&lt;code&gt;# Requirements&lt;/code&gt; — Full requirements from Step 1"><code># 需求详情</code> — 第 1 步聊出来的完整需求</p>
+<p data-zh="&lt;code&gt;# 对标项目&lt;/code&gt; — 第 2 步找到的 5+ 个开源参考" data-en="&lt;code&gt;# Benchmarks&lt;/code&gt; — 5+ open-source references from Step 2"><code># 对标项目</code> — 第 2 步找到的 5+ 个开源参考</p>
+<p data-zh="&lt;code&gt;# 技术决策&lt;/code&gt; — 选什么框架、为什么" data-en="&lt;code&gt;# Tech Decisions&lt;/code&gt; — Which framework and why"><code># 技术决策</code> — 选什么框架、为什么</p>
+<p data-zh="&lt;code&gt;# 待解决问题&lt;/code&gt; — 已知的坑和风险" data-en="&lt;code&gt;# Open Questions&lt;/code&gt; — Known pitfalls and risks"><code># 待解决问题</code> — 已知的坑和风险</p>
+<p data-zh="&lt;code&gt;# 对话记录&lt;/code&gt; — 关键对话片段（不用全部，挑重要的）" data-en="&lt;code&gt;# Conversation Log&lt;/code&gt; — Key conversation excerpts (not everything, just the important parts)"><code># 对话记录</code> — 关键对话片段（不用全部，挑重要的）</p>
 </div>
-<div class="detail-tip">产出：一份 context.md 文件，5000-15000 字，包含你项目的所有上下文。</div>
+<div class="detail-tip" data-zh="产出：一份 context.md 文件，5000-15000 字，包含你项目的所有上下文。" data-en="Output: A context.md file, 5000-15000 words, containing all project context.">产出：一份 context.md 文件，5000-15000 字，包含你项目的所有上下文。</div>
 </div>
 </div>
 
@@ -301,19 +303,19 @@ footer a:hover{color:var(--teal)}
 <div class="detail-card">
 <div>
 <div class="detail-num">04</div>
-<div class="detail-char">铸</div>
+<div class="detail-char">投</div>
 </div>
 <div>
-<div class="detail-title">把 MD 喂给 AI 编程工具</div>
-<div class="detail-sub">打开 Cursor、Windsurf 或你用的 AI 编程工具。把 <code>context.md</code> 放到项目根目录，告诉 AI：「这是我的项目背景和实现思路，请先读完再开始。」<br><br>AI 有了完整上下文后，它的代码质量和架构决策会好几个量级。这就是「先烧脑子不烧 Token」的核心——前置准备越充分，后面返工越少。</div>
+<div class="detail-title" data-zh="把 MD 投喂给 AI 编程工具" data-en="Feed the MD to your AI coding tool">把 MD 投喂给 AI 编程工具</div>
+<div class="detail-sub" data-zh="打开 Cursor、Windsurf 或你用的 AI 编程工具。把 &lt;code&gt;context.md&lt;/code&gt; 放到项目根目录，告诉 AI：「这是我的项目背景和实现思路，请先读完再开始。」&lt;br&gt;&lt;br&gt;AI 有了完整上下文后，它的代码质量和架构决策会好几个量级。这就是「先烧脑子不烧 Token」的核心——前置准备越充分，后面返工越少。" data-en="Open Cursor, Windsurf, or your AI coding tool of choice. Place &lt;code&gt;context.md&lt;/code&gt; in the project root and tell the AI: &quot;Read context.md first — this is my project background and implementation plan.&quot;&lt;br&gt;&lt;br&gt;With full context, the AI's code quality and architecture decisions improve by orders of magnitude. This is the core of &quot;think first, then build&quot; — the more prep upfront, the less rework later.">打开 Cursor、Windsurf 或你用的 AI 编程工具。把 <code>context.md</code> 放到项目根目录，告诉 AI：「这是我的项目背景和实现思路，请先读完再开始。」<br><br>AI 有了完整上下文后，它的代码质量和架构决策会好几个量级。这就是「先烧脑子不烧 Token」的核心——前置准备越充分，后面返工越少。</div>
 <div class="detail-how">
-<div class="detail-how-title">实操要点</div>
-<p>1. 把 <code>context.md</code> 放在项目根目录</p>
-<p>2. 第一句话：「请先阅读 context.md，理解项目全貌」</p>
-<p>3. 不要一上来就让 AI 写代码，先让它确认理解是否正确</p>
-<p>4. 让 AI 输出它的理解摘要，你确认后再进入下一步</p>
+<div class="detail-how-title" data-zh="实操要点" data-en="Key Actions">实操要点</div>
+<p data-zh="1. 把 &lt;code&gt;context.md&lt;/code&gt; 放在项目根目录" data-en="1. Place &lt;code&gt;context.md&lt;/code&gt; in the project root">1. 把 <code>context.md</code> 放在项目根目录</p>
+<p data-zh="2. 第一句话：「请先阅读 context.md，理解项目全貌」" data-en="2. First instruction: &quot;Read context.md and understand the full project scope&quot;">2. 第一句话：「请先阅读 context.md，理解项目全貌」</p>
+<p data-zh="3. 不要一上来就让 AI 写代码，先让它确认理解是否正确" data-en="3. Don't ask AI to code right away — let it confirm its understanding first">3. 不要一上来就让 AI 写代码，先让它确认理解是否正确</p>
+<p data-zh="4. 让 AI 输出它的理解摘要，你确认后再进入下一步" data-en="4. Have AI output a summary of its understanding — confirm before proceeding">4. 让 AI 输出它的理解摘要，你确认后再进入下一步</p>
 </div>
-<div class="detail-tip">产出：AI 编程工具已经完全理解你的项目，准备好开始构建。</div>
+<div class="detail-tip" data-zh="产出：AI 编程工具已经完全理解你的项目，准备好开始构建。" data-en="Output: Your AI coding tool fully understands your project and is ready to build.">产出：AI 编程工具已经完全理解你的项目，准备好开始构建。</div>
 </div>
 </div>
 
@@ -321,19 +323,19 @@ footer a:hover{color:var(--teal)}
 <div class="detail-card">
 <div>
 <div class="detail-num">05</div>
-<div class="detail-char">骨</div>
+<div class="detail-char">定</div>
 </div>
 <div>
-<div class="detail-title">用 26 维度标准定骨架</div>
-<div class="detail-sub">现在把 Agenauton 的 26 维度标准也丢给 AI。告诉它：「按这 26 个维度帮我搭架构骨架，每个维度给出明确的技术选型。」<br><br>这一步确保你的项目不是「想到哪写到哪」，而是有一个完整的、经过验证的架构框架。强模型定骨架，弱模型填代码。</div>
+<div class="detail-title" data-zh="用 26 维度标准定好骨架" data-en="Frame the skeleton with 26 dimensions">用 26 维度标准定好骨架</div>
+<div class="detail-sub" data-zh="现在把 Agenauton 的 26 维度标准也丢给 AI。告诉它：「按这 26 个维度帮我搭架构骨架，每个维度给出明确的技术选型。」&lt;br&gt;&lt;br&gt;这一步确保你的项目不是「想到哪写到哪」，而是有一个完整的、经过验证的架构框架。强模型定骨架，弱模型填代码。" data-en="Now feed Agenauton's 26-dimension standard to the AI. Tell it: &quot;Scaffold the architecture skeleton across these 26 dimensions, with explicit tech choices for each.&quot;&lt;br&gt;&lt;br&gt;This ensures your project isn't &quot;code as you think of it&quot; but follows a complete, validated architecture framework. Strong models frame the skeleton; weaker models fill in the code.">现在把 Agenauton 的 26 维度标准也丢给 AI。告诉它：「按这 26 个维度帮我搭架构骨架，每个维度给出明确的技术选型。」<br><br>这一步确保你的项目不是「想到哪写到哪」，而是有一个完整的、经过验证的架构框架。强模型定骨架，弱模型填代码。</div>
 <div class="detail-how">
-<div class="detail-how-title">实操要点</div>
-<p>1. 拉取 Agenauton Skill 文件：<code>curl -s https://agenauton.com/skill.md</code></p>
-<p>2. 或直接复制 <a href="Agenauton/03_Soul_Forging/ai_architect_prompt.md" style="color:var(--teal)">AI Architect Prompt</a></p>
-<p>3. 让 AI 逐层输出：基础设施 → 数据状态 → 核心逻辑 → 交互 → 治理 → 演进</p>
-<p>4. 每个维度必须有明确选型，不能留空</p>
+<div class="detail-how-title" data-zh="实操要点" data-en="Key Actions">实操要点</div>
+<p data-zh="1. 拉取 Agenauton Skill 文件：&lt;code&gt;curl -s https://agenauton.com/skill.md&lt;/code&gt;" data-en="1. Pull the Agenauton Skill file: &lt;code&gt;curl -s https://agenauton.com/skill.md&lt;/code&gt;">1. 拉取 Agenauton Skill 文件：<code>curl -s https://agenauton.com/skill.md</code></p>
+<p data-zh="2. 或直接复制 &lt;a href=&quot;Agenauton/03_Soul_Forging/ai_architect_prompt.md&quot; style=&quot;color:var(--teal)&quot;&gt;AI Architect Prompt&lt;/a&gt;" data-en="2. Or copy the &lt;a href=&quot;Agenauton/03_Soul_Forging/ai_architect_prompt.md&quot; style=&quot;color:var(--teal)&quot;&gt;AI Architect Prompt&lt;/a&gt; directly">2. 或直接复制 <a href="Agenauton/03_Soul_Forging/ai_architect_prompt.md" style="color:var(--teal)">AI Architect Prompt</a></p>
+<p data-zh="3. 让 AI 逐层输出：基础设施 → 数据状态 → 核心逻辑 → 交互 → 治理 → 演进" data-en="3. Have AI output layer by layer: Infrastructure → Data &amp; State → Core Logic → Interaction → Governance → Evolution">3. 让 AI 逐层输出：基础设施 → 数据状态 → 核心逻辑 → 交互 → 治理 → 演进</p>
+<p data-zh="4. 每个维度必须有明确选型，不能留空" data-en="4. Every dimension must have an explicit choice — no blanks allowed">4. 每个维度必须有明确选型，不能留空</p>
 </div>
-<div class="detail-tip">产出：完整的 26 维度架构骨架 + Mermaid 架构图 + 项目目录结构。</div>
+<div class="detail-tip" data-zh="产出：完整的 26 维度架构骨架 + Mermaid 架构图 + 项目目录结构。" data-en="Output: Complete 26-dimension architecture skeleton + Mermaid diagram + project directory structure.">产出：完整的 26 维度架构骨架 + Mermaid 架构图 + 项目目录结构。</div>
 </div>
 </div>
 
@@ -341,19 +343,19 @@ footer a:hover{color:var(--teal)}
 <div class="detail-card">
 <div>
 <div class="detail-num">06</div>
-<div class="detail-char">造</div>
+<div class="detail-char">铸</div>
 </div>
 <div>
-<div class="detail-title">Vibe Coding，开始构建</div>
-<div class="detail-sub">骨架定好了，上下文齐全了，现在开始写代码。但不是你写——是 AI 写，你审。按骨架的模块顺序，一个一个模块让 AI 生成，你负责审查、测试、调整。<br><br>因为前面 5 步做得扎实，这一步会异常顺畅。AI 不会跑偏，因为它有完整上下文；架构不会歪，因为有 26 维度兜底。</div>
+<div class="detail-title" data-zh="Vibe Coding，铸成产品" data-en="Vibe Coding — forge the product">Vibe Coding，铸成产品</div>
+<div class="detail-sub" data-zh="骨架定好了，上下文齐全了，现在开始写代码。但不是你写——是 AI 写，你审。按骨架的模块顺序，一个一个模块让 AI 生成，你负责审查、测试、调整。&lt;br&gt;&lt;br&gt;因为前面 5 步做得扎实，这一步会异常顺畅。AI 不会跑偏，因为它有完整上下文；架构不会歪，因为有 26 维度兜底。" data-en="Skeleton set, context loaded — now start coding. But you're not writing — AI writes, you review. Follow the skeleton's module order, generate one module at a time, and you handle review, testing, and adjustments.&lt;br&gt;&lt;br&gt;Because the first 5 steps were solid, this step flows smoothly. AI won't drift — it has full context. Architecture won't skew — 26 dimensions have it covered.">骨架定好了，上下文齐全了，现在开始写代码。但不是你写——是 AI 写，你审。按骨架的模块顺序，一个一个模块让 AI 生成，你负责审查、测试、调整。<br><br>因为前面 5 步做得扎实，这一步会异常顺畅。AI 不会跑偏，因为它有完整上下文；架构不会歪，因为有 26 维度兜底。</div>
 <div class="detail-how">
-<div class="detail-how-title">实操要点</div>
-<p>1. 按模块顺序构建，不要一次性让 AI 生成整个项目</p>
-<p>2. 每个模块：生成 → 审查 → 测试 → 下一个</p>
-<p>3. 遇到问题回头看 <code>context.md</code>，确保不偏离初衷</p>
-<p>4. 定期用 26 维度做「体检」，确保没有遗漏</p>
+<div class="detail-how-title" data-zh="实操要点" data-en="Key Actions">实操要点</div>
+<p data-zh="1. 按模块顺序构建，不要一次性让 AI 生成整个项目" data-en="1. Build module by module — don't ask AI to generate the entire project at once">1. 按模块顺序构建，不要一次性让 AI 生成整个项目</p>
+<p data-zh="2. 每个模块：生成 → 审查 → 测试 → 下一个" data-en="2. Each module: generate → review → test → next">2. 每个模块：生成 → 审查 → 测试 → 下一个</p>
+<p data-zh="3. 遇到问题回头看 &lt;code&gt;context.md&lt;/code&gt;，确保不偏离初衷" data-en="3. When stuck, revisit &lt;code&gt;context.md&lt;/code&gt; to stay aligned with the original vision">3. 遇到问题回头看 <code>context.md</code>，确保不偏离初衷</p>
+<p data-zh="4. 定期用 26 维度做「体检」，确保没有遗漏" data-en="4. Periodically run a 26-dimension &quot;health check&quot; to catch gaps">4. 定期用 26 维度做「体检」，确保没有遗漏</p>
 </div>
-<div class="detail-tip">产出：一个完整的、架构合理的、可运行的产品。从想法到产品，一个人搞定。</div>
+<div class="detail-tip" data-zh="产出：一个完整的、架构合理的、可运行的产品。从想法到产品，一个人搞定。" data-en="Output: A complete, well-architected, working product. From idea to product, one person did it.">产出：一个完整的、架构合理的、可运行的产品。从想法到产品，一个人搞定。</div>
 </div>
 </div>
 
@@ -367,35 +369,35 @@ footer a:hover{color:var(--teal)}
 <section class="section reveal" id="cases">
 <div class="wrap">
 <div class="section-label">Real Cases</div>
-<div class="section-title">他们用六式做了什么</div>
-<div class="section-desc">不是假设，是真实的从 0 到 1 案例。一个人 + AI，用铸基六式完成。</div>
+<div class="section-title" data-zh="他们用六式做了什么" data-en="What they built with the Forge Flow">他们用六式做了什么</div>
+<div class="section-desc" data-zh="不是假设，是真实的从 0 到 1 案例。一个人 + AI，用铸基六式完成。" data-en="Not hypothetical — real zero-to-one cases. One person + AI, built with the Forge Flow.">不是假设，是真实的从 0 到 1 案例。一个人 + AI，用铸基六式完成。</div>
 
 <div class="case-grid">
 
 <div class="case-card">
-<div class="case-tag" style="background:rgba(20,184,166,.12);color:var(--teal)">SaaS 工具</div>
-<div class="case-title">智能会议纪要 Agent</div>
-<div class="case-desc">一个产品经理想做会议录音自动生成纪要的工具。没有技术背景，用铸基六式：先跟 ChatGPT 聊清楚 ASR + 摘要 + 待办提取的流程，找到 5 个开源对标（Whisper、Otter.ai 架构分析、LangChain Summarizer 等），整理成 context.md 后用 Cursor 构建。3 天出 MVP。</div>
+<div class="case-tag" style="background:rgba(20,184,166,.12);color:var(--teal)" data-zh="SaaS 工具" data-en="SaaS Tool">SaaS 工具</div>
+<div class="case-title" data-zh="智能会议纪要 Agent" data-en="Smart Meeting Notes Agent">智能会议纪要 Agent</div>
+<div class="case-desc" data-zh="一个产品经理想做会议录音自动生成纪要的工具。没有技术背景，用铸基六式：先跟 ChatGPT 聊清楚 ASR + 摘要 + 待办提取的流程，找到 5 个开源对标（Whisper、Otter.ai 架构分析、LangChain Summarizer 等），整理成 context.md 后用 Cursor 构建。3 天出 MVP。" data-en="A product manager wanted to auto-generate meeting notes from recordings. No tech background — used the Forge Flow: clarified ASR + summarization + action-item extraction with ChatGPT, found 5 open-source benchmarks (Whisper, Otter.ai architecture analysis, LangChain Summarizer, etc.), organized into context.md, built with Cursor. MVP in 3 days.">一个产品经理想做会议录音自动生成纪要的工具。没有技术背景，用铸基六式：先跟 ChatGPT 聊清楚 ASR + 摘要 + 待办提取的流程，找到 5 个开源对标（Whisper、Otter.ai 架构分析、LangChain Summarizer 等），整理成 context.md 后用 Cursor 构建。3 天出 MVP。</div>
 <div class="case-flow">
-<span class="done">聊</span><span class="done">探</span><span class="done">录</span><span class="done">铸</span><span class="done">骨</span><span class="done">造</span>
+<span class="done">聊</span><span class="done">找</span><span class="done">理</span><span class="done">投</span><span class="done">定</span><span class="done">铸</span>
 </div>
 </div>
 
 <div class="case-card">
-<div class="case-tag" style="background:rgba(59,130,246,.12);color:var(--blue)">垂直 Agent</div>
-<div class="case-title">法律合同审查 Agent</div>
-<div class="case-desc">一个律师想做合同风险自动审查工具。先跟 Gemini 聊清楚合同审查的 47 个检查点和法律边界，找到 LegalBERT、ContractNLI 等开源项目做对标，用炼魂 9 问拆解了 Harvey AI 的架构。整理后用 Windsurf 构建，26 维度确保安全和合规层不遗漏。</div>
+<div class="case-tag" style="background:rgba(59,130,246,.12);color:var(--blue)" data-zh="垂直 Agent" data-en="Vertical Agent">垂直 Agent</div>
+<div class="case-title" data-zh="法律合同审查 Agent" data-en="Legal Contract Review Agent">法律合同审查 Agent</div>
+<div class="case-desc" data-zh="一个律师想做合同风险自动审查工具。先跟 Gemini 聊清楚合同审查的 47 个检查点和法律边界，找到 LegalBERT、ContractNLI 等开源项目做对标，用炼魂 9 问拆解了 Harvey AI 的架构。整理后用 Windsurf 构建，26 维度确保安全和合规层不遗漏。" data-en="A lawyer wanted to build an automated contract risk review tool. Clarified 47 inspection points and legal boundaries with Gemini, found LegalBERT, ContractNLI and other benchmarks, used The 9 Probes to dissect Harvey AI's architecture. Organized and built with Windsurf — 26 dimensions ensured no gaps in security and compliance.">一个律师想做合同风险自动审查工具。先跟 Gemini 聊清楚合同审查的 47 个检查点和法律边界，找到 LegalBERT、ContractNLI 等开源项目做对标，用炼魂 9 问拆解了 Harvey AI 的架构。整理后用 Windsurf 构建，26 维度确保安全和合规层不遗漏。</div>
 <div class="case-flow">
-<span class="done">聊</span><span class="done">探</span><span class="done">录</span><span class="done">铸</span><span class="done">骨</span><span class="done">造</span>
+<span class="done">聊</span><span class="done">找</span><span class="done">理</span><span class="done">投</span><span class="done">定</span><span class="done">铸</span>
 </div>
 </div>
 
 <div class="case-card">
-<div class="case-tag" style="background:rgba(139,92,246,.12);color:var(--purple)">内容创作</div>
-<div class="case-title">短视频脚本生成器</div>
-<div class="case-desc">一个自媒体人想做根据热点自动生成短视频脚本的工具。跟豆包聊清楚了「热点抓取 → 选题判断 → 脚本生成 → 分镜拆解」的完整链路，对标了 Jasper AI 和几个开源 content pipeline 项目。context.md 写了 8000 字，Cursor 两天跑通整个流程。</div>
+<div class="case-tag" style="background:rgba(139,92,246,.12);color:var(--purple)" data-zh="内容创作" data-en="Content Creation">内容创作</div>
+<div class="case-title" data-zh="短视频脚本生成器" data-en="Short Video Script Generator">短视频脚本生成器</div>
+<div class="case-desc" data-zh="一个自媒体人想做根据热点自动生成短视频脚本的工具。跟豆包聊清楚了「热点抓取 → 选题判断 → 脚本生成 → 分镜拆解」的完整链路，对标了 Jasper AI 和几个开源 content pipeline 项目。context.md 写了 8000 字，Cursor 两天跑通整个流程。" data-en="A content creator wanted to auto-generate short video scripts from trending topics. Clarified the full pipeline — trend scraping → topic selection → script generation → storyboard breakdown — with an LLM, benchmarked against Jasper AI and several open-source content pipelines. context.md hit 8000 words, Cursor built the entire flow in 2 days.">一个自媒体人想做根据热点自动生成短视频脚本的工具。跟豆包聊清楚了「热点抓取 → 选题判断 → 脚本生成 → 分镜拆解」的完整链路，对标了 Jasper AI 和几个开源 content pipeline 项目。context.md 写了 8000 字，Cursor 两天跑通整个流程。</div>
 <div class="case-flow">
-<span class="done">聊</span><span class="done">探</span><span class="done">录</span><span class="done">铸</span><span class="done">骨</span><span class="done">造</span>
+<span class="done">聊</span><span class="done">找</span><span class="done">理</span><span class="done">投</span><span class="done">定</span><span class="done">铸</span>
 </div>
 </div>
 
@@ -405,37 +407,33 @@ footer a:hover{color:var(--teal)}
 
 <div class="divider"></div>
 
-<!-- Relation to other methods -->
+<!-- Philosophy -->
 <section class="section reveal">
-<div class="wrap">
-<div class="section-label">Where It Fits</div>
-<div class="section-title">铸基六式在整个体系中的位置</div>
-<div class="section-desc">Agenauton 有多条路径，铸基六式是其中一条。它们不冲突，可以组合使用。</div>
+<div class="wrap" style="text-align:center;max-width:700px">
+<div class="section-label">Philosophy</div>
+<div class="section-title" style="text-align:center" data-zh="追求自己的道，才是永恒" data-en="Pursuing your own path — that's what lasts">追求自己的道，才是永恒</div>
 
-<div class="relation-map">
-<div class="relation-box" style="border-color:rgba(249,115,22,.2)">
-<div class="relation-box-title" style="color:var(--orange)">夺舍大法</div>
-<div class="relation-box-desc">没想法 → 拆别人的</div>
-</div>
-<div class="relation-arrow">+</div>
-<div class="relation-box" style="border-color:rgba(20,184,166,.2)">
-<div class="relation-box-title" style="color:var(--teal)">铸基六式</div>
-<div class="relation-box-desc">有想法 → 从 0 到 1 造</div>
+<div style="margin:48px 0;text-align:center">
+<div class="relation-map" style="justify-content:center">
+<div class="relation-box" style="border-color:rgba(20,184,166,.3)">
+<div class="relation-box-title" style="color:var(--teal);font-size:1.2rem" data-zh="聊找理" data-en="Ask.Find.Prep">聊找理</div>
+<div class="relation-box-desc" data-zh="想清楚" data-en="Think it through">想清楚</div>
 </div>
 <div class="relation-arrow">→</div>
-<div class="relation-box" style="border-color:rgba(59,130,246,.2)">
-<div class="relation-box-title" style="color:var(--blue)">26 维度标准</div>
-<div class="relation-box-desc">所有路径的终点骨架</div>
+<div class="relation-box" style="border-color:rgba(59,130,246,.3)">
+<div class="relation-box-title" style="color:var(--blue);font-size:1.2rem" data-zh="投定铸" data-en="Feed.Frame.Forge">投定铸</div>
+<div class="relation-box-desc" data-zh="造出来" data-en="Build it out">造出来</div>
+</div>
 </div>
 </div>
 
-<div style="text-align:center;margin-top:32px">
-<p style="font-size:.88rem;color:var(--dim);line-height:1.8;max-width:600px;margin:0 auto">
-没想法？先用<a href="duoshe.html" style="color:var(--orange);text-decoration:none;font-weight:600">夺舍大法</a>拆解别人的 Agent 找灵感。<br>
-有想法？用<span style="color:var(--teal);font-weight:600">铸基六式</span>六步落地。<br>
-两条路最终都汇入 <a href="guanwang.html#dimensions" style="color:var(--blue);text-decoration:none;font-weight:600">26 维度标准</a>，确保架构完整不遗漏。
+<p style="font-size:.95rem;color:var(--dim);line-height:2;margin:0 auto;max-width:560px" data-zh="别人的成功可以参考，但不能复制。&lt;br&gt;铸基六式的核心不是「抄谁」，而是「想清楚自己要什么」。&lt;br&gt;&lt;br&gt;跟 AI 对话的过程，也是跟自己对话。&lt;br&gt;我想过和我做过，你的选择是？&lt;br&gt;&lt;br&gt;&lt;span style=&quot;color:var(--teal);font-weight:600&quot;&gt;一个人，一个想法，六步铸成。&lt;/span&gt;" data-en="Others' success can inspire, but can't be copied.&lt;br&gt;The core of the Forge Flow isn't &quot;who to copy&quot; — it's &quot;knowing what you truly want.&quot;&lt;br&gt;&lt;br&gt;Talking to AI is also talking to yourself.&lt;br&gt;&quot;I thought about it&quot; vs &quot;I built it&quot; — which one are you?&lt;br&gt;&lt;br&gt;&lt;span style=&quot;color:var(--teal);font-weight:600&quot;&gt;One person, one idea, six steps to ship.&lt;/span&gt;">
+别人的成功可以参考，但不能复制。<br>
+铸基六式的核心不是「抄谁」，而是「想清楚自己要什么」。<br><br>
+跟 AI 对话的过程，也是跟自己对话。<br>
+我想过和我做过，你的选择是？<br><br>
+<span style="color:var(--teal);font-weight:600">一个人，一个想法，六步铸成。</span>
 </p>
-</div>
 
 </div>
 </section>
@@ -445,20 +443,20 @@ footer a:hover{color:var(--teal)}
 <!-- CTA -->
 <section class="cta-section reveal">
 <div class="wrap">
-<h2>你的想法，值得被铸造</h2>
-<p>不需要团队，不需要融资。一个人 + AI + 铸基六式，足够了。</p>
+<h2 data-zh="你的想法，值得被铸造" data-en="Your idea deserves to be forged">你的想法，值得被铸造</h2>
+<p data-zh="不需要团队，不需要融资。一个人 + AI + 铸基六式，足够了。" data-en="No team needed. No funding needed. One person + AI + the Forge Flow is enough.">不需要团队，不需要融资。一个人 + AI + 铸基六式，足够了。</p>
 <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap">
-<a href="guanwang.html" class="btn btn-primary">回到主站</a>
-<a href="duoshe.html" class="btn btn-ghost">看看夺舍大法</a>
-<a href="Agenauton/guide/index.html" class="btn btn-ghost">引导问答生成蓝图</a>
+<a href="guanwang.html" class="btn btn-primary" data-zh="回到主站" data-en="Back to Home">回到主站</a>
+<a href="duoshe.html" class="btn btn-ghost" data-zh="看看夺舍大法" data-en="Agent Autopsy">看看夺舍大法</a>
+<a href="Agenauton/guide/index.html" class="btn btn-ghost" data-zh="引导问答生成蓝图" data-en="Guided Q&amp;A Blueprint">引导问答生成蓝图</a>
 </div>
 </div>
 </section>
 
 <footer>
 <div class="wrap">
-<p>Agenauton 铸基 &mdash; The Agentic Standard<br>
-<a href="guanwang.html">主站</a> · <a href="duoshe.html">夺舍大法</a> · <a href="#">铸基六式</a> · <a href="https://github.com/agenauton">GitHub</a></p>
+<p><strong data-zh="Agenauton 铸基" data-en="Agenauton">Agenauton 铸基</strong> &mdash; The Agentic Standard<br>
+<a href="guanwang.html" data-zh="主站" data-en="Home">主站</a> · <a href="duoshe.html" data-zh="夺舍大法" data-en="Agent Autopsy">夺舍大法</a> · <a href="#" data-zh="铸基六式" data-en="Forge Flow">铸基六式</a> · <a href="https://github.com/agenauton">GitHub</a></p>
 </div>
 </footer>
 

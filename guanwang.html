@@ -227,6 +227,7 @@ footer a:hover{color:var(--blue)}
 .section-title.typed::after{content:'|';animation:blink 1s step-end 3;color:var(--blue)}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
 </style>
+<script src="lang.js"></script>
 </head>
 <body>
 
@@ -238,13 +239,14 @@ footer a:hover{color:var(--blue)}
 <div class="nav-inner">
 <div class="logo">AGEN<span>AUTON</span> <span class="logo-cn">铸基</span></div>
 <div class="nav-links">
-<a href="#entry">选路径</a>
-<a href="#dimensions">26 维度</a>
-<a href="#quickstart">快速开始</a>
-<a href="duoshe.html">夺舍大法</a>
-<a href="zhujiliushi.html">铸基六式</a>
-<a href="Agenauton/guide/index.html">引导问答</a>
+<a href="#entry" data-zh="选路径" data-en="Paths">选路径</a>
+<a href="#dimensions" data-zh="26 维度" data-en="26 Dimensions">26 维度</a>
+<a href="#quickstart" data-zh="快速开始" data-en="Quick Start">快速开始</a>
+<a href="duoshe.html" data-zh="夺舍大法" data-en="Agent Autopsy">夺舍大法</a>
+<a href="zhujiliushi.html" data-zh="铸基六式" data-en="Forge Flow">铸基六式</a>
+<a href="Agenauton/guide/index.html" data-zh="引导问答" data-en="Guided Q&amp;A">引导问答</a>
 <a href="https://github.com/agenauton" class="nav-cta">GitHub</a>
+<button id="langToggle" onclick="agenautonLang.toggle()" style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);border-radius:6px;padding:4px 10px;color:var(--text);font-size:.75rem;cursor:pointer;letter-spacing:.5px;transition:.2s">EN</button>
 </div>
 </div>
 </nav>
@@ -254,11 +256,11 @@ footer a:hover{color:var(--blue)}
 <canvas id="heroCanvas"></canvas>
 <div class="wrap">
 <div class="hero-badge"><span class="dot"></span> Open Source &middot; MIT License &middot; v2026</div>
-<h1>每一个想法<br><span class="gradient">都值得被铸造</span></h1>
+<h1 data-zh="每一个想法<br><span class=&quot;gradient&quot;>都值得被铸造</span>" data-en="Every Idea Deserves<br><span class=&quot;gradient&quot;>to Be Forged</span>">每一个想法<br><span class="gradient">都值得被铸造</span></h1>
 <p style="font-size:1.05rem;color:rgba(255,255,255,.7);letter-spacing:3px;margin:-8px 0 32px;font-weight:400">The Agentic Standard</p>
 <div class="hero-actions">
-<a href="https://github.com/agenauton" class="btn btn-primary">GitHub 开始使用</a>
-<a href="#how" class="btn btn-ghost">3 分钟上手</a>
+<a href="https://github.com/agenauton" class="btn btn-primary" data-zh="GitHub 开始使用" data-en="Get Started on GitHub">GitHub 开始使用</a>
+<a href="#how" class="btn btn-ghost" data-zh="3 分钟上手" data-en="3-Min Guide">3 分钟上手</a>
 </div>
 <div class="hero-stats">
 <div class="hero-stat"><div class="hero-stat-num">26</div><div class="hero-stat-label">Dimensions</div></div>
@@ -273,14 +275,14 @@ footer a:hover{color:var(--blue)}
 <button onclick="navigator.clipboard.writeText('curl -s https://agenauton.com/skill.md');this.innerHTML='<svg width=&quot;18&quot; height=&quot;18&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;#4ade80&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><polyline points=&quot;20 6 9 17 4 12&quot;/></svg>';var b=this;setTimeout(function(){b.innerHTML='<svg width=&quot;18&quot; height=&quot;18&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;#fff&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot;><rect x=&quot;9&quot; y=&quot;9&quot; width=&quot;13&quot; height=&quot;13&quot; rx=&quot;2&quot;/><path d=&quot;M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1&quot;/></svg>'},1500)" style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.25);border-radius:8px;padding:7px 10px;cursor:pointer;transition:.2s;flex-shrink:0;line-height:0;display:inline-flex;align-items:center;justify-content:center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button>
 </div>
 <div style="margin-top:6px;display:flex;justify-content:center;align-items:center;gap:12px">
-<span style="font-size:.65rem;color:var(--muted)">让 AI 按 26 维度帮你搭架构</span>
-<a href="Agenauton/03_Soul_Forging/ai_architect_prompt.md" download style="font-size:.65rem;color:var(--dim);text-decoration:none;transition:.2s">或下载完整 Prompt &rarr;</a>
+<span style="font-size:.65rem;color:var(--muted)" data-zh="让 AI 按 26 维度帮你搭架构" data-en="Let AI scaffold your architecture across 26 dimensions">让 AI 按 26 维度帮你搭架构</span>
+<a href="Agenauton/03_Soul_Forging/ai_architect_prompt.md" download style="font-size:.65rem;color:var(--dim);text-decoration:none;transition:.2s" data-zh="或下载完整 Prompt &amp;rarr;" data-en="or download full Prompt &amp;rarr;">或下载完整 Prompt &rarr;</a>
 </div>
 </div>
 
 <div style="margin-top:36px;text-align:center;line-height:2">
-<p style="font-size:.88rem;color:rgba(255,255,255,.55);margin:0">&mdash; 英语有 26 个字母，构成了所有文字。Agenauton 有 26 个维度，覆盖 Agent 构建的所有关键决策。</p>
-<p style="font-size:.88rem;color:rgba(255,255,255,.55);margin:4px 0 0">&mdash; 底子要硬，脑子要清，嘴巴要稳，出事要扛，上线要活。</p>
+<p style="font-size:.88rem;color:rgba(255,255,255,.55);margin:0" data-zh="&amp;mdash; 英语有 26 个字母，构成了所有文字。Agenauton 有 26 个维度，覆盖 Agent 构建的所有关键决策。" data-en="&amp;mdash; 26 letters build every word. 26 dimensions cover every critical decision in Agent development.">&mdash; 英语有 26 个字母，构成了所有文字。Agenauton 有 26 个维度，覆盖 Agent 构建的所有关键决策。</p>
+<p style="font-size:.88rem;color:rgba(255,255,255,.55);margin:4px 0 0" data-zh="&amp;mdash; 底子要硬，脑子要清，嘴巴要稳，出事要扛，上线要活。" data-en="&amp;mdash; Solid foundation. Clear logic. Stable output. Safe guardrails. Living system.">&mdash; 底子要硬，脑子要清，嘴巴要稳，出事要扛，上线要活。</p>
 </div>
 
 </div>
@@ -292,40 +294,40 @@ footer a:hover{color:var(--blue)}
 <section class="section reveal" id="quickstart">
 <div class="wrap">
 <div class="section-label">Quick Start</div>
-<div class="section-title">你现在是什么状态？</div>
-<div class="section-desc">不同阶段有不同的最佳路径。选一个最接近你的，立刻开始。</div>
+<div class="section-title" data-zh="你现在是什么状态？" data-en="Where are you right now?">你现在是什么状态？</div>
+<div class="section-desc" data-zh="不同阶段有不同的最佳路径。选一个最接近你的，立刻开始。" data-en="Different stages call for different paths. Pick the one that fits you best and start now.">不同阶段有不同的最佳路径。选一个最接近你的，立刻开始。</div>
 
 <div class="path-grid">
 <a class="path-card" href="duoshe.html#probe9">
 <div class="path-icon">🔮</div>
 <div>
-<div class="path-title">没思路，想做但不知道做什么</div>
-<div class="path-desc">用「炼魂 9 问」穿透任意 AI 的内核机制，再用炼魄、锻造三步把它变成你自己的。</div>
-<span class="path-link">进入炼魂 9 问 &rarr;</span>
+<div class="path-title" data-zh="没思路，想做但不知道做什么" data-en="No idea yet — want to build but don't know what">没思路，想做但不知道做什么</div>
+<div class="path-desc" data-zh="用「炼魂 9 问」穿透任意 AI 的内核机制，再用炼魄、锻造三步把它变成你自己的。" data-en="Use &quot;The 9 Probes&quot; to dissect any AI product's core, then map and forge it into your own.">用「炼魂 9 问」穿透任意 AI 的内核机制，再用炼魄、锻造三步把它变成你自己的。</div>
+<span class="path-link" data-zh="进入炼魂 9 问 &amp;rarr;" data-en="Start the 9 Probes &amp;rarr;">进入炼魂 9 问 &rarr;</span>
 </div>
 </a>
 <a class="path-card" href="zhujiliushi.html">
 <div class="path-icon">🎯</div>
 <div>
-<div class="path-title">有想法，不知道怎么落地</div>
-<div class="path-desc">「铸基六式」— 聊、探、录、铸、骨、造，六步把脑子里的想法铸成能跑的产品。</div>
-<span class="path-link">进入铸基六式 &rarr;</span>
+<div class="path-title" data-zh="有想法，不知道怎么落地" data-en="Have an idea but don't know how to ship it">有想法，不知道怎么落地</div>
+<div class="path-desc" data-zh="「铸基六式」— 聊找理，投定铸。六步把脑子里的想法铸成能跑的产品。" data-en="&quot;The Forge Flow&quot; — Ask. Find. Prep. Feed. Frame. Forge. Six steps from idea to working product.">「铸基六式」— 聊找理，投定铸。六步把脑子里的想法铸成能跑的产品。</div>
+<span class="path-link" data-zh="进入铸基六式 &amp;rarr;" data-en="Start the Forge Flow &amp;rarr;">进入铸基六式 &rarr;</span>
 </div>
 </a>
 <a class="path-card" href="Agenauton/02_Spirit_Refining/26_Dimensions_Template.md" download>
 <div class="path-icon">🏢</div>
 <div>
-<div class="path-title">企业 / 个人要正式构建</div>
-<div class="path-desc">下载 26 维度模板，逐条对照业务需求填写。确保安全、合规、可扩展，一次建对不返工。</div>
-<span class="path-link">下载 26 维度清单 &darr;</span>
+<div class="path-title" data-zh="企业 / 个人要正式构建" data-en="Enterprise / individual ready to build">企业 / 个人要正式构建</div>
+<div class="path-desc" data-zh="下载 26 维度模板，逐条对照业务需求填写。确保安全、合规、可扩展，一次建对不返工。" data-en="Download the 26-dimension template and fill it against your requirements. Secure, compliant, scalable — built right the first time.">下载 26 维度模板，逐条对照业务需求填写。确保安全、合规、可扩展，一次建对不返工。</div>
+<span class="path-link" data-zh="下载 26 维度清单 &amp;darr;" data-en="Download 26-Dimension Checklist &amp;darr;">下载 26 维度清单 &darr;</span>
 </div>
 </a>
 <a class="path-card" href="Agenauton/guide/index.html">
 <div class="path-icon">🔍</div>
 <div>
-<div class="path-title">已有 Agent，想优化提升</div>
-<div class="path-desc">用 26 维度给你的 Agent 做一次全面体检，满分 130 分，精准定位薄弱环节。</div>
-<span class="path-link">开始体检评分 &rarr;</span>
+<div class="path-title" data-zh="已有 Agent，想优化提升" data-en="Already have an Agent — want to improve it">已有 Agent，想优化提升</div>
+<div class="path-desc" data-zh="用 26 维度给你的 Agent 做一次全面体检，满分 130 分，精准定位薄弱环节。" data-en="Run a full 26-dimension health check on your Agent. Score out of 130, pinpoint every weak spot.">用 26 维度给你的 Agent 做一次全面体检，满分 130 分，精准定位薄弱环节。</div>
+<span class="path-link" data-zh="开始体检评分 &amp;rarr;" data-en="Start Health Check &amp;rarr;">开始体检评分 &rarr;</span>
 </div>
 </a>
 </div>
@@ -339,27 +341,27 @@ footer a:hover{color:var(--blue)}
 <section class="section reveal" id="entry">
 <div class="wrap">
 <div class="section-label">Choose Your Path</div>
-<div class="section-title">你是谁，决定从哪里开始</div>
-<div class="section-desc">Agenauton 为三种角色设计了不同的入口。选一个最适合你的。</div>
+<div class="section-title" data-zh="你是谁，决定从哪里开始" data-en="Who you are decides where you start">你是谁，决定从哪里开始</div>
+<div class="section-desc" data-zh="Agenauton 为三种角色设计了不同的入口。选一个最适合你的。" data-en="Agenauton offers three entry points for three roles. Pick the one that fits.">Agenauton 为三种角色设计了不同的入口。选一个最适合你的。</div>
 
 <div class="zone-grid">
 <div class="zone-card" onclick="location.href='#mantra'">
 <div class="zone-icon">👤</div>
-<div class="zone-title">我是新手</div>
-<div class="zone-desc">不懂技术也没关系。5 句话 30 秒理解 Agent 构建的全部要点，好懂好记好传播。</div>
-<span class="zone-cta">30 秒看懂 &rarr;</span>
+<div class="zone-title" data-zh="我是新手" data-en="I'm a beginner">我是新手</div>
+<div class="zone-desc" data-zh="不懂技术也没关系。5 句话 30 秒理解 Agent 构建的全部要点，好懂好记好传播。" data-en="No tech background needed. 5 sentences, 30 seconds — grasp every key point of Agent building.">不懂技术也没关系。5 句话 30 秒理解 Agent 构建的全部要点，好懂好记好传播。</div>
+<span class="zone-cta" data-zh="30 秒看懂 &amp;rarr;" data-en="30-Sec Overview &amp;rarr;">30 秒看懂 &rarr;</span>
 </div>
 <div class="zone-card" onclick="location.href='#dimensions'">
 <div class="zone-icon">&lt;/&gt;</div>
-<div class="zone-title">我要构建</div>
-<div class="zone-desc">26 维度架构清单，逐条填写生成完整蓝图。技术无关，适用于任何模型和框架。</div>
-<span class="zone-cta">查看 26 维度 &rarr;</span>
+<div class="zone-title" data-zh="我要构建" data-en="I want to build">我要构建</div>
+<div class="zone-desc" data-zh="26 维度架构清单，逐条填写生成完整蓝图。技术无关，适用于任何模型和框架。" data-en="26-dimension architecture checklist — fill it out to generate a full blueprint. Tech-agnostic, works with any model or framework.">26 维度架构清单，逐条填写生成完整蓝图。技术无关，适用于任何模型和框架。</div>
+<span class="zone-cta" data-zh="查看 26 维度 &amp;rarr;" data-en="View 26 Dimensions &amp;rarr;">查看 26 维度 &rarr;</span>
 </div>
-<div class="zone-card" onclick="navigator.clipboard.writeText('curl -s https://agenauton.com/skill.md');var s=this.querySelector('.zone-cta');s.textContent='已复制!';setTimeout(function(){s.innerHTML='复制命令 ⎘'},1500)">
+<div class="zone-card" onclick="navigator.clipboard.writeText('curl -s https://agenauton.com/skill.md');var s=this.querySelector('.zone-cta');var l=window.__lang||'zh';s.textContent=l==='zh'?'已复制!':'Copied!';setTimeout(function(){s.textContent=l==='zh'?'复制命令 ⎘':'Copy Command ⎘'},1500)">
 <div class="zone-icon">🤖</div>
-<div class="zone-title">让 AI 帮我建</div>
-<div class="zone-desc">一行命令拉取 Skill 文件，AI 按 26 维度标准帮你搭好架构骨架。</div>
-<span class="zone-cta">复制命令 ⎘</span>
+<div class="zone-title" data-zh="让 AI 帮我建" data-en="Let AI build for me">让 AI 帮我建</div>
+<div class="zone-desc" data-zh="一行命令拉取 Skill 文件，AI 按 26 维度标准帮你搭好架构骨架。" data-en="One command to pull the Skill file — AI scaffolds your architecture across all 26 dimensions.">一行命令拉取 Skill 文件，AI 按 26 维度标准帮你搭好架构骨架。</div>
+<span class="zone-cta" data-zh="复制命令 ⎘" data-en="Copy Command ⎘">复制命令 ⎘</span>
 </div>
 </div>
 
@@ -371,40 +373,40 @@ footer a:hover{color:var(--blue)}
 <!-- 30秒看懂 -->
 <section class="section reveal" id="mantra">
 <div class="wrap">
-<div class="section-label">30 秒看懂</div>
-<div class="section-title">五句话，记住整个框架</div>
-<div class="section-desc">做 Agent 不是写一个 Prompt 就完了。这 5 句话覆盖了 6 个架构层、26 个必须做的决策。</div>
+<div class="section-label" data-zh="30 秒看懂" data-en="30-Sec Overview">30 秒看懂</div>
+<div class="section-title" data-zh="五句话，记住整个框架" data-en="Five phrases, the entire framework">五句话，记住整个框架</div>
+<div class="section-desc" data-zh="做 Agent 不是写一个 Prompt 就完了。这 5 句话覆盖了 6 个架构层、26 个必须做的决策。" data-en="Building an Agent is more than writing a prompt. These 5 phrases cover 6 architecture layers and 26 critical decisions.">做 Agent 不是写一个 Prompt 就完了。这 5 句话覆盖了 6 个架构层、26 个必须做的决策。</div>
 
 <div class="mantra-grid">
 <div class="mantra-card">
 <div class="mantra-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 10h0M10 10h0M14 10h0M6 14h12"/></svg></div>
-<div class="mantra-zh">底子要硬</div>
+<div class="mantra-zh" data-zh="底子要硬" data-en="Solid Foundation">底子要硬</div>
 <div class="mantra-en">Foundation</div>
-<div class="mantra-dims">模型选择 · 并发扩展<br>容错恢复 · 成本管控</div>
+<div class="mantra-dims" data-zh="模型选择 · 并发扩展<br>容错恢复 · 成本管控" data-en="Model Selection · Concurrency<br>Fault Tolerance · Cost Control">模型选择 · 并发扩展<br>容错恢复 · 成本管控</div>
 </div>
 <div class="mantra-card">
 <div class="mantra-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 1 7 7c0 2.5-1.3 4.8-3.5 6L14 17H10l-1.5-2C6.3 13.8 5 11.5 5 9a7 7 0 0 1 7-7z"/><path d="M10 21h4M10 17v1a2 2 0 0 0 4 0v-1"/><circle cx="12" cy="9" r="2"/></svg></div>
-<div class="mantra-zh">脑子要清</div>
+<div class="mantra-zh" data-zh="脑子要清" data-en="Clear Logic">脑子要清</div>
 <div class="mantra-en">Cognition</div>
-<div class="mantra-dims">数据协议 · 记忆系统<br>知识管理 · 多模态<br>架构拓扑 · Agent 分工<br>工具能力 · 规划推理</div>
+<div class="mantra-dims" data-zh="数据协议 · 记忆系统<br>知识管理 · 多模态<br>架构拓扑 · Agent 分工<br>工具能力 · 规划推理" data-en="Data Schema · Memory System<br>Knowledge Mgmt · Multimodal<br>Architecture · Agent Division<br>Tool Mapping · Planning">数据协议 · 记忆系统<br>知识管理 · 多模态<br>架构拓扑 · Agent 分工<br>工具能力 · 规划推理</div>
 </div>
 <div class="mantra-card">
 <div class="mantra-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 10h8M8 13h5"/></svg></div>
-<div class="mantra-zh">嘴巴要稳</div>
+<div class="mantra-zh" data-zh="嘴巴要稳" data-en="Stable Output">嘴巴要稳</div>
 <div class="mantra-en">Expression</div>
-<div class="mantra-dims">指令策略 · 意图理解<br>个性适配 · 输出体验</div>
+<div class="mantra-dims" data-zh="指令策略 · 意图理解<br>个性适配 · 输出体验" data-en="Instruction Strategy · Intent Parsing<br>Personalization · Output UX">指令策略 · 意图理解<br>个性适配 · 输出体验</div>
 </div>
 <div class="mantra-card">
 <div class="mantra-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></div>
-<div class="mantra-zh">出事要扛</div>
+<div class="mantra-zh" data-zh="出事要扛" data-en="Safe Guardrails">出事要扛</div>
 <div class="mantra-en">Governance</div>
-<div class="mantra-dims">质量闭环 · 幻觉抑制<br>安全防御 · 信任边界</div>
+<div class="mantra-dims" data-zh="质量闭环 · 幻觉抑制<br>安全防御 · 信任边界" data-en="Quality Loop · Hallucination Control<br>Security Defense · Trust Boundary">质量闭环 · 幻觉抑制<br>安全防御 · 信任边界</div>
 </div>
 <div class="mantra-card">
 <div class="mantra-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#14b8a6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/><circle cx="12" cy="12" r="1" fill="#14b8a6" stroke="none"/></svg></div>
-<div class="mantra-zh">上线要活</div>
+<div class="mantra-zh" data-zh="上线要活" data-en="Living System">上线要活</div>
 <div class="mantra-en">Evolution</div>
-<div class="mantra-dims">监控遥测 · 评估测试<br>自演化 · 版本管理<br>合规伦理 · 可解释性</div>
+<div class="mantra-dims" data-zh="监控遥测 · 评估测试<br>自演化 · 版本管理<br>合规伦理 · 可解释性" data-en="Telemetry · Evaluation<br>Self-Evolve · Versioning<br>Compliance · Explainability">监控遥测 · 评估测试<br>自演化 · 版本管理<br>合规伦理 · 可解释性</div>
 </div>
 </div>
 
@@ -417,8 +419,8 @@ footer a:hover{color:var(--blue)}
 <section class="section reveal" id="dimensions">
 <div class="wrap">
 <div class="section-label">The Standard</div>
-<div class="section-title">6 层架构，26 个维度</div>
-<div class="section-desc">不告诉你"怎么写代码"，而是帮你"想清楚该做什么决策"。技术无关，适用于任何模型、框架、语言。</div>
+<div class="section-title" data-zh="6 层架构，26 个维度" data-en="6 Layers, 26 Dimensions">6 层架构，26 个维度</div>
+<div class="section-desc" data-zh="不告诉你"怎么写代码"，而是帮你"想清楚该做什么决策"。技术无关，适用于任何模型、框架、语言。" data-en="Not &quot;how to write code&quot; — but &quot;what decisions to make.&quot; Tech-agnostic, works with any model, framework, or language.">不告诉你"怎么写代码"，而是帮你"想清楚该做什么决策"。技术无关，适用于任何模型、框架、语言。</div>
 
 <div class="radar-container" id="radarContainer">
 <canvas id="radarCanvas"></canvas>
@@ -428,45 +430,45 @@ footer a:hover{color:var(--blue)}
 <div class="layer-grid">
 <div class="layer-card" style="--lc:#4a9eff">
 <span class="lc-num">01-04</span>
-<div class="lc-name">基础设施层</div>
+<div class="lc-name" data-zh="基础设施层" data-en="Infrastructure">基础设施层</div>
 <div class="lc-en">Infrastructure</div>
-<div class="lc-dims">环境依赖 · 并发伸缩 · 容错恢复 · 成本管控</div>
+<div class="lc-dims" data-zh="环境依赖 · 并发伸缩 · 容错恢复 · 成本管控" data-en="Environment · Concurrency · Fault Tolerance · Cost Control">环境依赖 · 并发伸缩 · 容错恢复 · 成本管控</div>
 </div>
 <div class="layer-card" style="--lc:#a78bfa">
 <span class="lc-num">05-08</span>
-<div class="lc-name">数据状态层</div>
+<div class="lc-name" data-zh="数据状态层" data-en="Data &amp; State">数据状态层</div>
 <div class="lc-en">Data & State</div>
-<div class="lc-dims">数据协议 · 状态记忆 · 知识时效 · 多模态处理</div>
+<div class="lc-dims" data-zh="数据协议 · 状态记忆 · 知识时效 · 多模态处理" data-en="Data Schema · State Memory · Knowledge Freshness · Multimodal">数据协议 · 状态记忆 · 知识时效 · 多模态处理</div>
 </div>
 <div class="layer-card" style="--lc:#f472b6">
 <span class="lc-num">09-12</span>
-<div class="lc-name">核心逻辑层</div>
+<div class="lc-name" data-zh="核心逻辑层" data-en="Core Logic">核心逻辑层</div>
 <div class="lc-en">Core Logic</div>
-<div class="lc-dims">架构拓扑 · Agent 分工 · 工具能力 · 决策规划</div>
+<div class="lc-dims" data-zh="架构拓扑 · Agent 分工 · 工具能力 · 决策规划" data-en="Topology · Agent Division · Tool Mapping · Planning">架构拓扑 · Agent 分工 · 工具能力 · 决策规划</div>
 </div>
 <div class="layer-card" style="--lc:#34d399">
 <span class="lc-num">13-16</span>
-<div class="lc-name">交互层</div>
+<div class="lc-name" data-zh="交互层" data-en="Interaction">交互层</div>
 <div class="lc-en">Interaction</div>
-<div class="lc-dims">指令策略 · 意图理解 · 个性适配 · 输出体验</div>
+<div class="lc-dims" data-zh="指令策略 · 意图理解 · 个性适配 · 输出体验" data-en="Instruction · Intent · Personalization · Output UX">指令策略 · 意图理解 · 个性适配 · 输出体验</div>
 </div>
 <div class="layer-card" style="--lc:#60a5fa">
 <span class="lc-num">17-20</span>
-<div class="lc-name">治理层</div>
+<div class="lc-name" data-zh="治理层" data-en="Governance">治理层</div>
 <div class="lc-en">Governance</div>
-<div class="lc-dims">质量闭环 · 幻觉抑制 · 安全防御 · 信任边界</div>
+<div class="lc-dims" data-zh="质量闭环 · 幻觉抑制 · 安全防御 · 信任边界" data-en="Quality Loop · Hallucination · Security · Trust Boundary">质量闭环 · 幻觉抑制 · 安全防御 · 信任边界</div>
 </div>
 <div class="layer-card" style="--lc:#2dd4bf">
 <span class="lc-num">21-26</span>
-<div class="lc-name">演进层</div>
+<div class="lc-name" data-zh="演进层" data-en="Evolution">演进层</div>
 <div class="lc-en">Evolution</div>
-<div class="lc-dims">监控遥测 · 评估测试 · 自演化 · 版本发布 · 合规伦理 · 可解释性</div>
+<div class="lc-dims" data-zh="监控遥测 · 评估测试 · 自演化 · 版本发布 · 合规伦理 · 可解释性" data-en="Telemetry · Evaluation · Self-Evolve · Versioning · Compliance · Explainability">监控遥测 · 评估测试 · 自演化 · 版本发布 · 合规伦理 · 可解释性</div>
 </div>
 </div>
 
 <div class="quote-box">
 <p>"26 letters build every word. 26 dimensions build every Agent."</p>
-<div class="author">— Agenauton 铸基</div>
+<div class="author" data-zh="— Agenauton 铸基" data-en="— Agenauton">— Agenauton 铸基</div>
 </div>
 </div>
 </section>
@@ -477,30 +479,30 @@ footer a:hover{color:var(--blue)}
 <section class="section reveal">
 <div class="wrap">
 <div class="section-label">Why It Matters</div>
-<div class="section-title">90% 的 Agent 项目死在 Demo 阶段</div>
-<div class="section-desc">不是因为技术不行，是因为从一开始就没想清楚。</div>
+<div class="section-title" data-zh="90% 的 Agent 项目死在 Demo 阶段" data-en="90% of Agent projects die at the demo stage">90% 的 Agent 项目死在 Demo 阶段</div>
+<div class="section-desc" data-zh="不是因为技术不行，是因为从一开始就没想清楚。" data-en="Not because the tech failed — because no one thought it through from the start.">不是因为技术不行，是因为从一开始就没想清楚。</div>
 
 <div class="compare">
 <div class="compare-side compare-bad">
-<div class="compare-label">没有标准的做法</div>
+<div class="compare-label" data-zh="没有标准的做法" data-en="Without a standard">没有标准的做法</div>
 <ul class="compare-list">
-<li>写一个 3000 字的 System Prompt，当作整个架构</li>
-<li>接了 15 个 API，Agent 总是调错工具</li>
-<li>Demo 好好的，上线就泄露用户数据</li>
-<li>改一处 Prompt，全局行为不可预测地变化</li>
-<li>不知道 Agent 什么时候该说"我不知道"</li>
-<li>用户问了个奇怪问题，Agent 开始编造政策</li>
+<li data-zh="写一个 3000 字的 System Prompt，当作整个架构" data-en="A 3000-word System Prompt masquerading as architecture">写一个 3000 字的 System Prompt，当作整个架构</li>
+<li data-zh="接了 15 个 API，Agent 总是调错工具" data-en="15 APIs connected, Agent keeps calling the wrong one">接了 15 个 API，Agent 总是调错工具</li>
+<li data-zh="Demo 好好的，上线就泄露用户数据" data-en="Demo works fine, production leaks user data">Demo 好好的，上线就泄露用户数据</li>
+<li data-zh="改一处 Prompt，全局行为不可预测地变化" data-en="One prompt change, unpredictable global behavior shifts">改一处 Prompt，全局行为不可预测地变化</li>
+<li data-zh="不知道 Agent 什么时候该说"我不知道"" data-en="No idea when the Agent should say &quot;I don't know&quot;">不知道 Agent 什么时候该说"我不知道"</li>
+<li data-zh="用户问了个奇怪问题，Agent 开始编造政策" data-en="User asks a weird question, Agent starts fabricating policies">用户问了个奇怪问题，Agent 开始编造政策</li>
 </ul>
 </div>
 <div class="compare-side compare-good">
-<div class="compare-label">用 Agenauton 之后</div>
+<div class="compare-label" data-zh="用 Agenauton 之后" data-en="With Agenauton">用 Agenauton 之后</div>
 <ul class="compare-list">
-<li>30 分钟填完清单，架构决策一次想清楚</li>
-<li>工具有注册中心、路由逻辑和权限边界</li>
-<li>安全层是架构的一部分，不是事后补丁</li>
-<li>每个模块独立可测试，改一处不动全局</li>
-<li>置信度量化 + 人工介入触发机制</li>
-<li>RAG 检索 + 事实核查 + 引用标注</li>
+<li data-zh="30 分钟填完清单，架构决策一次想清楚" data-en="30 minutes to fill the checklist — all architecture decisions made upfront">30 分钟填完清单，架构决策一次想清楚</li>
+<li data-zh="工具有注册中心、路由逻辑和权限边界" data-en="Tools have a registry, routing logic, and permission boundaries">工具有注册中心、路由逻辑和权限边界</li>
+<li data-zh="安全层是架构的一部分，不是事后补丁" data-en="Security is part of the architecture, not an afterthought">安全层是架构的一部分，不是事后补丁</li>
+<li data-zh="每个模块独立可测试，改一处不动全局" data-en="Every module is independently testable — change one, nothing else breaks">每个模块独立可测试，改一处不动全局</li>
+<li data-zh="置信度量化 + 人工介入触发机制" data-en="Confidence scoring + human-in-the-loop triggers">置信度量化 + 人工介入触发机制</li>
+<li data-zh="RAG 检索 + 事实核查 + 引用标注" data-en="RAG retrieval + fact-checking + citation attribution">RAG 检索 + 事实核查 + 引用标注</li>
 </ul>
 </div>
 </div>
@@ -511,35 +513,35 @@ footer a:hover{color:var(--blue)}
 <section class="section reveal" id="who">
 <div class="wrap">
 <div class="section-label">For Everyone</div>
-<div class="section-title">不管你是谁，都有你的入口</div>
+<div class="section-title" data-zh="不管你是谁，都有你的入口" data-en="No matter who you are, there's an entry point for you">不管你是谁，都有你的入口</div>
 
 <div class="who-grid">
 <div class="who-card">
 <div class="who-icon">💡</div>
 <div>
-<div class="who-title">想做 AI 产品但没思路</div>
-<div class="who-desc">先拆解一个你觉得好的产品，用 26 维度看它怎么做的。学会了思路，再照着清单构建自己的。</div>
+<div class="who-title" data-zh="想做 AI 产品但没思路" data-en="Want to build AI products but have no direction">想做 AI 产品但没思路</div>
+<div class="who-desc" data-zh="先拆解一个你觉得好的产品，用 26 维度看它怎么做的。学会了思路，再照着清单构建自己的。" data-en="Start by dissecting a product you admire through 26 dimensions. Learn the approach, then build your own.">先拆解一个你觉得好的产品，用 26 维度看它怎么做的。学会了思路，再照着清单构建自己的。</div>
 </div>
 </div>
 <div class="who-card">
 <div class="who-icon">🔧</div>
 <div>
-<div class="who-title">有想法但不知道怎么落地</div>
-<div class="who-desc">用清单把想法逐条具象化。填完丢给 AI 编程工具，架构骨架自动生成。你填表，AI 写代码。</div>
+<div class="who-title" data-zh="有想法但不知道怎么落地" data-en="Have ideas but don't know how to ship">有想法但不知道怎么落地</div>
+<div class="who-desc" data-zh="用清单把想法逐条具象化。填完丢给 AI 编程工具，架构骨架自动生成。你填表，AI 写代码。" data-en="Turn ideas into specifics with the checklist. Feed it to an AI coding tool — architecture scaffolded automatically. You fill, AI builds.">用清单把想法逐条具象化。填完丢给 AI 编程工具，架构骨架自动生成。你填表，AI 写代码。</div>
 </div>
 </div>
 <div class="who-card">
 <div class="who-icon">🏢</div>
 <div>
-<div class="who-title">企业想上 AI Agent</div>
-<div class="who-desc">按清单逐项对照业务需求，确保安全、合规、可扩展。不漏关键环节，一次建对不返工。</div>
+<div class="who-title" data-zh="企业想上 AI Agent" data-en="Enterprise deploying AI Agents">企业想上 AI Agent</div>
+<div class="who-desc" data-zh="按清单逐项对照业务需求，确保安全、合规、可扩展。不漏关键环节，一次建对不返工。" data-en="Map every checklist item to business requirements. Secure, compliant, scalable — no critical gaps, built right the first time.">按清单逐项对照业务需求，确保安全、合规、可扩展。不漏关键环节，一次建对不返工。</div>
 </div>
 </div>
 <div class="who-card">
 <div class="who-icon">🔍</div>
 <div>
-<div class="who-title">已有 Agent 想优化</div>
-<div class="who-desc">用 26 维度做一次全面体检，给你的 Agent 打个分（满分 130），精准定位薄弱环节。</div>
+<div class="who-title" data-zh="已有 Agent 想优化" data-en="Already have an Agent — want to optimize">已有 Agent 想优化</div>
+<div class="who-desc" data-zh="用 26 维度做一次全面体检，给你的 Agent 打个分（满分 130），精准定位薄弱环节。" data-en="Run a full 26-dimension health check. Score your Agent out of 130 and pinpoint every weak spot.">用 26 维度做一次全面体检，给你的 Agent 打个分（满分 130），精准定位薄弱环节。</div>
 </div>
 </div>
 </div>
@@ -552,29 +554,29 @@ footer a:hover{color:var(--blue)}
 <section class="section reveal">
 <div class="wrap">
 <div class="section-label">Positioning</div>
-<div class="section-title">标准，不是框架</div>
-<div class="section-desc">Agenauton 和 LangChain / CrewAI / AutoGen 不是竞品。它们解决不同的问题。</div>
+<div class="section-title" data-zh="标准，不是框架" data-en="A standard, not a framework">标准，不是框架</div>
+<div class="section-desc" data-zh="Agenauton 和 LangChain / CrewAI / AutoGen 不是竞品。它们解决不同的问题。" data-en="Agenauton and LangChain / CrewAI / AutoGen are not competitors. They solve different problems.">Agenauton 和 LangChain / CrewAI / AutoGen 不是竞品。它们解决不同的问题。</div>
 
 <div class="steps">
 <div class="step">
 <div class="step-icon">📐</div>
-<h3>Agenauton = 图纸</h3>
-<p>告诉你需要做哪些决策。不绑定任何技术栈，30 分钟填完，输出架构蓝图。</p>
+<h3 data-zh="Agenauton = 图纸" data-en="Agenauton = Blueprint">Agenauton = 图纸</h3>
+<p data-zh="告诉你需要做哪些决策。不绑定任何技术栈，30 分钟填完，输出架构蓝图。" data-en="Tells you what decisions to make. No tech-stack lock-in, 30 minutes to fill, outputs an architecture blueprint.">告诉你需要做哪些决策。不绑定任何技术栈，30 分钟填完，输出架构蓝图。</p>
 </div>
 <div class="step">
 <div class="step-icon">🔧</div>
-<h3>LangChain = 工具箱</h3>
-<p>帮你把 LLM 和外部工具连起来。解决"怎么实现"的问题。</p>
+<h3 data-zh="LangChain = 工具箱" data-en="LangChain = Toolbox">LangChain = 工具箱</h3>
+<p data-zh="帮你把 LLM 和外部工具连起来。解决"怎么实现"的问题。" data-en="Connects LLMs to external tools. Solves the &quot;how to implement&quot; problem.">帮你把 LLM 和外部工具连起来。解决"怎么实现"的问题。</p>
 </div>
 <div class="step">
 <div class="step-icon">🤝</div>
-<h3>CrewAI = 团队管理</h3>
-<p>帮你编排多个 Agent 协作。解决"怎么配合"的问题。</p>
+<h3 data-zh="CrewAI = 团队管理" data-en="CrewAI = Team Management">CrewAI = 团队管理</h3>
+<p data-zh="帮你编排多个 Agent 协作。解决"怎么配合"的问题。" data-en="Orchestrates multi-agent collaboration. Solves the &quot;how to coordinate&quot; problem.">帮你编排多个 Agent 协作。解决"怎么配合"的问题。</p>
 </div>
 </div>
 
 <div class="quote-box">
-<p>"先用 Agenauton 想清楚要做什么，再用框架去实现。图纸画对了，施工才不会出问题。"</p>
+<p data-zh=""先用 Agenauton 想清楚要做什么，再用框架去实现。图纸画对了，施工才不会出问题。"" data-en="&quot;Think it through with Agenauton first, then implement with frameworks. Get the blueprint right, and the build won't go wrong.&quot;">"先用 Agenauton 想清楚要做什么，再用框架去实现。图纸画对了，施工才不会出问题。"</p>
 </div>
 </div>
 </section>
@@ -585,10 +587,10 @@ footer a:hover{color:var(--blue)}
 <section class="section reveal">
 <div class="wrap" style="text-align:center;max-width:700px">
 <div class="section-label" style="text-align:center">Philosophy</div>
-<div class="section-title" style="text-align:center">为什么做这件事</div>
-<p style="color:var(--dim);font-size:1rem;line-height:1.8;margin-top:24px">2026 年，每个人都在谈论 AI Agent，但大多数人构建 Agent 时仍在盲目试错。</p>
-<p style="color:var(--dim);font-size:1rem;line-height:1.8;margin-top:16px">Agenauton 不是教你抄别人的作业。它是一张<strong style="color:var(--text)">构建 Agent 的标准地图</strong> — 无论你从哪里出发，都不会迷路。</p>
-<p style="color:var(--dim);font-size:1rem;line-height:1.8;margin-top:16px">26 个维度不是束缚，而是护栏。有了护栏，你才能放心地全速前进。</p>
+<div class="section-title" style="text-align:center" data-zh="为什么做这件事" data-en="Why we built this">为什么做这件事</div>
+<p style="color:var(--dim);font-size:1rem;line-height:1.8;margin-top:24px" data-zh="2026 年，每个人都在谈论 AI Agent，但大多数人构建 Agent 时仍在盲目试错。" data-en="In 2026, everyone talks about AI Agents, but most still build them through blind trial and error.">2026 年，每个人都在谈论 AI Agent，但大多数人构建 Agent 时仍在盲目试错。</p>
+<p style="color:var(--dim);font-size:1rem;line-height:1.8;margin-top:16px" data-zh="Agenauton 不是教你抄别人的作业。它是一张<strong style=&quot;color:var(--text)&quot;>构建 Agent 的标准地图</strong> — 无论你从哪里出发，都不会迷路。" data-en="Agenauton doesn't teach you to copy others. It's a <strong style=&quot;color:var(--text)&quot;>standard map for building Agents</strong> — no matter where you start, you won't get lost.">Agenauton 不是教你抄别人的作业。它是一张<strong style="color:var(--text)">构建 Agent 的标准地图</strong> — 无论你从哪里出发，都不会迷路。</p>
+<p style="color:var(--dim);font-size:1rem;line-height:1.8;margin-top:16px" data-zh="26 个维度不是束缚，而是护栏。有了护栏，你才能放心地全速前进。" data-en="26 dimensions are not constraints — they're guardrails. With guardrails, you can go full speed with confidence.">26 个维度不是束缚，而是护栏。有了护栏，你才能放心地全速前进。</p>
 <p style="color:var(--text);font-size:1.1rem;font-weight:600;margin-top:32px;letter-spacing:.5px">Think first. Build right. Build once.</p>
 </div>
 </section>
@@ -598,21 +600,21 @@ footer a:hover{color:var(--blue)}
 <!-- CTA -->
 <section class="cta-section reveal">
 <div class="wrap">
-<h2>开始铸造你的 Agent</h2>
-<p>26 个字母构成所有语言，26 个维度构成所有 Agent。</p>
+<h2 data-zh="开始铸造你的 Agent" data-en="Start forging your Agent">开始铸造你的 Agent</h2>
+<p data-zh="26 个字母构成所有语言，26 个维度构成所有 Agent。" data-en="26 letters build every word. 26 dimensions build every Agent.">26 个字母构成所有语言，26 个维度构成所有 Agent。</p>
 <div class="hero-actions">
-<a href="https://github.com/agenauton" class="btn btn-primary">GitHub 获取项目</a>
-<a href="Agenauton/guide/index.html" class="btn btn-ghost">在线引导</a>
-<a href="zhujiliushi.html" class="btn btn-ghost">铸基六式</a>
-<a href="duoshe.html" class="btn btn-ghost">夺舍大法</a>
+<a href="https://github.com/agenauton" class="btn btn-primary" data-zh="GitHub 获取项目" data-en="Get on GitHub">GitHub 获取项目</a>
+<a href="Agenauton/guide/index.html" class="btn btn-ghost" data-zh="在线引导" data-en="Guided Q&amp;A">在线引导</a>
+<a href="zhujiliushi.html" class="btn btn-ghost" data-zh="铸基六式" data-en="Forge Flow">铸基六式</a>
+<a href="duoshe.html" class="btn btn-ghost" data-zh="夺舍大法" data-en="Agent Autopsy">夺舍大法</a>
 </div>
 </div>
 </section>
 
 <footer>
 <div class="wrap">
-<p><strong>Agenauton 铸基</strong> &mdash; The Agentic Standard</p>
-<p style="margin-top:8px">MIT License &middot; <a href="https://github.com/agenauton">GitHub</a> &middot; <a href="duoshe.html">夺舍大法</a> &middot; <a href="zhujiliushi.html">铸基六式</a> &middot; <a href="Agenauton/guide/index.html">引导问答</a> &middot; 26 letters build every word. 26 dimensions build every Agent.</p>
+<p><strong data-zh="Agenauton 铸基" data-en="Agenauton">Agenauton 铸基</strong> &mdash; The Agentic Standard</p>
+<p style="margin-top:8px">MIT License &middot; <a href="https://github.com/agenauton">GitHub</a> &middot; <a href="duoshe.html" data-zh="夺舍大法" data-en="Agent Autopsy">夺舍大法</a> &middot; <a href="zhujiliushi.html" data-zh="铸基六式" data-en="Forge Flow">铸基六式</a> &middot; <a href="Agenauton/guide/index.html" data-zh="引导问答" data-en="Guided Q&amp;A">引导问答</a> &middot; 26 letters build every word. 26 dimensions build every Agent.</p>
 </div>
 </footer>
 
@@ -1128,7 +1130,8 @@ var ob3=new IntersectionObserver(function(entries){
   entries.forEach(function(e){
     if(e.isIntersecting&&!e.target.dataset.typed){
       e.target.dataset.typed='1';
-      var full=e.target.textContent;
+      var lang=window.__lang||'zh';
+      var full=e.target.getAttribute('data-'+lang)||e.target.textContent;
       var el=e.target;
       el.textContent='';
       el.classList.add('typed');
