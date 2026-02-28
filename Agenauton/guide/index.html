@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agenauton | Interactive Agent Blueprint Guide</title>
+    <style>
+        :root {
+            --bg: #000;
+            --surface: #0a0a0a;
+            --primary: #007AFF;
+            --primary-glow: rgba(0, 122, 255, 0.15);
+            --success: #30D158;
+            --warning: #FF9F0A;
+            --text: #ffffff;
+            --dim: #86868b;
+            --glass: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.08);
+            --border-hover: rgba(255, 255, 255, 0.15);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: "SF Pro Display", -apple-system, "Helvetica Neue", sans-serif;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .aurora {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background:
+                radial-gradient(ellipse at 20% -10%, rgba(0, 45, 95, 0.4) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 110%, rgba(0, 45, 95, 0.2) 0%, transparent 50%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        nav {
+            height: 80px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .brand { font-size: 1.3rem; font-weight: 800; letter-spacing: -0.5px; text-decoration:none; color:var(--text); }
+        .brand span { color: var(--primary); }
+        .nav-tag { font-size: 0.7rem; color: var(--dim); text-transform: uppercase; letter-spacing: 2px; }
+        .nav-links-guide { display:flex; gap:16px; align-items:center; }
+        .nav-links-guide a { font-size:.75rem; color:var(--dim); text-decoration:none; transition:.2s; }
+        .nav-links-guide a:hover { color:var(--text); }
+
+        /* Hero */
+        .hero {
+            text-align: center;
+            padding: 80px 0 60px;
+        }
+
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+            background: linear-gradient(to bottom, #fff, #888);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.05rem;
+            color: var(--dim);
+            max-width: 600px;
+            margin: 20px auto 0;
+            line-height: 1.6;
+        }
+
+        /* Progress */
+        .progress-bar {
+            width: 100%;
+            height: 3px;
+            background: var(--border);
+            border-radius: 2px;
+            margin: 40px 0 50px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--primary);
+            border-radius: 2px;
+            transition: width 0.6s cubic-bezier(0.2, 1, 0.2, 1);
+            box-shadow: 0 0 12px rgba(0, 122, 255, 0.5);
+        }
+
+        .step-indicator {
+            text-align: center;
+            font-size: 0.75rem;
+            color: var(--dim);
+            margin-bottom: 30px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* Question */
+        .question-section { display: none; }
+        .question-section.active { display: block; }
+
+        .question-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            letter-spacing: -0.02em;
+        }
+
+        .question-desc {
+            font-size: 0.9rem;
+            color: var(--dim);
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+
+        .dimension-tag {
+            display: inline-block;
+            font-size: 0.65rem;
+            color: var(--primary);
+            background: var(--primary-glow);
+            padding: 4px 10px;
+            border-radius: 20px;
+            margin-bottom: 16px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        /* Options */
+        .options { display: flex; flex-direction: column; gap: 12px; }
+
+        .option {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 20px 24px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.2, 1, 0.2, 1);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .option:hover {
+            border-color: var(--border-hover);
+            background: rgba(255, 255, 255, 0.05);
+            transform: translateY(-2px);
+        }
+
+        .option.selected {
+            border-color: var(--primary);
+            background: var(--primary-glow);
+            box-shadow: 0 0 20px rgba(0, 122, 255, 0.1);
+        }
+
+        .option-radio {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            border: 2px solid var(--border-hover);
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .option.selected .option-radio {
+            border-color: var(--primary);
+            background: var(--primary);
+        }
+
+        .option.selected .option-radio::after {
+            content: '';
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: white;
+        }
+
+        .option-content { flex: 1; }
+        .option-label { font-size: 1rem; font-weight: 600; margin-bottom: 4px; }
+        .option-hint { font-size: 0.8rem; color: var(--dim); line-height: 1.4; }
+
+        /* Navigation */
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            padding-bottom: 60px;
+        }
+
+        .btn {
+            padding: 14px 28px;
+            border-radius: 14px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            font-family: inherit;
+        }
+
+        .btn-secondary {
+            background: var(--glass);
+            color: var(--dim);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover { color: var(--text); border-color: var(--border-hover); }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover { box-shadow: 0 8px 24px rgba(0, 122, 255, 0.35); transform: translateY(-1px); }
+        .btn-primary:disabled { opacity: 0.3; cursor: not-allowed; transform: none; box-shadow: none; }
+
+        /* Results */
+        .results-section { display: none; padding-bottom: 80px; }
+        .results-section.active { display: block; }
+
+        .result-header {
+            text-align: center;
+            padding: 60px 0 40px;
+        }
+
+        .result-header h2 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            background: linear-gradient(to right, var(--primary), var(--success));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .result-header p {
+            color: var(--dim);
+            margin-top: 12px;
+            font-size: 1rem;
+        }
+
+        .result-card {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 32px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(20px);
+        }
+
+        .result-card h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .result-card .badge {
+            font-size: 0.65rem;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .badge-scenario { background: rgba(0, 122, 255, 0.15); color: var(--primary); }
+        .badge-layer { background: rgba(48, 209, 88, 0.15); color: var(--success); }
+
+        .result-list { list-style: none; }
+        .result-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.9rem;
+            color: var(--dim);
+            display: flex;
+            justify-content: space-between;
+        }
+        .result-list li:last-child { border-bottom: none; }
+        .result-list .label { color: var(--text); font-weight: 500; }
+
+        .export-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 40px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-export {
+            padding: 16px 32px;
+            border-radius: 16px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            font-family: inherit;
+        }
+
+        .btn-export-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-export-primary:hover { box-shadow: 0 8px 24px rgba(0, 122, 255, 0.35); }
+
+        .btn-export-secondary {
+            background: var(--glass);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .btn-export-secondary:hover { border-color: var(--primary); }
+
+        /* Responsive */
+        @media (max-width: 640px) {
+            .hero { padding: 50px 0 40px; }
+            .hero h1 { font-size: 1.8rem; }
+            .question-title { font-size: 1.2rem; }
+            .option { padding: 16px 18px; }
+            .export-buttons { flex-direction: column; }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .question-section.active { animation: fadeInUp 0.5s cubic-bezier(0.2, 1, 0.2, 1); }
+        .results-section.active { animation: fadeInUp 0.5s cubic-bezier(0.2, 1, 0.2, 1); }
+            /* Screenshot export footer */
+        .screenshot-footer {
+            display: none;
+            background: #161b22;
+            padding: 24px 32px;
+            border-top: 1px solid rgba(255,255,255,0.12);
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            margin-top: 24px;
+            border-radius: 16px;
+        }
+        .screenshot-footer.visible { display: flex; }
+        .screenshot-footer-left { display:flex; flex-direction:column; gap:4px; }
+        .screenshot-footer-url { font-size:1.2rem; font-weight:800; color:#58a6ff; letter-spacing:1.5px; }
+        .screenshot-footer-tagline { font-size:.75rem; color:#8b949e; }
+        .screenshot-footer-qr { width:80px; height:80px; background:#fff; border-radius:8px; padding:4px; }
+        .screenshot-footer-qr canvas { width:100%!important; height:100%!important; }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
+</head>
+<body>
+
+<div class="aurora"></div>
+
+<div class="container">
+    <nav>
+        <a href="../../guanwang.html" class="brand">AGEN<span>AUTON</span></a>
+        <div class="nav-links-guide">
+            <a href="../../guanwang.html">主站</a>
+            <a href="../../duoshe.html">夺舍大法</a>
+            <span class="nav-tag">Interactive Blueprint Guide</span>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <div class="hero" id="heroSection">
+        <h1>发现你的 Agent 灵魂</h1>
+        <p>通过 8 个选择题，Agenauton 将为你生成一份个性化的 Agent 构建蓝图。无需填空，只需选择。</p>
+    </div>
+
+    <!-- Progress -->
+    <div class="progress-bar" id="progressBar" style="display:none;">
+        <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+    </div>
+    <div class="step-indicator" id="stepIndicator" style="display:none;"></div>
+
+    <!-- Start Button -->
+    <div style="text-align:center; padding-bottom: 80px;" id="startSection">
+        <button class="btn btn-primary" onclick="startGuide()" style="padding: 18px 48px; font-size: 1.1rem; border-radius: 18px;">
+            开始铸造引导
+        </button>
+        <p style="color: var(--dim); font-size: 0.8rem; margin-top: 16px;">约 2 分钟 · 8 个问题 · 0 个填空</p>
+    </div>
+
+    <!-- Questions -->
+    <div id="questionsContainer"></div>
+
+    <!-- Results -->
+    <div class="results-section" id="resultsSection">
+        <div class="result-header">
+            <h2>你的 Agentic 蓝图已生成</h2>
+            <p>基于你的选择，以下是 Agenauton 为你推荐的构建方案</p>
+        </div>
+        <div id="resultsContent"></div>
+        <div class="screenshot-footer" id="screenshotFooter">
+            <div class="screenshot-footer-left">
+                <div class="screenshot-footer-url">AGENAUTON.COM</div>
+                <div class="screenshot-footer-tagline">The Agentic Standard — 26 dimensions build every Agent</div>
+            </div>
+            <div class="screenshot-footer-qr" id="qrcodeContainer"></div>
+        </div>
+        <div class="export-buttons">
+            <button class="btn-export btn-export-primary" onclick="exportScreenshot()">
+                截图导出（含网址 + 二维码）
+            </button>
+            <button class="btn-export btn-export-secondary" onclick="exportBlueprint()">
+                导出 Markdown 蓝图
+            </button>
+            <button class="btn-export btn-export-secondary" onclick="restartGuide()">
+                重新开始
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+const questions = [
+    {
+        id: 'scenario',
+        dimension: 'FORGING SCENARIO',
+        title: '你目前处于哪个阶段？',
+        desc: '选择最符合你当前状态的选项',
+        options: [
+            { value: 'extraction', label: '我没有明确想法', hint: '想做 AI Agent 但不知道从哪开始，想参考市面上成功的产品' },
+            { value: 'materialization', label: '我有想法但不会建', hint: '脑子里有清晰的构想，但不知道怎么落地成代码' },
+            { value: 'enterprise', label: '我有真实业务需求', hint: '企业/团队有具体的业务场景，需要 Agent 来提效' },
+            { value: 'evolution', label: '我已有 Agent 想优化', hint: '已经有一个运行中的 Agent，想让它更强、更智能' }
+        ]
+    },
+    {
+        id: 'domain',
+        dimension: 'LAYER 3 · CORE LOGIC',
+        title: '你的 Agent 服务什么领域？',
+        desc: '这决定了核心层的架构设计',
+        options: [
+            { value: 'content', label: '内容创作', hint: '写作、视频、图片、音乐等创意内容生成' },
+            { value: 'coding', label: '代码开发', hint: '代码生成、调试、重构、技术文档等' },
+            { value: 'business', label: '商业服务', hint: '客服、销售、数据分析、流程自动化等' },
+            { value: 'education', label: '教育培训', hint: '个性化教学、知识问答、技能训练等' },
+            { value: 'other', label: '其他领域', hint: '医疗、法律、金融或其他垂直领域' }
+        ]
+    },
+    {
+        id: 'architecture',
+        dimension: 'DIMENSION 08 · ARCHITECTURE TOPOLOGY',
+        title: '你需要多复杂的架构？',
+        desc: '单体 Agent 简单但能力有限，多 Agent 协同强大但复杂',
+        options: [
+            { value: 'single', label: '单体 Agent', hint: '一个 Agent 处理所有事情，适合简单场景' },
+            { value: 'pipeline', label: '流水线式', hint: '多个 Agent 按顺序处理，如：规划→执行→审查' },
+            { value: 'parallel', label: '并行协同', hint: '多个 Agent 同时工作，最后汇总结果' },
+            { value: 'graph', label: '图结构编排', hint: '复杂的条件路由和动态调度，最灵活也最复杂' }
+        ]
+    },
+    {
+        id: 'memory',
+        dimension: 'DIMENSION 05 · STATE & MEMORY',
+        title: '你的 Agent 需要记忆吗？',
+        desc: '记忆能力决定了 Agent 的个性化和持续学习能力',
+        options: [
+            { value: 'none', label: '不需要记忆', hint: '每次对话都是独立的，无需记住历史' },
+            { value: 'session', label: '会话级记忆', hint: '在一次对话中记住上下文，对话结束就忘记' },
+            { value: 'persistent', label: '持久化记忆', hint: '跨会话记住用户偏好和历史，提供个性化服务' },
+            { value: 'evolving', label: '进化式记忆', hint: '不仅记住，还能从历史中学习和进化' }
+        ]
+    },
+    {
+        id: 'tools',
+        dimension: 'DIMENSION 10 · TOOL MAPPING',
+        title: '你的 Agent 需要调用外部工具吗？',
+        desc: '工具能力让 Agent 从"只会说"变成"能干活"',
+        options: [
+            { value: 'none', label: '纯对话，不需要工具', hint: '只做文本交互，不调用任何外部服务' },
+            { value: 'search', label: '搜索和知识库', hint: '需要搜索互联网或查询内部知识库' },
+            { value: 'api', label: '调用外部 API', hint: '需要连接第三方服务（支付、邮件、数据库等）' },
+            { value: 'full', label: '完整工具链', hint: '需要代码执行、文件操作、多种 API 联动' }
+        ]
+    },
+    {
+        id: 'safety',
+        dimension: 'LAYER 5 · GOVERNANCE',
+        title: '安全和质量要求有多高？',
+        desc: '这决定了治理层的复杂度',
+        options: [
+            { value: 'basic', label: '基础防护', hint: '简单的内容过滤，适合个人项目或内部工具' },
+            { value: 'moderate', label: '中等防护', hint: '需要幻觉抑制和基本的安全过滤' },
+            { value: 'strict', label: '严格防护', hint: '面向公众的产品，需要完善的审核和合规机制' },
+            { value: 'enterprise', label: '企业级防护', hint: '金融/医疗等高风险领域，需要人工审核和审计追踪' }
+        ]
+    },
+    {
+        id: 'scale',
+        dimension: 'LAYER 1 · INFRASTRUCTURE',
+        title: '预期用户规模是多少？',
+        desc: '这决定了物理层的基础设施需求',
+        options: [
+            { value: 'personal', label: '个人使用', hint: '只有自己或几个人用，无需考虑并发' },
+            { value: 'small', label: '小团队 (10-100人)', hint: '内部团队使用，低并发' },
+            { value: 'medium', label: '中等规模 (100-10000人)', hint: '面向特定用户群，需要基本的扩展能力' },
+            { value: 'large', label: '大规模 (10000+人)', hint: '面向公众的产品，需要完善的弹性伸缩' }
+        ]
+    },
+    {
+        id: 'budget',
+        dimension: 'DIMENSION 06 · COST CONTROL',
+        title: '你的成本预算是？',
+        desc: '这决定了模型选择和成本管控策略',
+        options: [
+            { value: 'free', label: '尽量免费', hint: '使用开源模型，本地部署或免费 API 额度' },
+            { value: 'low', label: '低成本 (<$100/月)', hint: '可以使用付费 API，但需要严格控制用量' },
+            { value: 'moderate', label: '中等预算 ($100-1000/月)', hint: '可以使用强模型，但需要智能路由降本' },
+            { value: 'unlimited', label: '预算充足 (>$1000/月)', hint: '可以使用最强模型，追求最佳效果' }
+        ]
+    }
+];
+
+let currentStep = 0;
+let answers = {};
+
+function startGuide() {
+    document.getElementById('heroSection').style.display = 'none';
+    document.getElementById('startSection').style.display = 'none';
+    document.getElementById('progressBar').style.display = 'block';
+    document.getElementById('stepIndicator').style.display = 'block';
+    renderQuestions();
+    showStep(0);
+}
+
+function renderQuestions() {
+    const container = document.getElementById('questionsContainer');
+    container.innerHTML = '';
+    questions.forEach((q, idx) => {
+        const section = document.createElement('div');
+        section.className = 'question-section';
+        section.id = `step-${idx}`;
+        section.innerHTML = `
+            <div class="dimension-tag">${q.dimension}</div>
+            <div class="question-title">${q.title}</div>
+            <div class="question-desc">${q.desc}</div>
+            <div class="options">
+                ${q.options.map(opt => `
+                    <div class="option" data-question="${q.id}" data-value="${opt.value}" onclick="selectOption(this, '${q.id}', '${opt.value}')">
+                        <div class="option-radio"></div>
+                        <div class="option-content">
+                            <div class="option-label">${opt.label}</div>
+                            <div class="option-hint">${opt.hint}</div>
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+            <div class="nav-buttons">
+                <button class="btn btn-secondary" onclick="prevStep()" ${idx === 0 ? 'style="visibility:hidden"' : ''}>上一步</button>
+                <button class="btn btn-primary" id="nextBtn-${idx}" onclick="nextStep()" disabled>${idx === questions.length - 1 ? '生成蓝图' : '下一步'}</button>
+            </div>
+        `;
+        container.appendChild(section);
+    });
+}
+
+function showStep(step) {
+    document.querySelectorAll('.question-section').forEach(s => s.classList.remove('active'));
+    const el = document.getElementById(`step-${step}`);
+    if (el) el.classList.add('active');
+    const pct = ((step + 1) / questions.length) * 100;
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('stepIndicator').textContent = `STEP ${step + 1} / ${questions.length}`;
+    currentStep = step;
+}
+
+function selectOption(el, questionId, value) {
+    el.parentElement.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+    el.classList.add('selected');
+    answers[questionId] = value;
+    document.getElementById(`nextBtn-${currentStep}`).disabled = false;
+}
+
+function nextStep() {
+    if (currentStep < questions.length - 1) {
+        showStep(currentStep + 1);
+    } else {
+        showResults();
+    }
+}
+
+function prevStep() {
+    if (currentStep > 0) showStep(currentStep - 1);
+}
+
+function showResults() {
+    document.getElementById('questionsContainer').style.display = 'none';
+    document.getElementById('progressBar').style.display = 'none';
+    document.getElementById('stepIndicator').style.display = 'none';
+
+    const results = generateBlueprint(answers);
+    const container = document.getElementById('resultsContent');
+    container.innerHTML = '';
+
+    // Scenario Card
+    container.innerHTML += `
+        <div class="result-card">
+            <h3><span class="badge badge-scenario">推荐路径</span> ${results.scenario.name}</h3>
+            <p style="color: var(--dim); font-size: 0.9rem; line-height: 1.6;">${results.scenario.desc}</p>
+            <p style="color: var(--primary); font-size: 0.85rem; margin-top: 12px; font-weight: 600;">${results.scenario.steps}</p>
+        </div>
+    `;
+
+    // Architecture Card
+    container.innerHTML += `
+        <div class="result-card">
+            <h3><span class="badge badge-layer">架构建议</span> 你的 Agentic 架构</h3>
+            <ul class="result-list">
+                <li><span class="label">架构类型</span><span>${results.architecture}</span></li>
+                <li><span class="label">推荐模型</span><span>${results.model}</span></li>
+                <li><span class="label">记忆方案</span><span>${results.memory}</span></li>
+                <li><span class="label">工具能力</span><span>${results.tools}</span></li>
+                <li><span class="label">安全等级</span><span>${results.safety}</span></li>
+                <li><span class="label">基础设施</span><span>${results.infra}</span></li>
+                <li><span class="label">成本策略</span><span>${results.cost}</span></li>
+            </ul>
+        </div>
+    `;
+
+    // Priority Dimensions
+    container.innerHTML += `
+        <div class="result-card">
+            <h3><span class="badge badge-layer">优先维度</span> 你应该重点关注的维度</h3>
+            <ul class="result-list">
+                ${results.priorities.map(p => `<li><span class="label">${p.dim}</span><span>${p.reason}</span></li>`).join('')}
+            </ul>
+        </div>
+    `;
+
+    // Next Steps
+    container.innerHTML += `
+        <div class="result-card">
+            <h3>下一步行动</h3>
+            <ul class="result-list">
+                ${results.nextSteps.map((s, i) => `<li><span class="label">Step ${i+1}</span><span style="text-align:right;">${s}</span></li>`).join('')}
+            </ul>
+        </div>
+    `;
+
+    document.getElementById('resultsSection').classList.add('active');
+}
+
+function generateBlueprint(a) {
+    const scenarios = {
+        extraction: { name: '夺舍法 · Soul Extraction', desc: '通过逆向工程探测顶层商业 AI 的运行逻辑，跨越研发门槛，直接收割成熟的元神。就像普通人直接学习大宗门的武功，炼化己用。', steps: '搜魂 → 炼魄 → 锻造' },
+        materialization: { name: '具象化路径 · Materialization', desc: '将你模糊的天才想法，通过 26 维度标准强制具象化为逻辑实体。解决"想得出却做不出"的工程困境。', steps: '意图锚定 → 经络映射 → 架构生成' },
+        enterprise: { name: '实证方案 · Production Forging', desc: '深植于真实商业流程的 Agent 建设。将复杂的企业 SOP 转化为 26 维度稳健运行的生产力工具。', steps: '业务对齐 → 闭环治理 → 私有化锻造' },
+        evolution: { name: '自演化 · Auto-Evolution', desc: '让 Agent 具备自我迭代的能力。基于 26 维度的反馈层，实现逻辑的动态进化。', steps: '遥测分析 → 逻辑漂移 → 元神迭代' }
+    };
+
+    const archMap = { single: '单体 Agent', pipeline: '流水线多 Agent', parallel: '并行协同 Agent', graph: '图结构编排 Agent' };
+    const memMap = { none: '无记忆（无状态）', session: '会话级记忆（Context Window）', persistent: '持久化记忆（VectorDB）', evolving: '进化式记忆（VectorDB + 动态学习）' };
+    const toolMap = { none: '纯对话，无工具', search: '搜索 + RAG 知识库', api: '外部 API 集成', full: '完整工具链（代码执行 + API + 文件）' };
+    const safetyMap = { basic: '基础（Prompt 内置过滤）', moderate: '中等（幻觉抑制 + 内容审核）', strict: '严格（独立审核层 + 注入防御）', enterprise: '企业级（人工审核 + 审计追踪 + 合规）' };
+    const infraMap = { personal: '本地部署 / 单实例', small: '单服务器 + 基础监控', medium: '云服务 + 自动扩容', large: '分布式集群 + 全球 CDN' };
+
+    let modelRec = '';
+    if (a.budget === 'free') modelRec = '开源模型（DeepSeek / Llama 3）';
+    else if (a.budget === 'low') modelRec = 'GPT-4o-mini / DeepSeek API';
+    else if (a.budget === 'moderate') modelRec = '强模型定骨架（Claude 3.5）+ 弱模型填代码（GPT-4o-mini）';
+    else modelRec = 'Claude 3.5 Sonnet / GPT-4o（全流程）';
+
+    let costStrategy = '';
+    if (a.budget === 'free') costStrategy = '全开源方案，本地推理';
+    else if (a.budget === 'low') costStrategy = '智能路由：简单任务用弱模型，复杂任务用强模型';
+    else if (a.budget === 'moderate') costStrategy = 'Token 预算制 + 模型降级策略';
+    else costStrategy = '效果优先，成本次之';
+
+    let priorities = [];
+    if (a.architecture === 'graph' || a.architecture === 'parallel') {
+        priorities.push({ dim: '维度 08 架构拓扑', reason: '多 Agent 编排是你的核心挑战' });
+        priorities.push({ dim: '维度 09 子Agent分工', reason: '明确每个 Agent 的职责边界' });
+    }
+    if (a.tools === 'api' || a.tools === 'full') {
+        priorities.push({ dim: '维度 10 工具映射', reason: '工具调用的触发条件和错误处理' });
+    }
+    if (a.memory === 'persistent' || a.memory === 'evolving') {
+        priorities.push({ dim: '维度 05 状态记忆', reason: '长期记忆的存储和检索策略' });
+    }
+    if (a.safety === 'strict' || a.safety === 'enterprise') {
+        priorities.push({ dim: '维度 18 安全防御', reason: '面向公众需要完善的安全机制' });
+        priorities.push({ dim: '维度 17 幻觉抑制', reason: '确保输出的准确性和可靠性' });
+    }
+    if (a.scale === 'large') {
+        priorities.push({ dim: '维度 02 并发策略', reason: '大规模用户需要异步队列和负载均衡' });
+    }
+    priorities.push({ dim: '维度 12 指令策略', reason: 'System Prompt 是 Agent 的灵魂' });
+    if (priorities.length > 5) priorities = priorities.slice(0, 5);
+
+    let nextSteps = [];
+    if (a.scenario === 'extraction') {
+        nextSteps = [
+            '选择一个目标 Agent 进行分析',
+            '使用 01_Soul_Extraction 中的探测话术',
+            '将结果填入 26 维度测绘表',
+            '使用 03_Soul_Forging 生成代码骨架'
+        ];
+    } else if (a.scenario === 'materialization') {
+        nextSteps = [
+            '下载 26 维度测绘表模板',
+            '逐维度填写你的 Agent 构想',
+            '使用锻造元指令生成架构骨架',
+            '在 Cursor 中开始编码'
+        ];
+    } else if (a.scenario === 'enterprise') {
+        nextSteps = [
+            '梳理业务 SOP 流程',
+            '将业务流程映射到 26 维度',
+            '重点设计治理层（安全/质量/合规）',
+            '使用锻造指令生成企业级骨架'
+        ];
+    } else {
+        nextSteps = [
+            '审计现有 Agent 的 26 维度覆盖度',
+            '识别薄弱维度并制定优化计划',
+            '部署遥测日志收集用户反馈',
+            '基于数据驱动的迭代优化'
+        ];
+    }
+
+    return {
+        scenario: scenarios[a.scenario],
+        architecture: archMap[a.architecture],
+        model: modelRec,
+        memory: memMap[a.memory],
+        tools: toolMap[a.tools],
+        safety: safetyMap[a.safety],
+        infra: infraMap[a.scale],
+        cost: costStrategy,
+        priorities,
+        nextSteps
+    };
+}
+
+function exportBlueprint() {
+    const results = generateBlueprint(answers);
+    let md = `# Agenauton Agentic Blueprint\n# 我的 Agentic 铸造蓝图\n\n`;
+    md += `> Generated by Agenauton Interactive Guide\n> 生成时间: ${new Date().toLocaleDateString()}\n\n---\n\n`;
+    md += `## 推荐路径: ${results.scenario.name}\n\n${results.scenario.desc}\n\n**步骤:** ${results.scenario.steps}\n\n---\n\n`;
+    md += `## 架构概览\n\n`;
+    md += `| 维度 | 选择 |\n|------|------|\n`;
+    md += `| 架构类型 | ${results.architecture} |\n`;
+    md += `| 推荐模型 | ${results.model} |\n`;
+    md += `| 记忆方案 | ${results.memory} |\n`;
+    md += `| 工具能力 | ${results.tools} |\n`;
+    md += `| 安全等级 | ${results.safety} |\n`;
+    md += `| 基础设施 | ${results.infra} |\n`;
+    md += `| 成本策略 | ${results.cost} |\n\n`;
+    md += `## 优先关注维度\n\n`;
+    results.priorities.forEach(p => { md += `- **${p.dim}** — ${p.reason}\n`; });
+    md += `\n## 下一步行动\n\n`;
+    results.nextSteps.forEach((s, i) => { md += `${i+1}. ${s}\n`; });
+    md += `\n---\n\n> 下一步：下载完整的 [26 维度测绘表](../02_Spirit_Refining/26_Dimensions_Template.md) 进行详细填写。\n>\n> *— Agenauton: The Agentic Standard*\n`;
+
+    const blob = new Blob([md], { type: 'text/markdown' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'Agenauton_My_Agentic_Blueprint.md';
+    a.click();
+    URL.revokeObjectURL(url);
+}
+
+function restartGuide() {
+    answers = {};
+    currentStep = 0;
+    document.getElementById('heroSection').style.display = 'block';
+    document.getElementById('startSection').style.display = 'block';
+    document.getElementById('questionsContainer').style.display = 'block';
+    document.getElementById('resultsSection').classList.remove('active');
+    document.getElementById('progressBar').style.display = 'none';
+    document.getElementById('stepIndicator').style.display = 'none';
+    document.getElementById('screenshotFooter').classList.remove('visible');
+}
+
+function exportScreenshot() {
+    var results = generateBlueprint(answers);
+    var DPR = 3;
+    var PW = 390; // iPhone width in pt
+    var W = PW * DPR;
+    var pad = 20 * DPR, cardPad = 18 * DPR, gap = 12 * DPR, rowH = 44 * DPR;
+    var bg = '#0a0e14', cardBg = '#141a24', border = '#1e2a3a', white = '#f0f6fc', dim = '#7d8590', bright = '#d1d9e0';
+    var blue = '#58a6ff', green = '#3fb950';
+    var font = function(w, sz){ return w + ' ' + Math.round(sz*DPR) + 'px "SF Pro Display", -apple-system, "PingFang SC", "Helvetica Neue", sans-serif'; };
+    var contentW = W - pad * 2;
+    var innerW = contentW - cardPad * 2;
+
+    // Pre-measure wrapped text heights
+    function measureWrap(text, fontSize, maxW, lineH) {
+        var tmpC = document.createElement('canvas').getContext('2d');
+        tmpC.font = font('normal', fontSize);
+        var chars = text.split(''), line = '', h = lineH;
+        for (var i = 0; i < chars.length; i++) {
+            var test = line + chars[i];
+            if (tmpC.measureText(test).width > maxW && line.length > 0) { h += lineH; line = chars[i]; }
+            else line = test;
+        }
+        return h;
+    }
+
+    // Build sections
+    var sections = [
+        { type: 'header' },
+        { type: 'card', badgeText: '推荐路径', badgeColor: green, title: results.scenario.name, desc: results.scenario.desc, extra: results.scenario.steps },
+        { type: 'table', badgeText: '架构建议', badgeColor: blue, title: '你的 Agentic 架构', rows: [
+            ['架构类型', results.architecture], ['推荐模型', results.model], ['记忆方案', results.memory],
+            ['工具能力', results.tools], ['安全等级', results.safety], ['基础设施', results.infra], ['成本策略', results.cost]
+        ]},
+        { type: 'table', badgeText: '优先维度', badgeColor: blue, title: '重点关注的维度', rows: results.priorities.map(function(p) { return [p.dim, p.reason]; }) },
+        { type: 'table', badgeText: null, badgeColor: null, title: '下一步行动', rows: results.nextSteps.map(function(s, i) { return ['Step ' + (i + 1), s]; }) },
+        { type: 'footer' }
+    ];
+
+    // Calculate heights
+    var heights = sections.map(function(sec) {
+        if (sec.type === 'header') return 100 * DPR;
+        if (sec.type === 'footer') return 90 * DPR;
+        if (sec.type === 'card') {
+            var descH = measureWrap(sec.desc, 14, innerW, 22 * DPR);
+            return cardPad + 30 * DPR + 26 * DPR + descH + 12 * DPR + 22 * DPR + cardPad;
+        }
+        if (sec.type === 'table') {
+            var titleH = 30 * DPR + 12 * DPR;
+            var rowsH = 0;
+            sec.rows.forEach(function(row) {
+                var valH = measureWrap(row[1], 13, innerW * 0.55, 20 * DPR);
+                rowsH += Math.max(rowH, valH + 16 * DPR);
+            });
+            return cardPad + titleH + rowsH + cardPad;
+        }
+        return 0;
+    });
+
+    var totalH = pad;
+    heights.forEach(function(h) { totalH += h + gap; });
+    totalH += pad;
+
+    var canvas = document.createElement('canvas');
+    canvas.width = W;
+    canvas.height = totalH;
+    var ctx = canvas.getContext('2d');
+
+    // Background
+    roundRect(ctx, 0, 0, W, totalH, 24 * DPR, bg);
+
+    // Subtle gradient glow at top
+    var grd = ctx.createRadialGradient(W / 2, 0, 0, W / 2, 0, W * 0.7);
+    grd.addColorStop(0, 'rgba(88,166,255,0.08)');
+    grd.addColorStop(1, 'rgba(88,166,255,0)');
+    ctx.fillStyle = grd;
+    ctx.fillRect(0, 0, W, 200 * DPR);
+
+    var y = pad;
+
+    sections.forEach(function(sec, idx) {
+        var h = heights[idx];
+
+        if (sec.type === 'header') {
+            ctx.textAlign = 'center';
+            // Title with gradient feel — use bright blue-green
+            ctx.font = font('bold', 26);
+            var grdT = ctx.createLinearGradient(W * 0.2, y, W * 0.8, y);
+            grdT.addColorStop(0, '#58a6ff');
+            grdT.addColorStop(1, '#3fb950');
+            ctx.fillStyle = grdT;
+            ctx.fillText('你的 Agentic 蓝图已生成', W / 2, y + 44 * DPR);
+            ctx.font = font('normal', 13);
+            ctx.fillStyle = dim;
+            ctx.fillText('基于你的选择 · Agenauton 铸基', W / 2, y + 70 * DPR);
+            ctx.textAlign = 'left';
+        }
+
+        else if (sec.type === 'card') {
+            roundRect(ctx, pad, y, contentW, h, 16 * DPR, cardBg, border);
+            var cx = pad + cardPad, cy = y + cardPad;
+            // Badge
+            if (sec.badgeText) {
+                drawBadge(ctx, cx, cy, sec.badgeText, sec.badgeColor, DPR, font);
+                cy += 30 * DPR;
+            }
+            // Title
+            ctx.font = font('bold', 17);
+            ctx.fillStyle = white;
+            cy = wrapText(ctx, sec.title, cx, cy, innerW, 24 * DPR);
+            cy += 8 * DPR;
+            // Desc
+            ctx.font = font('normal', 14);
+            ctx.fillStyle = bright;
+            cy = wrapText(ctx, sec.desc, cx, cy, innerW, 22 * DPR);
+            cy += 8 * DPR;
+            // Steps highlight
+            if (sec.extra) {
+                ctx.font = font('bold', 14);
+                ctx.fillStyle = blue;
+                ctx.fillText(sec.extra, cx, cy);
+            }
+        }
+
+        else if (sec.type === 'table') {
+            roundRect(ctx, pad, y, contentW, h, 16 * DPR, cardBg, border);
+            var cx = pad + cardPad, cy = y + cardPad;
+            // Badge + title on same line
+            var titleX = cx;
+            if (sec.badgeText) {
+                drawBadge(ctx, cx, cy, sec.badgeText, sec.badgeColor, DPR, font);
+                titleX = cx + measureBadge(ctx, sec.badgeText, DPR, font) + 10 * DPR;
+            }
+            ctx.font = font('bold', 16);
+            ctx.fillStyle = white;
+            ctx.fillText(sec.title, titleX, cy + 2 * DPR);
+            cy += 30 * DPR + 8 * DPR;
+
+            // Rows
+            sec.rows.forEach(function(row) {
+                // Separator
+                ctx.strokeStyle = 'rgba(255,255,255,0.05)';
+                ctx.lineWidth = DPR;
+                ctx.beginPath();
+                ctx.moveTo(cx, cy);
+                ctx.lineTo(cx + innerW, cy);
+                ctx.stroke();
+                cy += 4 * DPR;
+
+                // Label (left)
+                ctx.font = font('600', 14);
+                ctx.fillStyle = white;
+                ctx.textAlign = 'left';
+                ctx.fillText(row[0], cx, cy + 16 * DPR);
+
+                // Value (right, may wrap)
+                ctx.font = font('normal', 13);
+                ctx.fillStyle = bright;
+                ctx.textAlign = 'right';
+                var valMaxW = innerW * 0.55;
+                var valW = ctx.measureText(row[1]).width;
+                if (valW <= valMaxW) {
+                    ctx.fillText(row[1], cx + innerW, cy + 16 * DPR);
+                    cy += rowH - 4 * DPR;
+                } else {
+                    // Wrap value text right-aligned
+                    ctx.textAlign = 'right';
+                    var chars = row[1].split(''), line = '', lines = [];
+                    for (var ci = 0; ci < chars.length; ci++) {
+                        var test = line + chars[ci];
+                        if (ctx.measureText(test).width > valMaxW && line.length > 0) { lines.push(line); line = chars[ci]; }
+                        else line = test;
+                    }
+                    if (line) lines.push(line);
+                    for (var li = 0; li < lines.length; li++) {
+                        ctx.fillText(lines[li], cx + innerW, cy + 16 * DPR + li * 20 * DPR);
+                    }
+                    cy += Math.max(rowH, (lines.length * 20 + 16) * DPR) - 4 * DPR;
+                }
+                ctx.textAlign = 'left';
+            });
+        }
+
+        else if (sec.type === 'footer') {
+            var fy = y + 8 * DPR;
+            var fh = 74 * DPR;
+            roundRect(ctx, pad, fy, contentW, fh, 16 * DPR, '#111820', border);
+
+            // QR code on the right
+            var qrSize = 52 * DPR;
+            var qrX = pad + contentW - cardPad - qrSize;
+            var qrY = fy + (fh - qrSize) / 2;
+            roundRect(ctx, qrX - 4 * DPR, qrY - 4 * DPR, qrSize + 8 * DPR, qrSize + 8 * DPR, 6 * DPR, '#ffffff');
+            if (typeof qrcode !== 'undefined') {
+                var qr = qrcode(0, 'M');
+                qr.addData('https://agenauton.com');
+                qr.make();
+                var mods = qr.getModuleCount();
+                var cellSize = qrSize / mods;
+                ctx.fillStyle = '#000000';
+                for (var r = 0; r < mods; r++) for (var c = 0; c < mods; c++) {
+                    if (qr.isDark(r, c)) ctx.fillRect(qrX + c * cellSize, qrY + r * cellSize, Math.ceil(cellSize), Math.ceil(cellSize));
+                }
+            }
+
+            // Text on the left
+            var tx = pad + cardPad;
+            ctx.font = font('800', 16);
+            ctx.fillStyle = blue;
+            ctx.fillText('AGENAUTON.COM', tx, fy + 30 * DPR);
+            ctx.font = font('normal', 11);
+            ctx.fillStyle = dim;
+            ctx.fillText('The Agentic Standard', tx, fy + 48 * DPR);
+            ctx.fillText('26 dimensions build every Agent', tx, fy + 62 * DPR);
+        }
+
+        y += h + gap;
+    });
+
+    // Download
+    var link = document.createElement('a');
+    link.download = 'Agenauton_Agentic_Blueprint_' + new Date().toISOString().slice(0, 10) + '.png';
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+}
+
+function roundRect(ctx, x, y, w, h, r, fill, stroke) {
+    ctx.beginPath();
+    ctx.moveTo(x + r, y); ctx.lineTo(x + w - r, y); ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+    ctx.lineTo(x + w, y + h - r); ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+    ctx.lineTo(x + r, y + h); ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+    ctx.lineTo(x, y + r); ctx.quadraticCurveTo(x, y, x + r, y);
+    ctx.closePath();
+    if (fill) { ctx.fillStyle = fill; ctx.fill(); }
+    if (stroke) { ctx.strokeStyle = stroke; ctx.lineWidth = 1; ctx.stroke(); }
+}
+
+function drawBadge(ctx, x, y, text, color, DPR, fontFn) {
+    ctx.font = fontFn('700', 10);
+    var tw = ctx.measureText(text).width;
+    var bw = tw + 14 * DPR, bh = 22 * DPR;
+    ctx.globalAlpha = 0.18;
+    roundRect(ctx, x, y - 15 * DPR, bw, bh, 5 * DPR, color);
+    ctx.globalAlpha = 1;
+    ctx.fillStyle = color;
+    ctx.fillText(text, x + 7 * DPR, y);
+}
+
+function measureBadge(ctx, text, DPR, fontFn) {
+    ctx.font = fontFn('700', 10);
+    return ctx.measureText(text).width + 14 * DPR;
+}
+
+function wrapText(ctx, text, x, y, maxW, lineH) {
+    var chars = text.split(''), line = '';
+    for (var i = 0; i < chars.length; i++) {
+        var test = line + chars[i];
+        if (ctx.measureText(test).width > maxW && line.length > 0) {
+            ctx.fillText(line, x, y); y += lineH; line = chars[i];
+        } else { line = test; }
+    }
+    if (line) { ctx.fillText(line, x, y); y += lineH; }
+    return y;
+}
+</script>
+
+</body>
+</html>

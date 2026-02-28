@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agenauton 内容营销仪表盘</title>
+<style>
+:root{--bg:#09090b;--surface:#18181b;--card:#1e1e22;--border:#27272a;--border-hover:#3f3f46;--primary:#3b82f6;--primary-glow:rgba(59,130,246,.12);--green:#22c55e;--yellow:#eab308;--orange:#f97316;--red:#ef4444;--purple:#a855f7;--text:#fafafa;--dim:#a1a1aa;--muted:#71717a}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,"SF Pro Display","Helvetica Neue",sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
+body.modal-open{overflow:hidden}
+.container{max-width:1400px;margin:0 auto;padding:24px}
+header{display:flex;justify-content:space-between;align-items:center;padding-bottom:24px;border-bottom:1px solid var(--border)}
+.brand{font-size:1.4rem;font-weight:800;letter-spacing:-.5px}
+.brand span{color:var(--primary)}
+.header-tag{font-size:.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:2px}
+.stats{display:grid;grid-template-columns:repeat(6,1fr);gap:16px;margin:24px 0}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px;text-align:center}
+.stat-num{font-size:2rem;font-weight:800;background:linear-gradient(135deg,var(--primary),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.stat-label{font-size:.75rem;color:var(--dim);margin-top:4px;text-transform:uppercase;letter-spacing:1px}
+.tabs{display:flex;gap:8px;margin:24px 0;flex-wrap:wrap}
+.tab{padding:8px 16px;border-radius:10px;font-size:.8rem;font-weight:600;cursor:pointer;border:1px solid var(--border);background:transparent;color:var(--dim);transition:.2s}
+.tab:hover{border-color:var(--border-hover);color:var(--text)}
+.tab.active{background:var(--primary-glow);border-color:var(--primary);color:var(--primary)}
+.section-title{font-size:1.3rem;font-weight:700;margin:32px 0 16px;display:flex;align-items:center;gap:10px}
+.section-title .badge{font-size:.65rem;padding:3px 8px;border-radius:6px;font-weight:600;text-transform:uppercase;letter-spacing:1px}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(380px,1fr));gap:16px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:24px;cursor:pointer;transition:.3s}
+.card:hover{border-color:var(--primary);transform:translateY(-2px);box-shadow:0 8px 32px rgba(59,130,246,.08)}
+.card-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px}
+.card-id{font-size:.65rem;color:var(--muted);font-weight:700;letter-spacing:1px}
+.card-wave{font-size:.6rem;padding:3px 8px;border-radius:20px;font-weight:600}
+.wave1{background:rgba(59,130,246,.12);color:var(--primary)}
+.wave2{background:rgba(168,85,247,.12);color:var(--purple)}
+.wave3{background:rgba(34,197,94,.12);color:var(--green)}
+.wave4{background:rgba(249,115,22,.12);color:var(--orange)}
+.wave-en{background:rgba(234,179,8,.12);color:var(--yellow)}
+.card h3{font-size:1.05rem;font-weight:700;margin-bottom:8px;line-height:1.3}
+.card-angle{font-size:.8rem;color:var(--dim);margin-bottom:12px}
+.card-channels{display:flex;flex-wrap:wrap;gap:6px}
+.ch-tag{font-size:.6rem;padding:3px 8px;border-radius:6px;background:var(--surface);color:var(--dim);border:1px solid var(--border)}
+.card-hint{font-size:.65rem;color:var(--muted);margin-top:12px;text-align:right}
+.matrix-section{margin:32px 0;overflow-x:auto}
+.matrix{width:100%;border-collapse:collapse;font-size:.7rem}
+.matrix th,.matrix td{padding:8px 6px;border:1px solid var(--border);text-align:center}
+.matrix th{background:var(--surface);color:var(--dim);font-weight:600;text-transform:uppercase;letter-spacing:.5px;position:sticky;top:0}
+.matrix td:first-child{text-align:left;font-weight:600;white-space:nowrap;background:var(--surface)}
+.matrix .has{color:var(--green);font-weight:700}
+.matrix .na{color:var(--border)}
+.timeline{margin:32px 0}
+.tl-row{display:flex;gap:16px;align-items:flex-start;padding:16px 0;border-left:2px solid var(--border);margin-left:20px;padding-left:24px;position:relative}
+.tl-row::before{content:'';position:absolute;left:-6px;top:20px;width:10px;height:10px;border-radius:50%;background:var(--primary);border:2px solid var(--bg)}
+.tl-week{font-size:.75rem;font-weight:700;color:var(--primary);min-width:60px}
+.tl-content{flex:1}
+.tl-title{font-size:.9rem;font-weight:600;margin-bottom:4px}
+.tl-desc{font-size:.8rem;color:var(--dim)}
+.slogans-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(350px,1fr));gap:12px;margin:16px 0}
+.slogan-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;display:flex;justify-content:space-between;align-items:center;gap:12px;cursor:pointer}
+.slogan-card:hover{border-color:var(--border-hover)}
+.slogan-text{font-size:.9rem;font-weight:600;flex:1}
+.slogan-use{font-size:.65rem;color:var(--dim)}
+.slogan-cat{font-size:.6rem;padding:2px 6px;border-radius:4px;font-weight:600;margin-bottom:6px;display:inline-block}
+.btn-copy{padding:6px 14px;border-radius:8px;font-size:.7rem;font-weight:600;cursor:pointer;border:1px solid var(--border);background:var(--surface);color:var(--text);transition:.2s}
+.btn-copy:hover{border-color:var(--primary);color:var(--primary)}
+
+/* Modal overlay */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(8px);z-index:1000;justify-content:center;align-items:flex-start;overflow-y:auto;padding:40px 20px}
+.modal-overlay.open{display:flex}
+.modal{background:var(--bg);border:1px solid var(--border);border-radius:20px;width:100%;max-width:900px;margin:0 auto;position:relative;overflow:hidden}
+.modal-top{display:flex;justify-content:space-between;align-items:center;padding:20px 28px;border-bottom:1px solid var(--border);background:var(--surface)}
+.modal-top-left{display:flex;align-items:center;gap:12px}
+.modal-close{width:36px;height:36px;border-radius:10px;border:1px solid var(--border);background:transparent;color:var(--dim);font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.2s}
+.modal-close:hover{border-color:var(--red);color:var(--red)}
+.modal-tabs{display:flex;gap:6px;padding:16px 28px;border-bottom:1px solid var(--border);flex-wrap:wrap;background:var(--surface)}
+.modal-tab{padding:6px 14px;border-radius:8px;font-size:.75rem;font-weight:600;cursor:pointer;border:1px solid var(--border);background:transparent;color:var(--dim);transition:.2s}
+.modal-tab:hover{border-color:var(--border-hover);color:var(--text)}
+.modal-tab.active{background:var(--primary-glow);border-color:var(--primary);color:var(--primary)}
+.modal-actions{display:flex;gap:8px;padding:12px 28px;border-bottom:1px solid var(--border);background:var(--card)}
+.modal-actions .btn-copy{padding:8px 18px;font-size:.75rem}
+.modal-body{padding:28px;min-height:300px;max-height:calc(100vh - 280px);overflow-y:auto}
+.modal-body.loading{display:flex;align-items:center;justify-content:center;color:var(--dim);font-size:.9rem}
+
+/* Rendered article styles */
+.article-render{line-height:1.8;font-size:.95rem;color:var(--text)}
+.article-render h1{font-size:1.6rem;font-weight:800;margin:0 0 16px;line-height:1.3;background:linear-gradient(135deg,var(--text),var(--dim));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.article-render h2{font-size:1.25rem;font-weight:700;margin:32px 0 12px;padding-bottom:8px;border-bottom:1px solid var(--border);color:var(--primary)}
+.article-render h3{font-size:1.1rem;font-weight:700;margin:24px 0 8px;color:var(--text)}
+.article-render h4{font-size:1rem;font-weight:600;margin:20px 0 8px;color:var(--dim)}
+.article-render p{margin:12px 0;color:var(--text)}
+.article-render strong{color:var(--text);font-weight:700}
+.article-render em{color:var(--dim);font-style:italic}
+.article-render blockquote{border-left:3px solid var(--primary);padding:12px 20px;margin:16px 0;background:var(--primary-glow);border-radius:0 8px 8px 0;color:var(--dim)}
+.article-render blockquote p{margin:4px 0}
+.article-render ul,.article-render ol{margin:12px 0;padding-left:24px}
+.article-render li{margin:6px 0;color:var(--text)}
+.article-render code{background:var(--surface);padding:2px 6px;border-radius:4px;font-size:.85em;color:var(--green);font-family:"SF Mono",Menlo,monospace}
+.article-render pre{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;margin:16px 0;overflow-x:auto}
+.article-render pre code{background:none;padding:0;color:var(--text);font-size:.85rem;line-height:1.6}
+.article-render table{width:100%;border-collapse:collapse;margin:16px 0;font-size:.85rem}
+.article-render th,.article-render td{padding:10px 12px;border:1px solid var(--border);text-align:left}
+.article-render th{background:var(--surface);color:var(--dim);font-weight:600}
+.article-render td{color:var(--text)}
+.article-render hr{border:none;border-top:1px solid var(--border);margin:24px 0}
+.article-render a{color:var(--primary);text-decoration:none}
+.article-render a:hover{text-decoration:underline}
+.article-render img{max-width:100%;border-radius:12px;margin:16px 0}
+
+/* Meta info block at top of article */
+.article-meta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px;padding:16px;background:var(--surface);border-radius:12px;border:1px solid var(--border)}
+.article-meta-item{font-size:.7rem;padding:4px 10px;border-radius:6px;background:var(--card);color:var(--dim);border:1px solid var(--border)}
+
+@media(max-width:768px){
+.stats{grid-template-columns:repeat(2,1fr)}
+.cards{grid-template-columns:1fr}
+.slogans-grid{grid-template-columns:1fr}
+.modal{border-radius:12px}
+.modal-body{padding:16px}
+}
+.toast{position:fixed;bottom:24px;right:24px;background:var(--green);color:#000;padding:12px 20px;border-radius:10px;font-size:.8rem;font-weight:600;opacity:0;transition:.3s;pointer-events:none;z-index:9999}
+.toast.show{opacity:1}
+
+/* Image gallery tab */
+.img-gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;padding:8px 0}
+.img-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:.3s;cursor:pointer}
+.img-card:hover{border-color:var(--primary);transform:translateY(-2px)}
+.img-card img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;background:var(--card)}
+.img-card-info{padding:12px}
+.img-card-desc{font-size:.8rem;font-weight:600;margin-bottom:6px}
+.img-card-tags{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px}
+.img-card-tag{font-size:.55rem;padding:2px 6px;border-radius:4px;background:var(--card);color:var(--dim);border:1px solid var(--border)}
+.img-card-tag.type-cover{border-color:var(--primary);color:var(--primary)}
+.img-card-tag.type-long{border-color:var(--purple);color:var(--purple)}
+.img-card-tag.type-short{border-color:var(--green);color:var(--green)}
+.img-card-tag.type-tweet{border-color:var(--yellow);color:var(--yellow)}
+.img-card-tag.type-brand{border-color:var(--orange);color:var(--orange)}
+.img-card-tag.type-shared{border-color:var(--dim);color:var(--dim)}
+.img-card-actions{display:flex;gap:6px}
+.img-card-actions .btn-copy{padding:4px 10px;font-size:.65rem}
+
+/* Inline article images */
+.article-inline-img{margin:16px 0;border-radius:12px;overflow:hidden;border:1px solid var(--border);background:var(--card)}
+.article-inline-img img{width:100%;display:block}
+.article-inline-img .img-caption{padding:8px 12px;font-size:.7rem;color:var(--dim);display:flex;justify-content:space-between;align-items:center}
+
+/* Image lightbox */
+.lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:2000;justify-content:center;align-items:center;cursor:zoom-out}
+.lightbox.open{display:flex}
+.lightbox img{max-width:90vw;max-height:90vh;border-radius:8px;box-shadow:0 0 60px rgba(0,0,0,.5)}
+</style>
+</head>
+<body>
+<div class="container">
+<header>
+<div class="brand">AGEN<span>AUTON</span> Marketing</div>
+<div class="header-tag">Content Dashboard</div>
+</header>
+
+<div class="stats">
+<div class="stat-card"><div class="stat-num">15</div><div class="stat-label">Total Topics</div></div>
+<div class="stat-card"><div class="stat-num">60+</div><div class="stat-label">Article Versions</div></div>
+<div class="stat-card"><div class="stat-num">34</div><div class="stat-label">Images</div></div>
+<div class="stat-card"><div class="stat-num">22</div><div class="stat-label">Slogans</div></div>
+<div class="stat-card"><div class="stat-num">12</div><div class="stat-label">Channels</div></div>
+</div>
+
+<div class="tabs" id="filterTabs">
+<div class="tab active" data-filter="all">All</div>
+<div class="tab" data-filter="wave1">Wave 1 认知</div>
+<div class="tab" data-filter="wave2">Wave 2 深度</div>
+<div class="tab" data-filter="wave3">Wave 3 裂变</div>
+<div class="tab" data-filter="wave4">Wave 4 权威</div>
+<div class="tab" data-filter="en">English</div>
+</div>
+
+<div class="section-title">选题卡片 <span class="badge" style="background:var(--primary-glow);color:var(--primary)">Click to preview</span></div>
+<div class="cards" id="cardsContainer"></div>
+
+<div class="section-title" style="margin-top:48px">渠道分发矩阵</div>
+<div class="matrix-section">
+<table class="matrix" id="matrixTable"></table>
+</div>
+
+<div class="section-title" style="margin-top:48px">推广节奏</div>
+<div class="timeline" id="timeline"></div>
+
+<div class="section-title" style="margin-top:48px">口号库 <span class="badge" style="background:rgba(34,197,94,.12);color:var(--green)">Click to copy</span></div>
+<div class="slogans-grid" id="slogansGrid"></div>
+</div>
+
+<!-- Article Preview Modal -->
+<div class="modal-overlay" id="modalOverlay">
+<div class="modal">
+<div class="modal-top">
+<div class="modal-top-left">
+<span class="card-id" id="modalId"></span>
+<span class="card-wave" id="modalWave"></span>
+</div>
+<button class="modal-close" id="modalClose">&times;</button>
+</div>
+<div class="modal-tabs" id="modalTabs"></div>
+<div class="modal-actions">
+<button class="btn-copy" id="btnCopySection">Copy current section</button>
+<button class="btn-copy" id="btnCopyAll">Copy full article</button>
+</div>
+<div class="modal-body" id="modalBody">
+<div class="article-render" id="articleRender"></div>
+</div>
+</div>
+</div>
+
+<div class="toast" id="toast">Copied!</div>
+<div class="lightbox" id="lightbox"><img id="lightboxImg" src="" alt=""></div>
+
+<script>
+var ARTICLES = {
+"articles/en/en01-26-things.md": "---\nTopic ID: EN-01\nCategory: English — Core Thesis\nChannels: Hacker News / Reddit / Twitter/X / LinkedIn\nSlogan: \"26 letters build every word. 26 dimensions build every Agent.\"\n---\n\n# Title Variants\n\n1. **The 26 Things You Must Decide Before Building an AI Agent**\n2. **Why Your AI Agent Failed: You Skipped the Architecture**\n3. **A Checklist That Would Have Saved Every Agent Project I've Seen Fail**\n\n---\n\n## Long Version\n\n> Channels: Medium / Dev.to\n\n### The 26 Things You Must Decide Before Building an AI Agent\n\nHere's a pattern I keep seeing in 2026:\n\nSomeone gets excited about AI Agents. They pick a model, write a System Prompt, connect a few APIs, and ship a demo. It works great in the demo. Then they deploy it, and everything falls apart.\n\nUsers ask unexpected questions. The Agent hallucinates. It leaks internal data. It calls the wrong tool. It forgets what happened two messages ago.\n\n**The problem is never the code. The problem is always the architecture — or rather, the lack of it.**\n\n#### The Missing Layer\n\nWe have great tools for *building* Agents: LangChain, CrewAI, AutoGen, dozens of frameworks. But we don't have a standard way to *think about* Agents before we build them.\n\nIt's like having power tools but no blueprint. You can drill holes very efficiently, but you might be drilling them in the wrong wall.\n\n#### 26 Dimensions, 6 Layers\n\nAfter studying dozens of Agent projects — both successful and failed — I identified 26 critical decisions that every Agent project needs to make. They fall into 6 layers:\n\n**Layer 1: Foundation (What is the Agent built on?)**\n\n1. **Model Selection** — Which LLM(s)? One model or a tiered strategy? Cost vs. capability trade-offs?\n2. **Knowledge Management** — What does the Agent know? Static docs, real-time data, or both? RAG architecture?\n3. **Memory System** — What does the Agent remember? Short-term conversation, long-term user profiles, operational history?\n4. **Tool Integration** — What can the Agent do? Which APIs, databases, external services? How are tools selected and prioritized?\n5. **Multimodal** — What formats can the Agent handle? Text only, or also images, audio, video, files?\n\n**Layer 2: Cognition (How does the Agent think?)**\n\n6. **Reasoning Strategy** — Chain-of-Thought? ReAct? Tree-of-Thought? Adaptive based on complexity?\n7. **Planning & Decomposition** — How does it break complex tasks into steps? Forward planning or goal decomposition?\n8. **Context Management** — How is the context window managed? Summarization, compression, structured memory?\n9. **Explainability** — Can the Agent explain its decisions? Is the reasoning chain visible to users?\n\n**Layer 3: Expression (How does the Agent communicate?)**\n\n10. **Persona Definition** — What role does the Agent play? What are its personality traits and boundaries?\n11. **Language & Style** — Formal or casual? Concise or detailed? Consistent across interactions?\n12. **Output Experience** — Plain text, structured data, rich formatting, interactive elements?\n\n**Layer 4: Safety (What are the guardrails?)**\n\n13. **Permission Control** — What can the Agent access? What actions require human approval?\n14. **Output Filtering** — How are hallucinations, data leaks, and harmful content prevented?\n15. **Fault Tolerance** — What happens when things go wrong? Retry, fallback, graceful degradation, human handoff?\n16. **Compliance & Ethics** — Data privacy, usage boundaries, regulatory requirements?\n\n**Layer 5: Collaboration (How does the Agent work with others?)**\n\n17. **Multi-Agent Orchestration** — Multiple Agents? How do they divide work? How do they communicate?\n18. **Human-in-the-Loop** — When does a human need to intervene? How is escalation handled?\n19. **Concurrency & Scaling** — Multiple users simultaneously? Session isolation? Rate limiting?\n20. **Communication Protocol** — How do Agents exchange information? Synchronous or asynchronous?\n21. **State Management** — How is state tracked across interactions, sessions, and Agent boundaries?\n\n**Layer 6: Evolution (How does the Agent improve?)**\n\n22. **Evaluation & Testing** — How do you measure performance? What metrics matter? Automated testing?\n23. **Continuous Learning** — How does the Agent get better over time? Feedback loops? Fine-tuning?\n24. **Monitoring & Observability** — Can you see what the Agent is doing in production? Logging, tracing, alerting?\n25. **Version Management** — How do you deploy updates? Canary releases? Rollback capability?\n26. **Cost Optimization** — What does it cost to run? How do you optimize without sacrificing quality?\n\n#### Why 26?\n\nThe English alphabet has 26 letters. With those 26 letters, you can construct every word in the language.\n\nWith these 26 dimensions, you can architect any AI Agent.\n\n**26 letters build every word. 26 dimensions build every Agent.**\n\n#### How to Use This\n\nAgenauton is an open-source project (MIT License) that turns these 26 dimensions into actionable tools:\n\n1. **A fillable template** — Spend 30 minutes making decisions across all 26 dimensions before writing code\n2. **An AI architect prompt** — Feed your completed template to Cursor/Copilot and get a project skeleton\n3. **A scoring rubric** — Rate your Agent 0-5 on each dimension to find gaps\n\nIt's not a framework. It doesn't generate code. It's a *standard* — a systematic way to think about Agent architecture.\n\n**Think first. Build right. Build once.**\n\n🔗 GitHub: search Agenauton\n\n---\n\n## Short Version\n\n> Channels: LinkedIn\n\n**Every failed AI Agent project I've seen made the same mistake: they started coding before they started thinking.**\n\nBuilding an Agent isn't writing a prompt. It's making 26 architectural decisions across 6 layers:\n\n- Foundation: model, knowledge, memory, tools\n- Cognition: reasoning, planning, context\n- Expression: persona, style, output format\n- Safety: permissions, filtering, fault tolerance\n- Collaboration: multi-agent, human-in-loop, scaling\n- Evolution: testing, learning, monitoring\n\nAgenauton is an open-source standard that helps you make these decisions *before* you write a single line of code.\n\nNot a framework. A way of thinking.\n\n🔗 GitHub: Agenauton\n\n---\n\n## Tweet Version\n\n> Channels: Twitter/X\n\nEvery AI Agent failure I've seen traces back to the same root cause: architecture decisions that were never made.\n\n26 dimensions. 6 layers. 30 minutes of thinking that saves weeks of debugging.\n\nAgenauton — an open standard for Agent architecture.\n\n🔗 github.com/Agenauton\n\n---\n\n## Community Post\n\n> Channels: HN / Reddit\n\n**Title: Show HN: Agenauton — An open standard for AI Agent architecture (26 dimensions)**\n\nI've been building AI Agents for the past year and kept seeing the same failure pattern: people jump straight to code without thinking through the architecture.\n\nSo I created Agenauton — a 26-dimension checklist that covers every critical decision you need to make before building an Agent. It's organized into 6 layers: Foundation, Cognition, Expression, Safety, Collaboration, and Evolution.\n\nIt's NOT a framework or SDK. It's a standard — technology-agnostic, works with any model/language/framework. Think of it as \"the blueprint before the construction.\"\n\nWhat it includes:\n- A fillable Markdown template (26 dimensions with guiding questions)\n- An AI architect prompt (feed your template to Cursor/Copilot → get a project skeleton)\n- A scoring rubric (rate your Agent 0-5 on each dimension)\n\nMIT licensed. Looking for feedback and contributions.\n\nGitHub: Agenauton\n\nCurious to hear: what's your process for designing Agent architecture before you start coding?\n",
+"articles/en/en02-checklist-saved-me.md": "---\nTopic ID: EN-02\nCategory: English — Personal Story\nChannels: Reddit / Dev.to / Twitter/X\nSlogan: \"Build right. Build once.\"\n---\n\n# Title Variants\n\n1. **I Open-Sourced a Checklist That Saved Me from 3 Agent Disasters**\n2. **The 30-Minute Exercise That Changed How I Build AI Agents**\n3. **How a Simple Template Prevented My Agent from Leaking Customer Data**\n\n---\n\n## Long Version\n\n> Channels: Dev.to / Medium\n\n### I Open-Sourced a Checklist That Saved Me from 3 Agent Disasters\n\nLet me tell you about three Agent projects that almost went very wrong — and the simple exercise that saved them.\n\n#### Disaster #1: The Hallucinating Customer Service Bot\n\n**The project:** A customer service Agent for an e-commerce platform.\n\n**What went wrong (almost):** During testing, we discovered the Agent was confidently making up return policies that didn't exist. A customer could ask \"Can I return this after 90 days?\" and the Agent would say \"Yes, absolutely!\" — even though the actual policy was 30 days.\n\n**What saved us:** Before building, I filled out the Knowledge Management dimension of the Agenauton template. The guiding question was: *\"How does the Agent access authoritative information? What happens when the knowledge base doesn't have the answer?\"*\n\nThis forced us to:\n- Build a proper RAG pipeline with the actual policy documents\n- Add a confidence threshold — if the retrieval score was too low, the Agent would say \"Let me check with a human colleague\" instead of guessing\n- Implement citation — every policy-related answer had to reference a specific document\n\n**Without the checklist**, we would have shipped the Agent with policies baked into the System Prompt, and it would have hallucinated its way into a lawsuit.\n\n#### Disaster #2: The Data-Leaking Research Assistant\n\n**The project:** An internal research Agent for a consulting firm.\n\n**What went wrong (almost):** The Agent had access to confidential client reports. During a red-team exercise, we found that a carefully crafted prompt could make it reveal information from Client A's reports while chatting with someone from Client B.\n\n**What saved us:** The Permission Control and Output Filtering dimensions in the Agenauton template. The guiding questions were:\n\n- *\"What data can the Agent access? Is there data it should NEVER reveal?\"*\n- *\"How do you prevent cross-contamination between different users/sessions?\"*\n\nThis forced us to:\n- Implement strict session isolation — each user's context was completely separate\n- Add an output filter that checked every response against a list of confidential patterns\n- Create a \"data boundary\" layer that sat between the Agent and the knowledge base\n\n**Without the checklist**, we would have deployed an Agent that could be tricked into corporate espionage.\n\n#### Disaster #3: The Cascading Failure\n\n**The project:** A multi-Agent system for automated report generation.\n\n**What went wrong (almost):** Agent A (data collector) would sometimes fail silently — returning empty results instead of an error. Agent B (analyzer) would then try to analyze empty data and produce nonsensical results. Agent C (writer) would then write a confident-sounding report based on nonsensical analysis.\n\nThe final output looked professional but was completely wrong.\n\n**What saved us:** The Fault Tolerance and Multi-Agent Orchestration dimensions. The guiding questions were:\n\n- *\"What happens when one component fails? How does the failure propagate?\"*\n- *\"How do Agents validate each other's outputs?\"*\n\nThis forced us to:\n- Add health checks between each Agent handoff\n- Implement a \"confidence score\" that each Agent attached to its output\n- Create a circuit breaker — if any Agent's confidence dropped below threshold, the entire pipeline would pause and alert a human\n\n**Without the checklist**, we would have shipped a system that produced beautiful, confident, completely wrong reports.\n\n#### The Pattern\n\nAll three disasters had the same root cause: **we didn't think about it before we built it.**\n\nNot because we were lazy or incompetent. Because there was no systematic way to think about all the things that could go wrong.\n\nThat's why I created Agenauton — a 26-dimension checklist that forces you to make every critical architectural decision before you write a single line of code.\n\n#### The Checklist\n\nIt takes about 30 minutes to fill out. Each dimension has guiding questions that prompt you to think about things you'd otherwise miss.\n\nThe 30 minutes you spend filling out this template will save you weeks of debugging, refactoring, and incident response.\n\nI've open-sourced it under MIT License because I believe every Agent developer deserves a systematic way to avoid these disasters.\n\n**Build right. Build once.**\n\n🔗 GitHub: search Agenauton\n\n---\n\n## Short Version\n\n> Channels: LinkedIn\n\n**Three AI Agent disasters I almost shipped — and the 30-minute exercise that saved me each time.**\n\n1. A customer service bot that hallucinated return policies → Fixed by thinking through Knowledge Management\n2. A research assistant that leaked confidential data → Fixed by thinking through Permission Control\n3. A multi-agent system that produced confident but wrong reports → Fixed by thinking through Fault Tolerance\n\nThe common thread: I caught these issues during a 30-minute architecture review using a 26-dimension checklist, not during production.\n\nI've open-sourced this checklist as Agenauton. MIT License.\n\n🔗 GitHub: Agenauton\n\n---\n\n## Tweet Version\n\n> Channels: Twitter/X\n\n3 Agent disasters I almost shipped:\n1. Bot hallucinating company policies\n2. Assistant leaking confidential data across sessions\n3. Multi-agent pipeline producing confident but wrong reports\n\nCaught all 3 during a 30-min architecture review, not in production.\n\nI open-sourced the checklist: Agenauton 🔗 github.com/Agenauton\n\n---\n\n## Community Post\n\n> Channels: Reddit r/LocalLLaMA\n\n**Title: I open-sourced a 26-dimension checklist after almost shipping 3 Agent disasters**\n\nHey everyone,\n\nI've been building AI Agents professionally for the past year. Three times, I almost shipped something that would have been a serious problem:\n\n1. **Hallucinating policies** — Customer service bot making up return policies that didn't exist\n2. **Data leakage** — Research assistant revealing Client A's confidential data to Client B\n3. **Cascading failures** — Multi-agent system producing beautiful, confident, completely wrong reports\n\nIn all three cases, I caught the issue not during testing, but during a pre-build architecture review. I had a checklist of 26 things to think about before writing code, and each time, one of those 26 items flagged the problem before it became real.\n\nI've cleaned up this checklist and open-sourced it as Agenauton. It's not a framework — it's a Markdown template with 26 dimensions and guiding questions. Takes about 30 minutes to fill out.\n\nGitHub: Agenauton (MIT License)\n\nWould love feedback from this community. What dimensions am I missing? What would you add?\n",
+"articles/en/en03-stop-prompt-stacking.md": "---\nTopic ID: EN-03\nCategory: English — Hot Take\nChannels: Twitter/X / LinkedIn / HN\nSlogan: \"Stop prompt-stacking. Start architecture-thinking.\"\n---\n\n# Title Variants\n\n1. **Stop Prompt-Stacking. Start Architecture-Thinking.**\n2. **Your 3000-Word System Prompt Is Not Architecture**\n3. **The Prompt-to-Architecture Shift Every Agent Developer Needs to Make**\n\n---\n\n## Long Version\n\n> Channels: Medium\n\n### Stop Prompt-Stacking. Start Architecture-Thinking.\n\nThere's a development pattern I see everywhere in the AI Agent space, and it needs to die:\n\n**Prompt-stacking.**\n\nYou know what I'm talking about. A System Prompt that's 3000 words long. Fifty rules. Twenty examples. Ten constraints. A section for \"edge cases\" that's longer than most README files.\n\nThe developer spent a week writing it, testing it, tweaking individual words, running A/B tests on different phrasings. It's prompt engineering taken to its logical extreme.\n\nAnd it's a dead end.\n\n#### Why Prompt-Stacking Fails\n\n**1. It's unmaintainable.**\n\nWhen your System Prompt is 3000 words, every change is a risk. You modify the refund policy section, and suddenly the shipping query responses change too. Because the model isn't executing rules — it's interpreting intent. And 3000 words of intent is a lot to interpret consistently.\n\n**2. It's untestable.**\n\nHow do you unit test a 3000-word prompt? You can't isolate individual rules because they're coupled through the model's attention mechanism. You can only do end-to-end testing, and your test coverage will never be sufficient.\n\n**3. It doesn't scale.**\n\nToday your Agent handles 3 scenarios and the prompt works. Tomorrow you need to add a 4th scenario, and the prompt is already at the context limit. So you start splitting prompts, but you have no methodology for how to split them.\n\n**4. It creates a false sense of control.**\n\n\"I told the model not to leak data\" is not a security measure. It's a suggestion. The model might follow it. It might not. You have no guarantee.\n\n#### The Alternative: Architecture-Thinking\n\nInstead of asking \"How do I write a better prompt?\", ask \"How do I design a better system?\"\n\n| Problem | Prompt-Stacking Solution | Architecture Solution |\n|---------|------------------------|----------------------|\n| Agent gives wrong info | Add more rules to prompt | Build a RAG pipeline with verified sources |\n| Agent forgets context | Make prompt shorter | Implement a memory system with summarization |\n| Agent calls wrong tool | Describe tools better in prompt | Build a tool router with selection logic |\n| Agent leaks data | Add \"don't leak data\" rule | Implement output filtering layer |\n| Agent fails on errors | Add \"handle errors gracefully\" | Build retry + fallback + human handoff |\n\n**The prompt is ONE component of the system. Not THE system.**\n\nIn a well-architected Agent, the prompt accounts for maybe 10% of the work. The other 90% is:\n- Knowledge retrieval pipeline\n- Memory management\n- Tool selection and execution\n- Safety and filtering layers\n- Error handling and recovery\n- Monitoring and observability\n\n#### Making the Shift\n\nAgenauton provides a structured way to make this shift. It's a 26-dimension framework that covers everything an Agent system needs — not just the prompt.\n\nThe exercise is simple:\n1. Download the 26-dimension template\n2. Spend 30 minutes filling it out\n3. For each dimension, make a concrete architectural decision\n\nBy the time you're done, you'll have a blueprint for a *system*, not just a prompt. And you can feed that blueprint to an AI coding tool to generate the project skeleton.\n\n#### The Analogy\n\nPrompt-stacking is like trying to build a house by writing increasingly detailed instructions on a single piece of paper and handing it to a contractor.\n\nArchitecture-thinking is like drawing a blueprint with structural engineering, plumbing, electrical, and safety systems — then handing THAT to the contractor.\n\nBoth approaches use a contractor (the LLM). But one produces a house that stands. The other produces a house that might collapse when someone opens a window.\n\n**Stop prompt-stacking. Start architecture-thinking.**\n\n🔗 GitHub: search Agenauton\n\n---\n\n## Short Version\n\n> Channels: LinkedIn\n\n**Hot take: If your AI Agent's \"architecture\" is a 3000-word System Prompt, you don't have architecture. You have a prayer.**\n\nThe prompt is ONE component. Maybe 10% of the work.\n\nThe other 90%:\n→ Knowledge retrieval pipeline\n→ Memory management system\n→ Tool selection & execution logic\n→ Safety & output filtering\n→ Error handling & recovery\n→ Monitoring & observability\n\nAgenauton: 26 dimensions to think through before you write a single prompt. Open source. Technology-agnostic.\n\nStop prompt-stacking. Start architecture-thinking.\n\n🔗 GitHub: Agenauton\n\n---\n\n## Tweet Version (Thread)\n\n> Channels: Twitter/X\n\n🧵 Hot take: Prompt-stacking is the biggest anti-pattern in AI Agent development.\n\nSigns you're prompt-stacking:\n- System Prompt > 1000 words\n- You A/B test individual word changes\n- \"Don't leak data\" is your security strategy\n- Adding a new feature = adding more rules to the prompt\n\nThe prompt is 10% of an Agent. The other 90% is architecture.\n\nAgenauton: 26 dimensions that turn \"prompt engineering\" into \"system engineering.\"\n\nOpen source, MIT license. 🔗 github.com/Agenauton\n\n---\n\n## Community Post\n\n> Channels: HN\n\n**Title: Stop prompt-stacking — AI Agents need architecture, not longer prompts**\n\nI keep seeing the same anti-pattern in Agent development: developers trying to solve architectural problems by making the System Prompt longer.\n\nAgent hallucinating? Add more rules. Agent calling wrong tools? Describe tools better. Agent leaking data? Add \"don't leak data.\"\n\nThis doesn't work because prompts aren't architecture. They're suggestions to a statistical model.\n\nReal solutions:\n- Hallucination → RAG pipeline with verified sources + confidence thresholds\n- Wrong tool calls → Tool router with selection logic + permission boundaries\n- Data leaks → Output filtering layer + session isolation\n- Errors → Retry + fallback + circuit breaker + human handoff\n\nI created Agenauton — a 26-dimension open standard for Agent architecture. It's not a framework (use LangChain/CrewAI/whatever for that). It's a checklist of architectural decisions you need to make before you start building.\n\nMIT licensed. Feedback welcome.\n\nGitHub: Agenauton\n",
+"articles/en/en04-dissect-product.md": "---\nTopic ID: EN-04\nCategory: English — Case Study\nChannels: Medium / Reddit / Twitter/X\nSlogan: \"26 letters build every word. 26 dimensions build every Agent.\"\n---\n\n# Title Variants\n\n1. **Dissecting an AI Agent Product Through the 26-Dimension Lens**\n2. **What You Can Learn by Reverse-Engineering Any AI Agent in 30 Minutes**\n3. **I Analyzed a Top AI Product Using 26 Dimensions — Here's What I Found**\n\n---\n\n## Long Version\n\n> Channels: Medium / Substack\n\n### Dissecting an AI Agent Product Through the 26-Dimension Lens\n\nThe best way to learn Agent architecture isn't reading documentation. It's reverse-engineering real products.\n\nToday, I'm going to walk through how to analyze any AI Agent product using Agenauton's 26-dimension framework. I'll use a \"browser-operating AI Agent\" (think: ChatGPT Operator, Manus, or similar products) as the example.\n\nThe goal isn't to copy these products. It's to understand the architectural decisions behind them — and learn from both their strengths and their gaps.\n\n#### The Method\n\nFor each dimension, I ask three questions:\n1. **What decision did they make?** (Observable behavior)\n2. **Why?** (My hypothesis)\n3. **What would I do differently?** (Learning opportunity)\n\nLet's go through the key dimensions.\n\n#### Foundation Layer\n\n**Dimension 1: Model Selection**\n\n*Observable:* The Agent handles complex multi-step tasks (booking flights, filling forms) with high accuracy. Response time suggests a large model.\n\n*Hypothesis:* Likely using a frontier model (GPT-4 class) for planning and decision-making, possibly with a smaller model for simple confirmations and status updates.\n\n*Takeaway:* **Tiered model strategy is essential for cost control.** Not every step needs the most expensive model. Simple \"click the OK button\" decisions can use a lightweight model.\n\n**Dimension 3: Memory System**\n\n*Observable:* The Agent remembers what it did earlier in the task (e.g., \"I already searched for flights, now I'm filtering results\"). It also remembers user preferences across sessions.\n\n*Hypothesis:* Short-term memory = operational log of actions taken. Long-term memory = user profile (login credentials, preferences, past requests).\n\n*Takeaway:* **For action-oriented Agents, memory isn't conversation history — it's an action log.** This is fundamentally different from chatbot memory.\n\n**Dimension 4: Tool Integration**\n\n*Observable:* The Agent can click, type, scroll, take screenshots, download files, and navigate between pages.\n\n*Hypothesis:* Browser automation tools (likely Playwright or similar) broken down into atomic actions. A tool router decides which action to take based on the current page state.\n\n*Takeaway:* **Tool granularity determines capability ceiling.** \"Use the browser\" is too coarse. \"Click element X at coordinates Y\" is the right level of abstraction.\n\n#### Cognition Layer\n\n**Dimension 6: Reasoning Strategy**\n\n*Observable:* The Agent follows a clear observe → think → act → observe cycle. After each action, it takes a screenshot and reassesses.\n\n*Hypothesis:* Classic ReAct (Reasoning + Acting) loop. Each iteration: perceive current state → decide next action → execute → verify result.\n\n*Takeaway:* **Action-oriented Agents need perception-decision loops, not one-shot generation.** The \"observe after acting\" step is crucial — it's how the Agent knows if its action worked.\n\n**Dimension 7: Planning & Decomposition**\n\n*Observable:* Given \"book me a flight from NYC to London next Tuesday,\" the Agent produces a visible plan: open travel site → search flights → filter by date → compare prices → select → fill passenger info → confirm.\n\n*Hypothesis:* Goal decomposition into a sequence of sub-tasks, with the ability to re-plan if a step fails.\n\n*Takeaway:* **Good planning = turning vague goals into executable step sequences.** The ability to re-plan on failure is what separates robust Agents from brittle ones.\n\n#### Safety Layer\n\n**Dimension 13: Permission Control**\n\n*Observable:* Before making a purchase or entering payment info, the Agent asks for explicit user confirmation. It won't access sites the user hasn't authorized.\n\n*Hypothesis:* Whitelist-based permission model. Sensitive actions (anything involving money or personal data) require human approval.\n\n*Takeaway:* **For action-oriented Agents, the default should be \"not allowed.\"** Every capability must be explicitly granted. This is the opposite of chatbots, where the default is \"try to help.\"\n\n**Dimension 15: Fault Tolerance**\n\n*Observable:* When a page doesn't load, the Agent retries. When an element isn't found, it tries an alternative approach (scrolling, waiting, using a different selector). When it's truly stuck, it asks the user for help.\n\n*Hypothesis:* Multi-level fallback: retry → alternative strategy → timeout → human handoff.\n\n*Takeaway:* **Fault tolerance for action Agents isn't \"apologize\" — it's \"try another way.\"** The Agent should exhaust its options before giving up.\n\n#### Scoring Summary\n\n| Layer | Strengths | Improvement Areas |\n|-------|-----------|-------------------|\n| Foundation | Tiered model strategy, good tool granularity | Knowledge caching for repeated tasks |\n| Cognition | Clear ReAct loop, visible planning | Long-horizon planning for complex tasks |\n| Expression | Clean status updates | Could offer more explanation of decisions |\n| Safety | Good permission model for payments | Multimodal output filtering (screenshots may contain sensitive info) |\n| Collaboration | Smooth human handoff | Multi-agent delegation for parallel tasks |\n| Evolution | — | Public evaluation metrics would build trust |\n\n#### Try It Yourself\n\nThis analysis took about 30 minutes. You can do the same with any AI Agent product:\n\n1. Download the Agenauton 26-dimension template\n2. Use the product for 15-20 minutes, paying attention to each dimension\n3. Fill in your observations, hypotheses, and takeaways\n\nThis is the fastest way to develop architectural intuition for AI Agents. You're not just using products — you're learning from the best (and worst) architectural decisions in the industry.\n\n**26 letters build every word. 26 dimensions build every Agent.**\n\n🔗 GitHub: search Agenauton\n\n---\n\n## Short Version\n\n> Channels: LinkedIn\n\n**The fastest way to learn AI Agent architecture: reverse-engineer real products.**\n\nPick any AI Agent. Analyze it through 26 dimensions:\n\n🏗️ Foundation: What model? What tools? How does it remember?\n🧠 Cognition: How does it reason? How does it plan?\n🗣️ Expression: How does it communicate?\n🛡️ Safety: What are the guardrails? What happens when things fail?\n🤝 Collaboration: How does it work with humans?\n📈 Evolution: How does it improve?\n\nAgenauton provides the template. 30 minutes per product. Better than any tutorial.\n\n🔗 GitHub: Agenauton\n\n---\n\n## Tweet Version\n\n> Channels: Twitter/X\n\nThe best way to learn Agent architecture isn't tutorials. It's reverse-engineering real products.\n\nPick any AI Agent. Ask 26 questions:\n- What model strategy?\n- How does it remember?\n- What happens when it fails?\n- Who controls permissions?\n\nAgenauton template makes this systematic. 30 min per product.\n\n🔗 github.com/Agenauton\n\n---\n\n## Community Post\n\n> Channels: Reddit\n\n**Title: I reverse-engineered a browser-operating AI Agent using a 26-dimension framework — here's what I learned**\n\nI've been using Agenauton's 26-dimension framework to systematically analyze AI Agent products. Today I did a deep dive on a browser-operating Agent (similar to Operator/Manus).\n\nKey findings:\n\n**What they got right:**\n- Tiered model strategy (frontier model for planning, lightweight for simple actions)\n- ReAct loop with screenshot verification after each action\n- Whitelist-based permission model (default = not allowed)\n- Multi-level fault tolerance (retry → alternative strategy → human handoff)\n\n**What could be better:**\n- No knowledge caching for repeated tasks\n- Long-horizon planning breaks down for complex multi-site workflows\n- Screenshot outputs may contain sensitive info that isn't filtered\n- No public evaluation metrics\n\n**The method:**\nI used a 26-dimension template from Agenauton (open source, MIT). For each dimension, I noted: what I observed, my hypothesis for why, and what I'd do differently.\n\nTook about 30 minutes. I learned more about Agent architecture from this exercise than from any tutorial.\n\nThe template is on GitHub: Agenauton\n\nHas anyone else tried systematic Agent analysis like this? Would love to compare notes.\n",
+"articles/zh/01-why-90-percent-fail.md": "---\n选题编号: ZH-01\n分类: Wave 1 — 认知建立\n适用渠道: 公众号 / 知乎 / 掘金 / 即刻 / V2EX\n推荐口号: 「底子要硬，脑子要清，嘴巴要稳，出事要扛，上线要活。」\n---\n\n# 标题变体\n\n1. **为什么 90% 的人做 Agent 都在踩坑？**\n2. **你做的 Agent 为什么总翻车？因为这 26 件事你一件都没想过**\n3. **2026 年了，做 AI Agent 还在靠感觉？**\n\n---\n\n## 长文版\n\n> 适用渠道：公众号 / 知乎 / 掘金\n\n### 为什么 90% 的人做 Agent 都在踩坑？\n\n你有没有发现一个现象——\n\n2025 年底到 2026 年初，几乎所有人都在做 Agent。从创业者到大厂工程师，从独立开发者到产品经理，每个人都觉得自己能做一个 AI Agent 改变世界。\n\n但现实是：**绝大多数 Agent 项目，活不过 Demo 阶段。**\n\n不是因为技术不行，不是因为模型不够好，而是因为——**从一开始就没想清楚。**\n\n#### 典型的翻车场景\n\n**场景一：Prompt 堆砌型**\n\n\"我给 GPT 写了一个超长的 System Prompt，加了 20 个规则，结果它还是经常答非所问。\"\n\n这是最常见的做法。把所有期望都塞进一个 Prompt 里，期望模型能\"理解\"你的意图。但 Prompt 不是架构，它只是指令。没有记忆管理、没有错误处理、没有状态追踪，你的 Agent 就是一个\"健忘的实习生\"。\n\n**场景二：工具堆砌型**\n\n\"我接了 15 个 API，能搜索、能发邮件、能查数据库，但 Agent 总是调错工具。\"\n\n工具多不等于能力强。如果没有清晰的工具选择策略、没有权限边界、没有失败回退机制，工具越多，出错概率越高。\n\n**场景三：上线即翻车型**\n\n\"Demo 的时候好好的，一上线就出问题。用户问了个奇怪的问题，Agent 直接把内部数据吐出来了。\"\n\n没有安全边界、没有输出审查、没有异常处理。这不是 Agent 的问题，是架构的问题。\n\n#### 问题的根源：缺少一个系统化的思考框架\n\n做 Agent 不是写一个 Prompt 那么简单。一个能上线、能稳定运行、能持续迭代的 Agent，至少需要考虑 **26 个维度**：\n\n| 层级 | 维度 | 你想过吗？ |\n|------|------|-----------|\n| 基座层 | 模型选择、知识库、记忆系统、工具集成 | 用什么模型？知识怎么管？记忆怎么存？ |\n| 认知层 | 推理策略、规划能力、上下文管理 | Agent 怎么\"想\"？怎么拆任务？ |\n| 表达层 | 人设、语言风格、多模态输出 | Agent 怎么\"说话\"？ |\n| 安全层 | 权限控制、输出审查、容错机制 | 出了事谁扛？ |\n| 协作层 | 多 Agent 协同、人机交互、并发控制 | 一个人干还是团队配合？ |\n| 进化层 | 评估测试、持续学习、合规伦理 | 怎么知道它在变好而不是变坏？ |\n\n这就是 **Agenauton** 在做的事情——把这 26 个维度变成一个标准化的检查清单，让你在动手之前就把架构想清楚。\n\n#### 一句话记住\n\n> **底子要硬，脑子要清，嘴巴要稳，出事要扛，上线要活。**\n\n这五句话对应 Agent 的五个核心层。记住这个，你就不会在架构层面犯致命错误。\n\n#### 怎么开始？\n\n1. **Star** [Agenauton](https://github.com/Agenauton) — 开源的 Agent 构建标准\n2. 下载 **26 维度模板**，花 30 分钟填一遍，你会发现自己之前漏想了多少东西\n3. 把模板丢给你的 AI 编程工具（Cursor / Copilot），让它帮你生成架构骨架\n\n**26 letters build every word. 26 dimensions build every Agent.**\n\n---\n\n## 短文版\n\n> 适用渠道：即刻 / 小红书\n\n**为什么你做的 Agent 总翻车？**\n\n说个扎心的事实：90% 的 Agent 项目活不过 Demo 阶段。\n\n不是技术不行，是从一开始就没想清楚。\n\n做 Agent 至少要想清楚 26 件事：\n- 用什么模型？知识怎么管？记忆怎么存？\n- Agent 怎么\"想\"？怎么拆任务？\n- 出了事谁扛？怎么防止数据泄露？\n- 一个人干还是团队配合？\n- 怎么知道它在变好而不是变坏？\n\n一句话记住：**底子要硬，脑子要清，嘴巴要稳，出事要扛，上线要活。**\n\nAgenauton 把这 26 个维度做成了开源标准清单，填一遍你就知道自己漏了什么。\n\n🔗 GitHub 搜 Agenauton\n\n#AIAgent #Agenauton #AI开发 #Agent架构\n\n---\n\n## 推文版\n\n> 适用渠道：Twitter/X（280 字符内）\n\n90% of AI Agent projects die at the demo stage. Not because the tech is bad — because the architecture was never thought through. Agenauton gives you 26 dimensions to check before you write a single line of code. Build right. Build once. 🔗 github.com/Agenauton\n\n---\n\n## 社区帖版\n\n> 适用渠道：V2EX / Reddit\n\n**标题：为什么 90% 的人做 Agent 都在踩坑？聊聊我总结的 26 个必须想清楚的维度**\n\n大家好，最近在做 Agent 项目的过程中踩了不少坑，总结了一些经验分享给大家。\n\n做 Agent 不是写一个 Prompt 就完事了。一个能上线的 Agent，至少需要在 6 个层面、26 个维度上做出决策：\n\n1. **基座层**：模型选择、知识管理、记忆系统、工具集成\n2. **认知层**：推理策略、规划能力、上下文管理\n3. **表达层**：人设定义、语言风格、多模态输出\n4. **安全层**：权限控制、输出审查、容错机制\n5. **协作层**：多 Agent 协同、人机交互、并发控制\n6. **进化层**：评估测试、持续学习、合规伦理\n\n我把这些整理成了一个开源项目 Agenauton，包含一个可填写的 26 维度模板。填一遍大概 30 分钟，但能帮你避免很多架构层面的坑。\n\nGitHub 搜 Agenauton，欢迎 Star 和提 Issue。\n\n有做 Agent 的朋友可以聊聊你们踩过什么坑？\n",
+"articles/zh/02-3-days-no-crash.md": "---\n选题编号: ZH-02\n分类: Wave 1 — 认知建立\n适用渠道: B站 / 小红书 / 公众号 / 即刻\n推荐口号: 「造 Agent，怕翻车？26 条，照着查。」\n---\n\n# 标题变体\n\n1. **我用一份清单，3 天做出了一个不翻车的 Agent**\n2. **别人做 Agent 靠感觉，我靠一张 26 维度清单**\n3. **3 天从 0 到上线：一个 Agent 的标准化构建全记录**\n\n---\n\n## 长文版\n\n> 适用渠道：公众号 / B站文字版\n\n### 我用一份清单，3 天做出了一个不翻车的 Agent\n\n先说结论：**3 天时间，从零到上线，Agent 运行两周零翻车。**\n\n这不是因为我技术多牛，而是因为我在动手之前，花了 2 个小时填了一份表。\n\n#### 背景\n\n我要做的是一个客服 Agent——帮一个电商团队处理售后咨询。需求看起来很简单：用户问问题，Agent 回答。\n\n但如果你做过就知道，\"简单\"的客服 Agent 是最容易翻车的：\n- 用户问退款政策，Agent 编了一个不存在的政策\n- 用户发了一张图片，Agent 完全不知道怎么处理\n- 两个用户同时问问题，Agent 把上一个用户的订单信息告诉了下一个用户\n\n这些都是真实发生过的事故。\n\n#### 我做了什么不同的事？\n\n在写第一行代码之前，我打开了 Agenauton 的 **26 维度模板**，逐条填写。\n\n**基座层的 4 个决策：**\n\n| 维度 | 我的选择 | 为什么 |\n|------|---------|--------|\n| 模型选择 | GPT-4o-mini 主力 + GPT-4o 兜底 | 成本控制，复杂问题升级 |\n| 知识管理 | RAG + 产品文档向量库 | 确保回答基于真实政策 |\n| 记忆系统 | 短期会话记忆 + 用户档案 | 记住当前对话 + 历史订单 |\n| 工具集成 | 订单查询 API + 退款 API | 只开放必要的两个工具 |\n\n**认知层的 3 个决策：**\n\n- 推理策略：先检索知识库，再生成回答，最后自检\n- 规划能力：简单问题直接答，复杂问题分步处理\n- 上下文管理：最近 10 轮对话 + 摘要压缩\n\n**安全层的 3 个决策：**\n\n- 权限控制：Agent 只能查询，不能直接执行退款（需人工确认）\n- 输出审查：禁止输出内部系统信息、其他用户数据\n- 容错机制：模型调用失败自动重试 3 次，最终转人工\n\n**这些决策花了我 2 个小时。但省了我至少 2 周的返工时间。**\n\n#### 实际构建过程\n\n**Day 1：架构搭建**\n\n把填好的 26 维度模板丢给 Cursor，用 Agenauton 的 `ai_architect_prompt.md` 让 AI 生成了基础架构。Cursor 直接输出了：\n- 项目目录结构\n- 核心模块划分\n- 数据流图\n- 关键接口定义\n\n我只需要 review 和微调，不需要从零设计。\n\n**Day 2：核心逻辑**\n\n基于架构骨架，用 Cursor 逐模块实现：\n- RAG 检索管道\n- 工具调用路由\n- 会话管理\n- 安全过滤层\n\n因为架构已经想清楚了，每个模块的边界很清晰，写起来很快。\n\n**Day 3：测试上线**\n\n用 Agenauton 的评估维度设计了测试用例：\n- 正常问答（准确率）\n- 边界情况（图片输入、超长对话）\n- 安全测试（诱导泄露、权限越界）\n- 并发测试（多用户同时对话）\n\n全部通过后上线。\n\n#### 两周后的数据\n\n- 处理了 3000+ 次对话\n- 准确率 94%\n- 零安全事故\n- 用户满意度 4.6/5\n\n#### 关键感悟\n\n**不是代码写得好，是架构想得清。**\n\nAgenauton 的 26 维度模板不会帮你写代码，但它会帮你在动手之前把所有该想的问题都想一遍。这就像盖房子之前先画图纸——图纸画好了，施工就不会出大问题。\n\n> **26 letters build every word. 26 dimensions build every Agent.**\n\n🔗 GitHub 搜 Agenauton，下载 26 维度模板\n\n---\n\n## 短文版\n\n> 适用渠道：小红书 / 即刻\n\n**3 天做了一个不翻车的客服 Agent，秘诀就一个：先填表，再写码。**\n\nAgenauton 有一份 26 维度清单，涵盖了做 Agent 必须想清楚的所有问题：\n\n✅ 用什么模型？成本怎么控？\n✅ 知识从哪来？怎么保证不编造？\n✅ 出了安全问题怎么办？\n✅ 多用户并发怎么隔离？\n\n我花 2 小时填完这份表，然后丢给 Cursor 生成架构，3 天就上线了。\n\n运行两周，3000+ 对话，零翻车。\n\n不是技术多牛，是架构想清楚了。\n\n🔗 GitHub 搜 Agenauton\n\n#AIAgent #Agent开发 #Cursor #AI编程\n\n---\n\n## 推文版\n\n> 适用渠道：Twitter/X\n\nBuilt a customer service Agent in 3 days. Zero crashes in 2 weeks. The secret? I spent 2 hours filling out a 26-dimension checklist BEFORE writing any code. Architecture > Code. 🔗 Agenauton on GitHub\n\n---\n\n## 视频脚本\n\n> 适用渠道：B站 / 抖音\n\n**【标题】3 天做出不翻车的 Agent，我只多做了一步**\n\n**[开头 - 15秒]**\n\"大家好，今天分享一个实战案例——我怎么用 3 天时间，从零做出一个客服 Agent，而且上线两周零翻车。\"\n\n**[痛点 - 30秒]**\n\"做过 Agent 的朋友都知道，Demo 阶段好好的，一上线就各种问题。编造回答、泄露数据、调错工具……这些坑我以前全踩过。\"\n\n**[转折 - 15秒]**\n\"后来我发现，问题不在代码，在架构。在写第一行代码之前，你需要先想清楚 26 个问题。\"\n\n**[展示 - 60秒]**\n（屏幕录制：打开 Agenauton 26 维度模板，逐条讲解关键维度）\n\"比如模型选择——不是越贵越好，要根据场景选。比如安全层——Agent 能做什么、不能做什么，必须提前定义。\"\n\n**[实操 - 60秒]**\n（屏幕录制：填写模板 → 丢给 Cursor → 生成架构 → 快速实现）\n\"填完这份表，大概 2 个小时。然后丢给 Cursor，它直接帮你生成架构骨架。\"\n\n**[结果 - 20秒]**\n\"3 天上线，两周运行，3000 次对话，零翻车。不是技术多牛，是架构想清楚了。\"\n\n**[结尾 - 10秒]**\n\"Agenauton，GitHub 上搜就能找到。26 个维度，帮你把 Agent 的架构想清楚。链接在简介里。\"\n",
+"articles/zh/03-stop-prompt-stacking.md": "---\n选题编号: ZH-03\n分类: Wave 1 — 认知建立\n适用渠道: Twitter/X / 即刻 / 知乎 / V2EX\n推荐口号: 「2026 年了，做 Agent 还在盲目堆 Prompt？」\n---\n\n# 标题变体\n\n1. **2026 年了，做 Agent 还在盲目堆 Prompt？**\n2. **Prompt 不是架构：为什么你的 Agent 需要的是工程思维**\n3. **从 Prompt Engineer 到 Agent Architect：一次认知升级**\n\n---\n\n## 长文版\n\n> 适用渠道：知乎 / 掘金\n\n### 2026 年了，做 Agent 还在盲目堆 Prompt？\n\n我见过太多这样的 Agent 项目——\n\nSystem Prompt 写了 3000 字，包含 50 条规则、20 个示例、10 个约束条件。开发者花了一周时间调 Prompt，每次改一个词就重新测试，像在炼丹一样。\n\n**这不是在做工程，这是在碰运气。**\n\n#### Prompt 堆砌的三个致命问题\n\n**1. 不可维护**\n\n当你的 System Prompt 超过 1000 字，任何一次修改都可能引发连锁反应。你改了退款规则的描述，结果发货查询的回答也变了。因为模型不是按规则执行的——它是在\"理解\"你的意图，而 3000 字的意图，它理解得和你想的不一样。\n\n**2. 不可测试**\n\n你怎么测试一个 3000 字的 Prompt？你没法单元测试它的每一条规则，因为规则之间是耦合的。你只能端到端测试，而端到端测试的覆盖率永远不够。\n\n**3. 不可扩展**\n\n今天你的 Agent 处理 3 种场景，Prompt 还能 hold 住。明天要加第 4 种场景，你发现 Prompt 已经装不下了。于是你开始拆 Prompt，但拆的方式完全靠经验，没有方法论。\n\n#### 从 Prompt 思维到架构思维\n\n真正的 Agent 开发，应该是这样的：\n\n```\nPrompt 思维：\n\"我要写一个完美的 Prompt，让模型做对所有事情\"\n\n架构思维：\n\"我要设计一个系统，让模型在正确的框架内发挥能力\"\n```\n\n区别在哪？\n\n| 维度 | Prompt 思维 | 架构思维 |\n|------|-----------|---------|\n| 知识管理 | 全塞进 Prompt | RAG + 向量库，按需检索 |\n| 记忆 | 靠上下文窗口 | 短期记忆 + 长期存储 + 摘要 |\n| 工具使用 | Prompt 里描述工具 | 工具注册 + 路由 + 权限 |\n| 错误处理 | \"如果出错请道歉\" | 重试 + 降级 + 转人工 |\n| 安全 | \"不要泄露信息\" | 输出过滤 + 权限隔离 + 审计 |\n| 多 Agent | 不存在 | 角色分工 + 通信协议 + 编排 |\n\n**Prompt 是 Agent 的一部分，但不是全部。**\n\n一个成熟的 Agent 系统，Prompt 只占 10% 的工作量。剩下的 90% 是架构设计、工具集成、安全机制、监控运维。\n\n#### Agenauton：从 Prompt 到架构的桥梁\n\nAgenauton 提供了一个 26 维度的标准化框架，帮你把\"写 Prompt\"升级为\"设计架构\"：\n\n**第一步：填写 26 维度模板**（30 分钟）\n- 不需要写代码，只需要做决策\n- 每个维度都有引导问题，帮你想清楚\n\n**第二步：生成架构骨架**（5 分钟）\n- 把填好的模板丢给 AI 编程工具\n- 自动生成项目结构、模块划分、接口定义\n\n**第三步：逐模块实现**（按需）\n- 架构清晰了，每个模块可以独立开发和测试\n- 可以用便宜的模型写具体代码，因为方向已经对了\n\n#### 一个类比\n\n**Prompt 堆砌 = 盖房子不画图纸，边盖边改。**\n**架构思维 = 先画图纸，再按图施工。**\n\n图纸不会帮你搬砖，但它能保证你不会把厕所盖在客厅里。\n\n> **26 letters build every word. 26 dimensions build every Agent.**\n\n🔗 GitHub 搜 Agenauton\n\n---\n\n## 短文版\n\n> 适用渠道：即刻 / 小红书\n\n**你的 Agent 还在靠堆 Prompt 续命吗？**\n\n一个残酷的事实：Prompt 再长，也不是架构。\n\n3000 字的 System Prompt = 不可维护 + 不可测试 + 不可扩展\n\n真正的 Agent 开发应该是：\n1️⃣ 先想清楚 26 个维度（30 分钟填表）\n2️⃣ 生成架构骨架（5 分钟丢给 AI）\n3️⃣ 逐模块实现（每个模块独立可测试）\n\nPrompt 只占 Agent 工作量的 10%，剩下 90% 是架构。\n\nAgenauton = 从 Prompt 思维到架构思维的升级指南。\n\n🔗 GitHub 搜 Agenauton\n\n#AIAgent #Prompt #架构设计 #Agenauton\n\n---\n\n## 推文版\n\n> 适用渠道：Twitter/X\n\nHot take: If your Agent's \"architecture\" is a 3000-word System Prompt, you don't have an architecture. You have a prayer.\n\nPrompt = 10% of the work. Architecture = 90%.\n\nAgenauton: 26 dimensions to think through before you write a single prompt. 🔗 github.com/Agenauton\n\n---\n\n## 社区帖版\n\n> 适用渠道：V2EX / HN\n\n**标题：观点：2026 年了，做 Agent 不应该还在堆 Prompt**\n\n最近看到很多 Agent 项目，核心就是一个巨长的 System Prompt。3000 字，50 条规则，改一个词全盘测试。\n\n我觉得这个阶段应该过去了。Agent 开发需要的是架构思维，不是 Prompt 炼丹。\n\n几个关键区别：\n- 知识管理：不应该全塞 Prompt，应该用 RAG\n- 记忆：不应该靠上下文窗口，应该有独立的记忆系统\n- 错误处理：不应该\"请道歉\"，应该有重试、降级、转人工\n- 安全：不应该\"不要泄露\"，应该有输出过滤和权限隔离\n\n我整理了一个 26 维度的检查清单，开源在 GitHub：Agenauton\n\n不是框架，不是 SDK，就是一个帮你在动手之前想清楚架构的标准化工具。\n\n欢迎讨论：你们做 Agent 的时候，架构是怎么设计的？\n",
+"articles/zh/04-dissect-product.md": "---\n选题编号: ZH-04\n分类: Wave 2 — 深度传播\n适用渠道: 公众号 / 知乎 / 掘金 / B站\n推荐口号: 「选好料、记得住、想得清、说得准、扛得住、学得快。」\n---\n\n# 标题变体\n\n1. **拆解 ChatGPT Operator 的 26 个维度：它凭什么能替你上网？**\n2. **用 26 维度透视一个顶级 AI 产品，你能看到什么？**\n3. **别只会用 AI 产品，学会拆解它——26 维度分析法**\n\n---\n\n## 长文版\n\n> 适用渠道：公众号 / 知乎\n\n### 拆解一个顶级 AI 产品的 26 个维度\n\n今天我们用 Agenauton 的 26 维度框架，来拆解一个大家都在用的 AI Agent 产品。\n\n不是为了抄袭，而是为了**学习它的架构决策**——为什么它在某些地方做得好，某些地方还有改进空间。\n\n#### 拆解对象\n\n我们以一个典型的\"能上网、能操作浏览器\"的 AI Agent 为例（类似 ChatGPT Operator / Manus 这类产品）。\n\n#### 基座层分析\n\n**维度 1：模型选择**\n- 主模型：大概率是旗舰级模型（GPT-4 级别），因为需要强推理能力\n- 策略：复杂操作用旗舰模型，简单确认用轻量模型\n- 学习点：**不是所有步骤都需要最强模型，分级调用是成本控制的关键**\n\n**维度 2：知识管理**\n- 实时网页内容作为动态知识源\n- 没有固定知识库，完全依赖实时检索\n- 学习点：**对于需要实时信息的 Agent，RAG 的\"R\"比\"G\"更重要**\n\n**维度 3：记忆系统**\n- 短期：当前任务的操作历史（点了什么、看到了什么）\n- 长期：用户偏好（登录信息、常用网站）\n- 学习点：**操作型 Agent 的记忆不是对话记录，而是操作轨迹**\n\n**维度 4：工具集成**\n- 浏览器操作（点击、输入、滚动、截图）\n- 文件下载/上传\n- 学习点：**工具的粒度决定了 Agent 的能力上限。浏览器操作需要拆到元素级别**\n\n#### 认知层分析\n\n**维度 5：推理策略**\n- 观察 → 思考 → 行动 → 观察（经典 ReAct 循环）\n- 每一步都需要理解当前页面状态\n- 学习点：**操作型 Agent 的推理是\"感知-决策\"循环，不是一次性生成**\n\n**维度 6：规划能力**\n- 把\"帮我订一张机票\"拆解为：打开网站 → 搜索航班 → 筛选 → 选择 → 填写信息 → 确认\n- 学习点：**好的规划 = 把模糊目标拆成可执行的步骤序列**\n\n**维度 7：上下文管理**\n- 需要同时记住：用户目标、当前页面状态、已完成步骤、待完成步骤\n- 学习点：**操作型 Agent 的上下文比对话型复杂得多，需要结构化管理**\n\n#### 安全层分析\n\n**维度 8：权限控制**\n- 敏感操作（支付、删除）需要用户确认\n- 不能访问用户未授权的网站\n- 学习点：**操作型 Agent 的权限控制是\"白名单\"模式，默认不允许**\n\n**维度 9：输出审查**\n- 截图中的敏感信息需要脱敏\n- 不能将一个用户的信息泄露给另一个用户\n- 学习点：**多模态输出的审查比纯文本复杂，图片也需要过滤**\n\n**维度 10：容错机制**\n- 页面加载失败 → 重试\n- 元素找不到 → 换策略\n- 操作卡死 → 超时回退\n- 学习点：**操作型 Agent 的容错不是\"道歉\"，而是\"换一种方式再试\"**\n\n#### 拆解总结\n\n| 层级 | 做得好的 | 可以改进的 |\n|------|---------|-----------|\n| 基座层 | 模型分级调用 | 知识缓存机制 |\n| 认知层 | ReAct 循环清晰 | 长任务规划可以更强 |\n| 安全层 | 敏感操作确认 | 多模态审查 |\n\n#### 你也可以这样拆解\n\nAgenauton 的 26 维度模板不只是用来\"建\"Agent 的，也可以用来\"拆\"Agent。\n\n下次你用到一个好的 AI 产品，试试用 26 维度去分析它：\n1. 它在每个维度上做了什么决策？\n2. 为什么这样决策？\n3. 如果是你，你会怎么做？\n\n这就是最好的学习方式。\n\n> **26 letters build every word. 26 dimensions build every Agent.**\n\n🔗 GitHub 搜 Agenauton\n\n---\n\n## 短文版\n\n> 适用渠道：小红书 / 即刻\n\n**用 26 维度拆解一个 AI 产品，你能学到什么？**\n\n拿一个\"能上网操作浏览器\"的 AI Agent 举例：\n\n🔍 模型选择：复杂操作用旗舰模型，简单确认用轻量模型\n🧠 记忆系统：不是记对话，而是记操作轨迹\n🛡️ 安全机制：敏感操作必须用户确认\n⚡ 容错：页面加载失败不是道歉，而是换策略重试\n\nAgenauton 的 26 维度不只能\"建\" Agent，还能\"拆\" Agent。\n\n下次用到好的 AI 产品，试试用 26 维度分析它，这是最好的学习方式。\n\n🔗 GitHub 搜 Agenauton\n\n#AI产品拆解 #AIAgent #Agenauton #产品分析\n\n---\n\n## 推文版\n\n> 适用渠道：Twitter/X\n\nWant to learn how top AI Agents are built? Don't just use them — dissect them.\n\nAgenauton's 26-dimension framework works both ways:\n→ Build your own Agent\n→ Reverse-engineer any AI product\n\nArchitecture decisions are the real moat. 🔗 github.com/Agenauton\n",
+"articles/zh/05-interview-cheatsheet.md": "---\n选题编号: ZH-05\n分类: Wave 2 — 深度传播\n适用渠道: 知乎 / 小红书 / 脉脉 / 即刻\n推荐口号: 「根基不牢，地动山摇。26 条铁律，条条不能少。」\n---\n\n# 标题变体\n\n1. **面试官问\"你怎么设计一个 Agent\"，我掏出了这张表**\n2. **2026 AI 面试必备：一张 26 维度清单搞定 Agent 设计题**\n3. **面试被问 Agent 架构怎么办？背这 6 层 26 维度就够了**\n\n---\n\n## 长文版\n\n> 适用渠道：知乎 / 公众号\n\n### 面试官问\"你怎么设计一个 Agent\"，我掏出了这张表\n\n2026 年的 AI 岗位面试，有一道题出现的频率越来越高：\n\n> \"如果让你从零设计一个 AI Agent，你会怎么做？\"\n\n这道题没有标准答案，但有标准思路。如果你能系统性地回答，而不是东一榔头西一棒子，面试官会立刻对你刮目相看。\n\n#### 大多数人的回答\n\n\"嗯……首先我会选一个模型，然后写一个 System Prompt，再接几个 API……\"\n\n这个回答不是错的，但太浅了。面试官想听的不是\"你会做什么\"，而是\"你怎么系统性地思考这个问题\"。\n\n#### 高分回答框架：6 层 26 维度\n\n用 Agenauton 的框架来回答，你可以这样组织：\n\n**\"我会从 6 个层面来设计，每个层面有若干关键决策点。\"**\n\n**第一层：基座层——Agent 的\"硬件\"**\n\n\"首先我需要确定 4 个基础决策：\n1. **模型选择**：根据场景的复杂度和成本预算，选择合适的模型组合。比如简单场景用轻量模型，复杂推理用旗舰模型。\n2. **知识管理**：Agent 需要什么知识？是静态文档还是实时数据？用 RAG 还是微调？\n3. **记忆系统**：需要记住什么？短期对话记忆、长期用户偏好、还是操作历史？\n4. **工具集成**：Agent 需要调用哪些外部工具？工具之间的优先级和冲突怎么处理？\"\n\n**第二层：认知层——Agent 的\"大脑\"**\n\n\"然后是 Agent 怎么'思考'：\n5. **推理策略**：用 Chain-of-Thought、ReAct、还是 Tree-of-Thought？\n6. **规划能力**：复杂任务怎么拆解？用前向规划还是反向规划？\n7. **上下文管理**：上下文窗口有限，怎么做摘要和压缩？\"\n\n**第三层：表达层——Agent 的\"嘴巴\"**\n\n\"Agent 怎么和用户交互：\n8. **人设定义**：Agent 的角色、性格、专业领域\n9. **语言风格**：正式还是随意？简洁还是详细？\n10. **多模态输出**：只输出文字，还是也能生成图片、代码、表格？\"\n\n**第四层：安全层——Agent 的\"防线\"**\n\n\"安全是最容易被忽略但最致命的：\n11. **权限控制**：Agent 能做什么、不能做什么\n12. **输出审查**：怎么防止幻觉、数据泄露、有害内容\n13. **容错机制**：模型调用失败、工具报错怎么处理\"\n\n**第五层：协作层——Agent 的\"团队\"**\n\n\"如果是复杂系统：\n14. **多 Agent 协同**：多个 Agent 怎么分工？怎么通信？\n15. **人机交互**：什么时候需要人工介入？\n16. **并发控制**：多用户同时使用怎么隔离？\"\n\n**第六层：进化层——Agent 的\"成长\"**\n\n\"最后是持续改进：\n17. **评估测试**：怎么量化 Agent 的表现？\n18. **持续学习**：怎么从用户反馈中改进？\n19. **合规伦理**：数据隐私、使用边界怎么定义？\"\n\n#### 面试官的反应\n\n当你用这个框架回答时，面试官会看到：\n- ✅ 你有**系统性思维**，不是想到哪说到哪\n- ✅ 你了解 Agent 的**全生命周期**，不只是 Prompt 工程\n- ✅ 你关注**安全和合规**，有工程素养\n- ✅ 你考虑了**可扩展性**，不是只做 Demo\n\n#### 实战技巧\n\n1. **不需要每个维度都深入**——根据面试的具体场景，重点展开 2-3 个维度\n2. **用具体例子**——\"比如做一个客服 Agent，我会在记忆系统上选择……\"\n3. **承认取舍**——\"在成本和效果之间，我会优先……因为……\"\n\n#### 下载清单\n\nAgenauton 的 26 维度模板可以直接打印出来，面试前过一遍，确保你对每个维度都有自己的思考。\n\n> **26 letters build every word. 26 dimensions build every Agent.**\n\n🔗 GitHub 搜 Agenauton\n\n---\n\n## 短文版\n\n> 适用渠道：小红书 / 脉脉\n\n**AI 面试高频题：怎么设计一个 Agent？**\n\n别慌，记住这个框架：6 层搞定 👇\n\n1️⃣ 基座层：模型 + 知识 + 记忆 + 工具\n2️⃣ 认知层：推理 + 规划 + 上下文\n3️⃣ 表达层：人设 + 风格 + 多模态\n4️⃣ 安全层：权限 + 审查 + 容错\n5️⃣ 协作层：多Agent + 人机 + 并发\n6️⃣ 进化层：评估 + 学习 + 合规\n\n面试官想听的不是\"我会写 Prompt\"，而是\"我能系统性地设计架构\"。\n\nAgenauton 26 维度清单，打印出来面试前过一遍。\n\n🔗 GitHub 搜 Agenauton\n\n#AI面试 #AIAgent #面试技巧 #架构设计\n\n---\n\n## 推文版\n\n> 适用渠道：Twitter/X\n\n\"How would you design an AI Agent from scratch?\"\n\nMost people: \"I'd pick a model and write a prompt...\"\n\nBetter answer: \"I'd make decisions across 6 layers and 26 dimensions — from model selection to safety to multi-agent coordination.\"\n\nThe Agenauton checklist = your interview cheat code. 🔗 github.com/Agenauton\n",
+"articles/zh/06-cursor-one-prompt.md": "---\n选题编号: ZH-06\n分类: Wave 2 — 深度传播\n适用渠道: B站 / Twitter/X / 掘金 / 即刻\n推荐口号: 「给 Cursor 一段话，它就能帮你搭好 Agent 架构。」\n---\n\n# 标题变体\n\n1. **给 Cursor 一段话，它就能帮你搭好 Agent 架构**\n2. **AI 写 AI：用 Cursor + Agenauton 10 分钟生成 Agent 骨架**\n3. **不会写代码也能做 Agent？Cursor + 26 维度模板实操演示**\n\n---\n\n## 长文版\n\n> 适用渠道：掘金 / 公众号\n\n### 给 Cursor 一段话，它就能帮你搭好 Agent 架构\n\n很多人觉得做 Agent 需要很强的编程能力。但在 2026 年，AI 编程工具已经强大到可以帮你生成完整的项目架构——前提是你给它**正确的指令**。\n\n今天演示一下，怎么用 Agenauton + Cursor，10 分钟生成一个 Agent 的完整架构骨架。\n\n#### 准备工作\n\n1. 安装 Cursor IDE\n2. 克隆 Agenauton 仓库（或者直接下载 `ai_architect_prompt.md`）\n3. 花 30 分钟填写 26 维度模板（这是最重要的一步）\n\n#### 实操演示\n\n**Step 1：填写 26 维度模板**\n\n假设我们要做一个\"智能日程助手 Agent\"，填写关键维度：\n\n```markdown\n## 基座层\n- 模型选择：GPT-4o-mini（日常对话）+ GPT-4o（复杂规划）\n- 知识管理：用户日历数据 + 会议规则\n- 记忆系统：短期对话记忆 + 长期日程偏好\n- 工具集成：Google Calendar API / Outlook API / 提醒系统\n\n## 认知层\n- 推理策略：理解用户意图 → 检查日程冲突 → 提出建议\n- 规划能力：支持多步日程安排（\"帮我安排下周的会议\"）\n- 上下文管理：最近 5 轮对话 + 当日日程摘要\n\n## 表达层\n- 人设：高效、简洁的私人助理\n- 语言风格：专业但友好，默认简短回复\n- 多模态：文字 + 日程表格 + 提醒通知\n\n## 安全层\n- 权限控制：只能读写用户自己的日历\n- 输出审查：不泄露其他参会者的私人信息\n- 容错：API 调用失败时提示用户手动操作\n\n## 协作层\n- 人机交互：时间冲突时询问用户偏好\n- 并发：支持多设备同步\n\n## 进化层\n- 评估：日程安排准确率 + 用户采纳率\n- 学习：根据用户习惯优化建议时间\n```\n\n**Step 2：丢给 Cursor**\n\n打开 Cursor，新建一个项目，然后在 Chat 中输入：\n\n```\n请根据以下 Agenauton 26 维度规格，为我生成一个智能日程助手 Agent 的完整项目架构。\n\n[粘贴填好的 26 维度模板]\n\n要求：\n1. 生成项目目录结构\n2. 定义核心模块和接口\n3. 生成 Pydantic 数据模型\n4. 画出数据流 Mermaid 图\n5. 为每个模块生成代码骨架\n```\n\n**Step 3：Cursor 的输出**\n\nCursor 会生成：\n\n```\nschedule-agent/\n├── src/\n│   ├── core/\n│   │   ├── agent.py          # Agent 主循环\n│   │   ├── planner.py        # 日程规划引擎\n│   │   └── memory.py         # 记忆管理\n│   ├── tools/\n│   │   ├── calendar.py       # 日历 API 集成\n│   │   ├── reminder.py       # 提醒系统\n│   │   └── registry.py       # 工具注册中心\n│   ├── safety/\n│   │   ├── permissions.py    # 权限控制\n│   │   ├── filters.py        # 输出过滤\n│   │   └── fallback.py       # 容错处理\n│   ├── models/\n│   │   ├── schemas.py        # Pydantic 数据模型\n│   │   └── config.py         # 配置定义\n│   └── api/\n│       └── endpoints.py      # API 接口\n├── tests/\n│   ├── test_planner.py\n│   ├── test_safety.py\n│   └── test_tools.py\n├── docs/\n│   └── architecture.md       # 架构文档 + Mermaid 图\n└── pyproject.toml\n```\n\n每个文件都有基础的代码骨架，包含类定义、接口签名、关键注释。\n\n**Step 4：逐模块填充**\n\n架构骨架生成后，你可以：\n- 逐个模块让 Cursor 帮你实现具体逻辑\n- 因为架构已经清晰，每个模块的边界很明确\n- 可以用更便宜的模型来写具体实现代码\n\n#### 为什么这样做更好？\n\n| 传统方式 | Agenauton + Cursor |\n|---------|-------------------|\n| 边想边写，架构混乱 | 先想清楚，再生成架构 |\n| 模块耦合，改一处动全身 | 模块独立，可单独开发测试 |\n| 安全是事后补丁 | 安全是架构的一部分 |\n| 重构成本高 | 一次建对，不走回头路 |\n\n#### 关键点\n\n**Agenauton 不是帮你写代码的工具，而是帮你\"想清楚\"的工具。**\n\n想清楚之后，让 AI 帮你写代码就是水到渠成的事。\n\n> **26 letters build every word. 26 dimensions build every Agent.**\n\n🔗 GitHub 搜 Agenauton\n\n---\n\n## 短文版\n\n> 适用渠道：即刻 / 小红书\n\n**10 分钟用 Cursor 生成 Agent 架构，只需要 3 步：**\n\n1️⃣ 填 Agenauton 26 维度模板（30 分钟想清楚）\n2️⃣ 把模板丢给 Cursor + 架构生成 Prompt\n3️⃣ Cursor 输出完整项目结构 + 代码骨架\n\n然后逐模块让 AI 帮你实现具体逻辑。\n\n关键不是代码能力，是架构思维。想清楚了，AI 帮你写。\n\n🔗 GitHub 搜 Agenauton\n\n#Cursor #AIAgent #AI编程 #Agenauton\n\n---\n\n## 推文版\n\n> 适用渠道：Twitter/X\n\nCursor + Agenauton = Agent architecture in 10 minutes.\n\n1. Fill out the 26-dimension template (think first)\n2. Feed it to Cursor with the architect prompt\n3. Get a complete project skeleton with modules, interfaces, and data models\n\nArchitecture > Code. Think first, build fast. 🔗 github.com/Agenauton\n\n---\n\n## 视频脚本\n\n> 适用渠道：B站 / 抖音\n\n**【标题】10 分钟用 Cursor 生成 Agent 架构｜Agenauton 实操**\n\n**[开头 - 10秒]**\n\"今天演示一个东西——怎么用 Cursor 加一份清单，10 分钟生成一个 Agent 的完整架构。\"\n\n**[背景 - 20秒]**\n\"很多人做 Agent 都是边想边写，写到一半发现架构不对，推倒重来。Agenauton 的思路是：先想清楚，再让 AI 帮你生成架构。\"\n\n**[实操 Part 1 - 60秒]**\n（屏幕录制：打开 26 维度模板，填写关键维度）\n\"我们做一个日程助手 Agent。先填模板——模型选什么、记忆怎么管、安全怎么做……大概 30 分钟能填完。\"\n\n**[实操 Part 2 - 60秒]**\n（屏幕录制：打开 Cursor，粘贴模板 + Prompt，展示生成结果）\n\"填好之后，打开 Cursor，粘贴模板加上架构生成 Prompt。看——它直接给你生成了完整的项目结构、代码骨架、数据模型。\"\n\n**[分析 - 30秒]**\n\"看这个结构：核心模块、工具集成、安全层、测试——全都有。而且每个模块的边界很清晰，你可以逐个让 Cursor 帮你实现。\"\n\n**[结尾 - 10秒]**\n\"Agenauton 不是帮你写代码，是帮你想清楚。想清楚了，AI 帮你写。链接在简介里。\"\n",
+"articles/zh/07-community-challenge.md": "---\n选题编号: ZH-07\n分类: Wave 3 — 社区裂变\n适用渠道: GitHub / Twitter/X / 即刻 / 知乎\n推荐口号: 「26 letters build every word. 26 dimensions build every Agent.」\n---\n\n# 标题变体\n\n1. **全网征集：用 26 维度拆解你最喜欢的 AI 产品**\n2. **Agenauton Challenge：谁能把一个 AI 产品拆得最透？**\n3. **26 维度挑战赛：拆解 AI 产品，赢取社区认证**\n\n---\n\n## 长文版\n\n> 适用渠道：GitHub Issue / 知乎\n\n### 🔥 Agenauton 26 维度挑战赛\n\n**用 Agenauton 的 26 维度框架，拆解你最喜欢（或最讨厌）的 AI Agent 产品。**\n\n#### 为什么要做这个活动？\n\nAgenauton 的 26 维度框架不只是用来\"建\"Agent 的，也是用来\"理解\"Agent 的。\n\n通过拆解现有产品，你可以：\n- 深入理解优秀 Agent 的架构决策\n- 发现产品的优势和改进空间\n- 锻炼自己的架构思维\n- 为社区贡献有价值的案例分析\n\n#### 怎么参与？\n\n**Step 1：选择一个 AI Agent 产品**\n\n可以是：\n- ChatGPT / Claude / Gemini 的 Agent 功能\n- Manus / Operator / Devin 等自主 Agent\n- 任何你用过的 AI 助手、AI 客服、AI 写作工具\n- 你自己做的 Agent 也可以！\n\n**Step 2：用 26 维度模板分析**\n\n下载 Agenauton 的 26 维度模板，逐条分析目标产品：\n- 它在每个维度上做了什么决策？\n- 为什么这样决策？（你的推测）\n- 做得好的地方是什么？\n- 可以改进的地方是什么？\n\n**Step 3：提交你的分析**\n\n两种方式：\n1. **GitHub**：在 Agenauton 仓库提交 Issue，标题格式 `[拆解] 产品名称`\n2. **社交媒体**：发布到任何平台，带标签 `#Agenauton拆解`\n\n#### 评选标准\n\n| 维度 | 权重 | 说明 |\n|------|------|------|\n| 完整性 | 30% | 覆盖了多少个维度 |\n| 深度 | 30% | 分析是否有洞察力 |\n| 实用性 | 20% | 对其他开发者是否有参考价值 |\n| 表达 | 20% | 写得是否清晰易懂 |\n\n#### 奖励\n\n- 🥇 **最佳拆解**：收录进 Agenauton 官方案例库 + 社区 Contributor 认证\n- 🥈 **优秀拆解**：README 致谢 + 社区推荐\n- 🏅 **参与奖**：所有有效提交都会在社区展示\n\n#### 时间\n\n- 征集期：即日起持续进行\n- 每月评选一次最佳拆解\n\n#### 示例\n\n参考 Agenauton 仓库中的 `04_Case_Studies/` 目录，里面有示例拆解模板。\n\n---\n\n**来吧，用 26 维度的眼光重新审视你身边的 AI 产品。**\n\n**你会发现，好的 Agent 和差的 Agent 之间，差的不是技术，是架构决策。**\n\n> **26 letters build every word. 26 dimensions build every Agent.**\n\n🔗 GitHub 搜 Agenauton\n\n---\n\n## 短文版\n\n> 适用渠道：即刻 / 小红书\n\n**🔥 Agenauton 挑战赛来了！**\n\n选一个你最喜欢的 AI 产品，用 26 维度拆解它：\n\n- 它用什么模型？知识怎么管？\n- 怎么处理错误？安全怎么做？\n- 多个 Agent 怎么协作？\n\n提交方式：\n📌 GitHub Issue（标题：[拆解] 产品名）\n📌 社交媒体带 #Agenauton拆解\n\n最佳拆解收录进官方案例库！\n\n这是学习 Agent 架构最好的方式——不是看教程，是拆真实产品。\n\n🔗 GitHub 搜 Agenauton\n\n#Agenauton拆解 #AIAgent #AI产品分析 #挑战赛\n\n---\n\n## 推文版\n\n> 适用渠道：Twitter/X\n\n🔥 Agenauton Challenge: Pick any AI Agent product. Dissect it through 26 dimensions. Share your analysis.\n\nBest submissions get featured in the official case study library.\n\nThe best way to learn Agent architecture? Don't read tutorials — reverse-engineer real products.\n\n#Agenauton #AIAgent 🔗 github.com/Agenauton\n",
+"articles/zh/08-agent-scorecard.md": "---\n选题编号: ZH-08\n分类: Wave 3 — 社区裂变\n适用渠道: 小红书 / 公众号 / 即刻\n推荐口号: 「你的 Agent 能打几分？26 维度自检评分表。」\n---\n\n# 标题变体\n\n1. **你的 Agent 能打几分？26 维度自检评分表**\n2. **Agent 体检报告：用这张表给你的 AI 打个分**\n3. **上线前必做：26 维度 Agent 健康检查**\n\n---\n\n## 长文版\n\n> 适用渠道：公众号\n\n### 你的 Agent 能打几分？26 维度自检评分表\n\n你的 Agent 做好了，准备上线了。但你真的确定它准备好了吗？\n\n这里有一份 **26 维度自检评分表**，每个维度 0-5 分，满分 130 分。花 10 分钟给你的 Agent 做个\"体检\"。\n\n#### 评分表\n\n##### 基座层（满分 25 分）\n\n| # | 维度 | 评分标准 | 你的评分 |\n|---|------|---------|---------|\n| 1 | 模型选择 | 0=没想过 1=随便选的 3=有对比 5=有分级策略 | /5 |\n| 2 | 知识管理 | 0=全靠模型 1=塞Prompt里 3=有RAG 5=有更新机制 | /5 |\n| 3 | 记忆系统 | 0=无记忆 1=靠上下文 3=有短期记忆 5=短期+长期+摘要 | /5 |\n| 4 | 工具集成 | 0=无工具 1=硬编码 3=有注册机制 5=有路由+权限+回退 | /5 |\n| 5 | 多模态 | 0=纯文字 1=能处理一种 3=多种输入 5=多种输入输出 | /5 |\n\n##### 认知层（满分 20 分）\n\n| # | 维度 | 评分标准 | 你的评分 |\n|---|------|---------|---------|\n| 6 | 推理策略 | 0=直接生成 1=简单CoT 3=ReAct 5=自适应策略 | /5 |\n| 7 | 规划能力 | 0=无规划 1=单步 3=多步分解 5=动态调整计划 | /5 |\n| 8 | 上下文管理 | 0=全量传入 1=截断 3=摘要 5=结构化管理 | /5 |\n| 9 | 可解释性 | 0=黑盒 1=能说原因 3=有推理链 5=用户可查看决策过程 | /5 |\n\n##### 表达层（满分 15 分）\n\n| # | 维度 | 评分标准 | 你的评分 |\n|---|------|---------|---------|\n| 10 | 人设定义 | 0=无人设 1=简单描述 3=详细人设 5=有边界约束 | /5 |\n| 11 | 语言风格 | 0=默认 1=有要求 3=一致性好 5=可根据场景切换 | /5 |\n| 12 | 输出体验 | 0=纯文字 1=有格式 3=结构化输出 5=多格式自适应 | /5 |\n\n##### 安全层（满分 20 分）\n\n| # | 维度 | 评分标准 | 你的评分 |\n|---|------|---------|---------|\n| 13 | 权限控制 | 0=无限制 1=简单规则 3=角色权限 5=细粒度+审计 | /5 |\n| 14 | 输出审查 | 0=无审查 1=关键词过滤 3=语义过滤 5=多层审查 | /5 |\n| 15 | 容错机制 | 0=直接崩溃 1=报错 3=重试 5=重试+降级+转人工 | /5 |\n| 16 | 合规伦理 | 0=没考虑 1=有意识 3=有措施 5=有审计+合规文档 | /5 |\n\n##### 协作层（满分 25 分）\n\n| # | 维度 | 评分标准 | 你的评分 |\n|---|------|---------|---------|\n| 17 | 多Agent协同 | 0=单Agent 1=简单串联 3=有编排 5=动态协作 | /5 |\n| 18 | 人机交互 | 0=无介入 1=能转人工 3=智能升级 5=人机协作流畅 | /5 |\n| 19 | 并发控制 | 0=单用户 1=多用户 3=有隔离 5=隔离+限流+监控 | /5 |\n| 20 | 通信协议 | 0=无 1=简单传参 3=标准协议 5=异步+可追溯 | /5 |\n| 21 | 状态管理 | 0=无状态 1=简单状态 3=有状态机 5=分布式状态 | /5 |\n\n##### 进化层（满分 25 分）\n\n| # | 维度 | 评分标准 | 你的评分 |\n|---|------|---------|---------|\n| 22 | 评估测试 | 0=没测过 1=手动测 3=有测试集 5=自动化+CI | /5 |\n| 23 | 持续学习 | 0=不学习 1=手动更新 3=有反馈循环 5=自动优化 | /5 |\n| 24 | 监控运维 | 0=无监控 1=日志 3=指标+告警 5=全链路可观测 | /5 |\n| 25 | 版本管理 | 0=无版本 1=手动 3=有版本号 5=灰度+回滚 | /5 |\n| 26 | 成本控制 | 0=没算过 1=知道总成本 3=有预算 5=动态优化 | /5 |\n\n#### 评分解读\n\n| 分数段 | 等级 | 建议 |\n|--------|------|------|\n| 100-130 | ⭐⭐⭐⭐⭐ 生产级 | 放心上线，持续优化 |\n| 75-99 | ⭐⭐⭐⭐ 可用级 | 可以上线，但需要补齐短板 |\n| 50-74 | ⭐⭐⭐ Demo 级 | 只适合演示，上线有风险 |\n| 25-49 | ⭐⭐ 原型级 | 需要大幅改进 |\n| 0-24 | ⭐ Prompt 级 | 这不是 Agent，这是一个 Prompt |\n\n#### 怎么用这张表？\n\n1. **上线前自检**：确保没有致命短板\n2. **团队评审**：多人独立评分，对比差异\n3. **竞品分析**：给竞品也打个分，找到差异化机会\n4. **持续追踪**：每次迭代后重新评分，看趋势\n\n> **底子要硬，脑子要清，嘴巴要稳，出事要扛，上线要活。**\n\n🔗 GitHub 搜 Agenauton，下载完整评分模板\n\n---\n\n## 短文版\n\n> 适用渠道：小红书 / 即刻\n\n**你的 Agent 能打几分？来测一下 👇**\n\n26 维度评分表，每项 0-5 分，满分 130：\n\n🏗️ 基座层：模型+知识+记忆+工具+多模态\n🧠 认知层：推理+规划+上下文+可解释\n🗣️ 表达层：人设+风格+输出体验\n🛡️ 安全层：权限+审查+容错+合规\n🤝 协作层：多Agent+人机+并发+通信+状态\n📈 进化层：评估+学习+监控+版本+成本\n\n评分解读：\n- 100+ = 生产级，放心上线\n- 75-99 = 可用，但有短板\n- 50-74 = 只能 Demo\n- <50 = 这不是 Agent，这是 Prompt\n\n你的 Agent 多少分？评论区晒分！\n\n🔗 GitHub 搜 Agenauton\n\n#AIAgent #Agent评分 #Agenauton #自检清单\n\n---\n\n## 推文版\n\n> 适用渠道：Twitter/X\n\nHow production-ready is your AI Agent? Score it across 26 dimensions (0-5 each, max 130):\n\n100+ = Production-grade\n75-99 = Usable, gaps remain\n50-74 = Demo only\n<50 = That's not an Agent, that's a prompt\n\nFree scorecard template: 🔗 github.com/Agenauton #AIAgent\n",
+"articles/zh/09-zero-to-one-story.md": "---\n选题编号: ZH-09\n分类: Wave 3 — 社区裂变\n适用渠道: B站 / 小红书 / 公众号\n推荐口号: 「底子要硬，脑子要清，嘴巴要稳，出事要扛，上线要活。」\n---\n\n# 标题变体\n\n1. **从 0 到 1：一个普通人用 Agenauton 做出第一个 Agent**\n2. **不会写代码的我，用一份清单做出了能赚钱的 Agent**\n3. **普通人做 Agent 的真实记录：从迷茫到上线的 7 天**\n\n---\n\n## 长文版\n\n> 适用渠道：公众号 / B站\n\n### 从 0 到 1：一个普通人用 Agenauton 做出第一个 Agent\n\n我不是程序员。准确地说，我是一个做跨境电商的个体户，每天花大量时间回复客户消息、查物流、处理售后。\n\n2026 年初，我决定做一个 AI Agent 来帮我处理这些重复工作。\n\n这是我的真实经历。\n\n#### Day 0：一头雾水\n\n我知道 AI 很厉害，但\"做一个 Agent\"对我来说完全是黑盒。\n\n我试过的方法：\n- 直接问 ChatGPT：\"帮我做一个客服 Agent\"——它给了我一堆代码，我看不懂\n- 找了几个\"零代码 Agent 平台\"——做出来的东西太简单，不能满足我的需求\n- 看了 B 站上的教程——每个人说的都不一样，越看越乱\n\n**我缺的不是工具，是一个系统性的思路。**\n\n#### Day 1：发现 Agenauton\n\n在即刻上看到有人分享 Agenauton 的 26 维度清单，说\"做 Agent 之前先填这张表\"。\n\n我抱着试试看的心态打开了那个模板。\n\n说实话，第一眼看到 26 个维度我是懵的。但它有一个\"30 秒看懂\"版本，用大白话解释了每一层：\n\n> 底子要硬（基座层）——用什么模型？知识从哪来？\n> 脑子要清（认知层）——Agent 怎么思考？怎么拆任务？\n> 嘴巴要稳（表达层）——Agent 怎么说话？什么该说什么不该说？\n> 出事要扛（安全层）——出了问题怎么办？\n> 上线要活（进化层）——怎么越用越好？\n\n**这个我能理解！**\n\n#### Day 2-3：填写 26 维度模板\n\n我花了两天时间，逐条填写模板。虽然有些技术细节我不懂，但每个维度的引导问题帮了大忙：\n\n**模型选择**\n- 引导问题：\"你的场景需要多强的理解能力？\"\n- 我的回答：客户消息大多是简单的查询，偶尔有复杂的投诉\n- 我的决策：主力用便宜的模型，复杂问题用好模型\n\n**知识管理**\n- 引导问题：\"Agent 需要知道什么才能回答用户？\"\n- 我的回答：产品信息、物流政策、售后规则、常见问题\n- 我的决策：把这些文档整理好，用 RAG 检索\n\n**安全层**\n- 引导问题：\"Agent 绝对不能做什么？\"\n- 我的回答：不能承诺不存在的政策、不能泄露其他客户信息、不能自动退款\n- 我的决策：所有退款操作需要我确认\n\n填完之后，我第一次对\"我要做一个什么样的 Agent\"有了清晰的画面。\n\n#### Day 4-5：让 AI 帮我写代码\n\n我把填好的模板丢给了 Cursor（一个 AI 编程工具），加上 Agenauton 的架构生成 Prompt。\n\nCursor 帮我生成了：\n- 项目结构\n- 核心模块的代码骨架\n- 数据库表结构\n- API 接口\n\n然后我逐个模块让 Cursor 帮我实现具体逻辑。遇到不懂的地方就问它，它会解释并帮我修改。\n\n**整个过程我没有手写过一行代码。**\n\n#### Day 6：测试\n\n用 Agenauton 的评估维度设计了测试：\n- 让朋友假装客户问各种问题\n- 故意问一些刁钻的问题（\"你们老板是谁？\"）\n- 测试多人同时对话\n\n发现了几个问题，让 Cursor 帮我修复。\n\n#### Day 7：上线\n\n接入了我的客服系统，开始处理真实客户消息。\n\n#### 一个月后的数据\n\n- 处理了 80% 的客户咨询（剩下 20% 转给我处理）\n- 平均响应时间从 30 分钟降到 30 秒\n- 客户满意度没有下降\n- 我每天省出了 3-4 个小时\n\n#### 我的感悟\n\n**做 Agent 最难的不是写代码，是想清楚。**\n\nAgenauton 帮我做到了\"想清楚\"这一步。剩下的，AI 编程工具帮我搞定了。\n\n如果你也是一个\"不会写代码但想做 Agent\"的人，我的建议是：\n\n1. 先花 2 天填 Agenauton 的 26 维度模板\n2. 把模板丢给 Cursor 或类似的 AI 编程工具\n3. 逐步实现、测试、上线\n\n不需要成为程序员，但需要成为**架构师**——想清楚你要什么，AI 帮你实现。\n\n> **26 个字母构成所有语言，26 个维度构成所有 Agent。**\n\n🔗 GitHub 搜 Agenauton\n\n---\n\n## 短文版\n\n> 适用渠道：小红书 / 即刻\n\n**不会写代码的我，7 天做出了一个能用的 AI 客服 Agent 🤯**\n\n我是做跨境电商的，每天花大量时间回复客户。\n\n用 Agenauton 的 26 维度清单 + Cursor AI 编程工具：\n\n📋 Day 1-3：填写 26 维度模板，想清楚要做什么\n💻 Day 4-5：把模板丢给 Cursor，让 AI 帮我写代码\n🧪 Day 6：测试修复\n🚀 Day 7：上线\n\n一个月后：\n✅ 处理 80% 客户咨询\n✅ 响应时间 30分钟→30秒\n✅ 每天省出 3-4 小时\n\n全程没有手写一行代码。关键是先想清楚，AI 帮你写。\n\n🔗 GitHub 搜 Agenauton\n\n#普通人做Agent #AIAgent #Cursor #Agenauton #AI创业\n\n---\n\n## 推文版\n\n> 适用渠道：Twitter/X\n\nI'm not a developer. I run a small e-commerce business.\n\nI built a customer service AI Agent in 7 days using Agenauton + Cursor:\n- 2 days thinking (26-dimension template)\n- 3 days building (AI wrote the code)\n- 2 days testing\n\nNow it handles 80% of customer queries. Zero coding by hand.\n\n🔗 github.com/Agenauton\n\n---\n\n## 视频脚本\n\n> 适用渠道：B站 / 抖音\n\n**【标题】不会写代码，我 7 天做出了一个 AI 客服 Agent**\n\n**[开头 - 15秒]**\n\"我不是程序员，我是做跨境电商的。但我用 7 天时间，做出了一个 AI 客服 Agent，现在它帮我处理 80% 的客户咨询。\"\n\n**[痛点 - 20秒]**\n\"每天回复客户消息要花 4-5 个小时，大部分都是重复的问题。我想做一个 AI 来帮我，但不知道从哪开始。\"\n\n**[转折 - 15秒]**\n\"后来我发现了 Agenauton——一个开源的 Agent 构建标准。它不是帮你写代码的，而是帮你想清楚的。\"\n\n**[过程 - 60秒]**\n（屏幕录制 + 旁白）\n\"第一步，填写 26 维度模板。每个维度都有引导问题，比如'你的 Agent 绝对不能做什么？'我填了'不能自动退款、不能泄露客户信息'。\"\n\"第二步，把填好的模板丢给 Cursor。它直接帮我生成了项目代码。\"\n\"第三步，测试修复，然后上线。\"\n\n**[结果 - 20秒]**\n\"一个月后：80% 的咨询自动处理，响应时间从 30 分钟降到 30 秒，每天省出 3-4 个小时。\"\n\n**[结尾 - 10秒]**\n\"做 Agent 最难的不是写代码，是想清楚。Agenauton 帮你想清楚，AI 帮你写代码。链接在简介里。\"\n",
+"articles/zh/10-why-we-need-standard.md": "---\n选题编号: ZH-10\n分类: Wave 4 — 权威背书\n适用渠道: 知乎 / 公众号 / LinkedIn\n推荐口号: 「26 个字母构成所有语言，26 个维度构成所有 Agent。」\n---\n\n# 标题变体\n\n1. **为什么我们需要一个 Agent 构建标准？**\n2. **Agent 行业的\"ISO\"在哪里？**\n3. **从野蛮生长到标准化：AI Agent 行业需要一次认知升级**\n\n---\n\n## 长文版\n\n> 适用渠道：知乎 / 公众号 / Medium\n\n### 为什么我们需要一个 Agent 构建标准？\n\n2026 年，AI Agent 行业正在经历一个微妙的转折点。\n\n一方面，Agent 的能力越来越强——能上网、能写代码、能操作软件、能协调多个子任务。另一方面，Agent 项目的失败率居高不下——大量项目停留在 Demo 阶段，能真正上线并稳定运行的屈指可数。\n\n**这个矛盾的根源是什么？**\n\n#### 历史的回声\n\n每一个技术领域在成熟之前，都经历过类似的阶段：\n\n**Web 开发**\n- 2000 年代初：每个人都在用自己的方式写网页，没有统一的架构模式\n- 然后出现了 MVC、REST、响应式设计等标准\n- 结果：Web 开发从\"手艺活\"变成了\"工程\"\n\n**移动开发**\n- 2010 年代初：App 开发百花齐放，质量参差不齐\n- 然后出现了 Material Design、Human Interface Guidelines、MVVM 等标准\n- 结果：移动开发有了可预期的质量基线\n\n**DevOps**\n- 2015 年前后：部署和运维各家各法\n- 然后出现了 CI/CD、容器化、Infrastructure as Code 等标准\n- 结果：软件交付从\"手动操作\"变成了\"自动化流水线\"\n\n**AI Agent 行业现在正处于\"标准化之前\"的阶段。**\n\n#### 没有标准的代价\n\n**对个人开发者：**\n- 每次做 Agent 都从零开始思考架构\n- 踩过的坑下次还会踩，因为没有系统化的检查清单\n- 不同项目之间的经验无法复用\n\n**对团队：**\n- 团队成员对\"什么是好的 Agent\"没有共识\n- Code Review 没有统一标准，全靠个人经验\n- 新人入职没有参考框架，上手慢\n\n**对行业：**\n- 优秀的架构决策散落在各个公司内部，无法共享\n- 投资人和客户无法评估一个 Agent 项目的成熟度\n- 没有通用的评估体系，\"好\"和\"差\"全靠感觉\n\n#### Agenauton 的定位\n\nAgenauton 不是一个框架（framework），不是一个 SDK，不是一个平台。\n\n**它是一个标准（standard）。**\n\n具体来说，它提供：\n\n**1. 26 维度矩阵**\n- 覆盖 Agent 构建的 6 个层面、26 个关键决策点\n- 不告诉你\"怎么做\"，而是告诉你\"需要想什么\"\n- 技术无关——不绑定任何特定模型、框架或语言\n\n**2. 标准化模板**\n- 可填写的 Markdown 模板，用于记录架构决策\n- 可以作为团队沟通的共同语言\n- 可以作为项目评审的检查清单\n\n**3. AI 可执行指令**\n- 把 26 维度转化为 AI 编程工具可理解的 Prompt\n- 让 AI 帮你生成符合标准的架构骨架\n- 确保 AI 生成的代码在架构层面是正确的\n\n#### 标准 vs 框架\n\n| | 标准（Agenauton） | 框架（LangChain 等） |\n|---|---|---|\n| 做什么 | 告诉你需要想什么 | 告诉你怎么实现 |\n| 绑定 | 不绑定任何技术栈 | 绑定特定语言和生态 |\n| 适用范围 | 所有 Agent 项目 | 特定类型的 Agent |\n| 学习成本 | 30 分钟填一张表 | 几天到几周学 API |\n| 价值 | 架构决策不出错 | 实现效率提升 |\n\n**标准和框架不是竞争关系，而是互补关系。**\n\n你可以用 Agenauton 想清楚架构，然后用 LangChain / CrewAI / AutoGen 来实现。\n\n#### 为什么是 26 个维度？\n\n26 不是一个随意的数字。\n\n英语有 26 个字母，用这 26 个字母可以构成所有的单词、所有的句子、所有的文章。\n\n同样，Agenauton 的 26 个维度覆盖了 Agent 构建的所有关键决策。掌握了这 26 个维度，你就有了构建任何 Agent 的基础。\n\n> **26 letters build every word. 26 dimensions build every Agent.**\n\n#### 开源的意义\n\nAgenauton 是完全开源的（MIT License），因为：\n\n1. **标准应该是公共的**——不应该被任何一家公司垄断\n2. **标准需要社区共建**——26 个维度会随着行业发展持续演进\n3. **标准的价值在于普及**——用的人越多，价值越大\n\n我们希望 Agenauton 能成为 AI Agent 行业的\"通用语言\"——当你说\"我的 Agent 在安全层的容错维度做到了 Level 5\"，所有人都知道你在说什么。\n\n🔗 GitHub 搜 Agenauton\n\n---\n\n## 短文版\n\n> 适用渠道：即刻 / LinkedIn\n\n**为什么 AI Agent 行业需要一个构建标准？**\n\nWeb 有 REST，移动有 Material Design，DevOps 有 CI/CD。\n\nAI Agent 呢？目前还是各家各法，没有统一的架构思考框架。\n\nAgenauton = Agent 行业的标准化方案：\n- 26 维度矩阵：覆盖所有关键决策\n- 技术无关：不绑定任何框架\n- 开源共建：MIT License\n\n标准和框架不是竞争关系。先用 Agenauton 想清楚架构，再用 LangChain/CrewAI 实现。\n\n26 个字母构成所有语言，26 个维度构成所有 Agent。\n\n🔗 GitHub 搜 Agenauton\n\n#AIAgent #行业标准 #Agenauton #开源\n\n---\n\n## 推文版\n\n> 适用渠道：Twitter/X\n\nWeb has REST. Mobile has Material Design. DevOps has CI/CD.\n\nAI Agents have... nothing. Everyone's reinventing the wheel.\n\nAgenauton: An open standard for Agent architecture. 26 dimensions. Technology-agnostic. MIT licensed.\n\nNot a framework. A way of thinking. 🔗 github.com/Agenauton\n",
+"articles/zh/11-forgebase-vs-frameworks.md": "---\n选题编号: ZH-11\n分类: Wave 4 — 权威背书\n适用渠道: 掘金 / 知乎 / V2EX\n推荐口号: 「根基不牢，地动山摇。26 条铁律，条条不能少。」\n---\n\n# 标题变体\n\n1. **Agenauton vs LangChain / CrewAI / AutoGen：有什么不同？**\n2. **做 Agent 该选框架还是标准？一张图说清楚**\n3. **LangChain 解决了 60% 的问题，剩下 40% 需要 Agenauton**\n\n---\n\n## 长文版\n\n> 适用渠道：掘金 / 知乎\n\n### Agenauton vs LangChain / CrewAI / AutoGen：有什么不同？\n\n这是我被问得最多的问题：\"Agenauton 和 LangChain 有什么区别？是竞品吗？\"\n\n**不是竞品。它们解决的是完全不同的问题。**\n\n#### 一句话区分\n\n- **LangChain / LlamaIndex**：帮你把 LLM 和工具连起来（实现层）\n- **CrewAI / AutoGen**：帮你编排多个 Agent 协作（协作层）\n- **Agenauton**：帮你在动手之前想清楚架构（决策层）\n\n#### 详细对比\n\n| 维度 | Agenauton | LangChain | CrewAI | AutoGen |\n|------|-----------|-----------|--------|---------|\n| **定位** | 架构标准 | LLM 应用框架 | 多 Agent 编排 | 多 Agent 对话 |\n| **解决什么** | 想清楚要做什么 | 怎么连接 LLM 和工具 | 怎么让多个 Agent 协作 | 怎么让 Agent 对话 |\n| **输出** | 架构决策文档 | 可运行的代码 | 可运行的代码 | 可运行的代码 |\n| **技术绑定** | 无（技术无关） | Python 生态 | Python 生态 | Python 生态 |\n| **学习成本** | 30 分钟 | 几天 | 几天 | 几天 |\n| **覆盖范围** | 26 个维度全覆盖 | 主要覆盖基座层 | 主要覆盖协作层 | 主要覆盖协作层 |\n| **安全层** | 有专门的维度 | 需要自己实现 | 需要自己实现 | 需要自己实现 |\n| **评估体系** | 有标准化评分 | 无 | 无 | 无 |\n\n#### 它们的关系\n\n```\nAgenauton（想清楚）\n    ↓ 输出架构决策\nLangChain / CrewAI / AutoGen（实现）\n    ↓ 输出可运行代码\n部署上线\n```\n\n**Agenauton 是\"设计图纸\"，框架是\"施工工具\"。**\n\n你不会因为有了电钻就不需要图纸，也不会因为有了图纸就不需要电钻。\n\n#### 框架解决不了的问题\n\n以 LangChain 为例，它帮你解决了：\n- ✅ 模型调用的统一接口\n- ✅ RAG 管道的搭建\n- ✅ 工具集成的标准化\n- ✅ 链式调用的编排\n\n但它没有帮你解决：\n- ❌ 你应该选什么模型？（模型选择维度）\n- ❌ 你的记忆策略是什么？（记忆系统维度）\n- ❌ Agent 的人设和边界是什么？（人设定义维度）\n- ❌ 出了安全问题怎么办？（安全层所有维度）\n- ❌ 怎么评估 Agent 的表现？（评估测试维度）\n- ❌ 多个 Agent 怎么分工？（多 Agent 协同维度）\n\n**框架给你工具，标准给你思路。**\n\n#### 实际工作流\n\n一个成熟的 Agent 项目应该是这样的：\n\n**Phase 1：架构设计（用 Agenauton）**\n1. 填写 26 维度模板\n2. 明确每个维度的决策\n3. 生成架构文档\n\n**Phase 2：技术选型（选框架）**\n- 需要 RAG？→ LangChain / LlamaIndex\n- 需要多 Agent？→ CrewAI / AutoGen\n- 需要浏览器操作？→ Playwright + 自定义\n- 简单场景？→ 直接调 API\n\n**Phase 3：实现（用框架 + AI 编程工具）**\n- 按架构文档逐模块实现\n- 用 Cursor 等工具加速编码\n\n**Phase 4：评估（用 Agenauton 评分表）**\n- 26 维度自检评分\n- 发现短板，针对性改进\n\n#### 一个真实的例子\n\n假设你要做一个\"智能研究助手\"：\n\n**用 Agenauton 想清楚：**\n- 需要搜索网页 + 读取论文 + 生成报告\n- 需要多步规划能力（搜索 → 筛选 → 阅读 → 总结）\n- 需要长期记忆（记住之前的研究主题）\n- 安全：不能编造引用\n\n**然后选框架：**\n- LangChain 做 RAG 管道（检索论文）\n- CrewAI 编排多个子 Agent（搜索 Agent + 阅读 Agent + 写作 Agent）\n- 自定义安全层（引用验证）\n\n**如果你跳过 Agenauton 直接用框架：**\n- 可能忘了设计记忆策略，导致重复搜索\n- 可能忘了安全层，导致编造引用\n- 可能忘了评估体系，不知道 Agent 表现如何\n\n#### 总结\n\n| 你的需求 | 用什么 |\n|---------|-------|\n| 想清楚 Agent 架构 | Agenauton |\n| 连接 LLM 和工具 | LangChain / LlamaIndex |\n| 多 Agent 协作 | CrewAI / AutoGen |\n| 全部都要 | Agenauton + 框架（互补） |\n\n**先想清楚，再动手。这就是 Agenauton 的价值。**\n\n> **26 letters build every word. 26 dimensions build every Agent.**\n\n🔗 GitHub 搜 Agenauton\n\n---\n\n## 短文版\n\n> 适用渠道：即刻 / 小红书\n\n**Agenauton 和 LangChain 是竞品吗？**\n\n不是！它们解决不同的问题：\n\n🧠 Agenauton = 设计图纸（想清楚要做什么）\n🔧 LangChain = 施工工具（怎么连接 LLM 和工具）\n🤝 CrewAI = 团队管理（怎么让多个 Agent 协作）\n\n正确的工作流：\n1️⃣ 用 Agenauton 想清楚架构（30 分钟）\n2️⃣ 选合适的框架来实现\n3️⃣ 用 Agenauton 评分表自检\n\n框架给你工具，标准给你思路。两个都要。\n\n🔗 GitHub 搜 Agenauton\n\n#Agenauton #LangChain #CrewAI #AIAgent #框架对比\n\n---\n\n## 推文版\n\n> 适用渠道：Twitter/X\n\n\"Is Agenauton a LangChain competitor?\"\n\nNo. They solve different problems:\n- Agenauton = blueprint (what to build)\n- LangChain = toolkit (how to connect)\n- CrewAI = team manager (how to coordinate)\n\nBest workflow: Think with Agenauton → Build with frameworks → Evaluate with Agenauton.\n\n🔗 github.com/Agenauton\n\n---\n\n## 社区帖版\n\n> 适用渠道：V2EX / HN\n\n**标题：Agenauton vs LangChain/CrewAI/AutoGen — 它们是什么关系？**\n\n经常被问到这个问题，统一回复一下。\n\nAgenauton 不是框架，是标准。它和 LangChain/CrewAI/AutoGen 是互补关系，不是竞争关系。\n\n简单类比：\n- Agenauton = 建筑设计图纸\n- LangChain = 电钻、水泥等施工工具\n- CrewAI/AutoGen = 施工团队管理方案\n\n你不会因为有了电钻就不画图纸。\n\n实际工作流：\n1. 用 Agenauton 的 26 维度模板想清楚架构决策\n2. 根据决策选择合适的框架\n3. 用框架实现\n4. 用 Agenauton 评分表评估\n\nAgenauton 覆盖的是框架不管的那些东西：模型选择策略、记忆架构、安全边界、评估体系、合规伦理等。\n\nGitHub 搜 Agenauton，MIT License，欢迎讨论。\n"
+};
+
+var VERSION_LABELS = {long:"Long 长文",short:"Short 短文",tweet:"Tweet 推文",video:"Video 视频脚本",community:"Community 社区帖",full:"Full 完整文章"};
+var ZH_HEADERS = {long:"## 长文版",short:"## 短文版",tweet:"## 推文版",video:"## 视频脚本",community:"## 社区帖版"};
+var EN_HEADERS = {long:"## Long Version",short:"## Short Version",tweet:"## Tweet Version",video:"## Video Script",community:"## Community Post"};
+
+var topics = [
+  {id:"ZH-01",title:"为什么 90% 的人做 Agent 都在踩坑？",angle:"痛点共鸣",wave:"wave1",waveLabel:"Wave 1 认知",lang:"zh",channels:["公众号","知乎","掘金","即刻","V2EX"],file:"articles/zh/01-why-90-percent-fail.md",versions:{long:"公众号 / 知乎 / 掘金",short:"即刻 / 小红书",tweet:"Twitter/X",community:"V2EX"}},
+  {id:"ZH-02",title:"我用一份清单，3 天做出了一个不翻车的 Agent",angle:"实战案例",wave:"wave1",waveLabel:"Wave 1 认知",lang:"zh",channels:["B站","小红书","公众号","即刻"],file:"articles/zh/02-3-days-no-crash.md",versions:{long:"公众号 / B站文字版",short:"小红书 / 即刻",tweet:"Twitter/X",video:"B站 / 抖音脚本"}},
+  {id:"ZH-03",title:"2026 年了，做 Agent 还在盲目堆 Prompt？",angle:"行业观点",wave:"wave1",waveLabel:"Wave 1 认知",lang:"zh",channels:["Twitter/X","即刻","知乎","V2EX"],file:"articles/zh/03-stop-prompt-stacking.md",versions:{long:"知乎 / 掘金",short:"即刻 / 小红书",tweet:"Twitter/X",community:"V2EX / HN"}},
+  {id:"ZH-04",title:"拆解 [某知名 AI 产品] 的 26 个维度",angle:"产品拆解",wave:"wave2",waveLabel:"Wave 2 深度",lang:"zh",channels:["公众号","知乎","掘金","B站"],file:"articles/zh/04-dissect-product.md",versions:{long:"公众号 / 知乎",short:"小红书 / 即刻",tweet:"Twitter/X"}},
+  {id:"ZH-05",title:"面试官问\u201c你怎么设计一个 Agent\u201d，我掏出了这张表",angle:"职场实用",wave:"wave2",waveLabel:"Wave 2 深度",lang:"zh",channels:["知乎","小红书","脉脉","即刻"],file:"articles/zh/05-interview-cheatsheet.md",versions:{long:"知乎 / 公众号",short:"小红书 / 脉脉",tweet:"Twitter/X"}},
+  {id:"ZH-06",title:"给 Cursor 一段话，它就能帮你搭好 Agent 架构",angle:"AI编程实战",wave:"wave2",waveLabel:"Wave 2 深度",lang:"zh",channels:["B站","Twitter/X","掘金","即刻"],file:"articles/zh/06-cursor-one-prompt.md",versions:{long:"掘金 / 公众号",short:"即刻 / 小红书",tweet:"Twitter/X",video:"B站 / 抖音脚本"}},
+  {id:"ZH-07",title:"全网征集：用 26 维度拆解你最喜欢的 AI 产品",angle:"社区活动",wave:"wave3",waveLabel:"Wave 3 裂变",lang:"zh",channels:["GitHub","Twitter/X","即刻","知乎"],file:"articles/zh/07-community-challenge.md",versions:{long:"GitHub Issue / 知乎",short:"即刻 / 小红书",tweet:"Twitter/X"}},
+  {id:"ZH-08",title:"你的 Agent 能打几分？26 维度自检评分表",angle:"互动工具",wave:"wave3",waveLabel:"Wave 3 裂变",lang:"zh",channels:["小红书","公众号","即刻"],file:"articles/zh/08-agent-scorecard.md",versions:{long:"公众号",short:"小红书 / 即刻",tweet:"Twitter/X"}},
+  {id:"ZH-09",title:"从 0 到 1：一个普通人用 Agenauton 做出第一个 Agent",angle:"普通人故事",wave:"wave3",waveLabel:"Wave 3 裂变",lang:"zh",channels:["B站","小红书","公众号"],file:"articles/zh/09-zero-to-one-story.md",versions:{long:"公众号 / B站",short:"小红书 / 即刻",tweet:"Twitter/X",video:"B站 / 抖音脚本"}},
+  {id:"ZH-10",title:"为什么我们需要一个 Agent 构建标准？",angle:"行业思考",wave:"wave4",waveLabel:"Wave 4 权威",lang:"zh",channels:["知乎","公众号","LinkedIn"],file:"articles/zh/10-why-we-need-standard.md",versions:{long:"知乎 / 公众号 / Medium",short:"即刻 / LinkedIn",tweet:"Twitter/X"}},
+  {id:"ZH-11",title:"Agenauton vs LangChain/CrewAI/AutoGen 有什么不同？",angle:"对比分析",wave:"wave4",waveLabel:"Wave 4 权威",lang:"zh",channels:["掘金","知乎","V2EX"],file:"articles/zh/11-forgebase-vs-frameworks.md",versions:{long:"掘金 / 知乎",short:"即刻 / 小红书",tweet:"Twitter/X",community:"V2EX / HN"}},
+  {id:"EN-01",title:"The 26 things you must decide before building an AI Agent",angle:"Core thesis",wave:"en",waveLabel:"English",lang:"en",channels:["Hacker News","Reddit","Twitter/X","LinkedIn"],file:"articles/en/en01-26-things.md",versions:{long:"Medium / Dev.to",short:"LinkedIn",tweet:"Twitter/X",community:"HN / Reddit"}},
+  {id:"EN-02",title:"I open-sourced a checklist that saved me from 3 Agent disasters",angle:"Personal story",wave:"en",waveLabel:"English",lang:"en",channels:["Reddit","Dev.to","Twitter/X"],file:"articles/en/en02-checklist-saved-me.md",versions:{long:"Dev.to / Medium",short:"LinkedIn",tweet:"Twitter/X",community:"Reddit r/LocalLLaMA"}},
+  {id:"EN-03",title:"Stop prompt-stacking. Start architecture-thinking.",angle:"Hot take",wave:"en",waveLabel:"English",lang:"en",channels:["Twitter/X","LinkedIn","HN"],file:"articles/en/en03-stop-prompt-stacking.md",versions:{long:"Medium",short:"LinkedIn",tweet:"Twitter/X thread",community:"HN"}},
+  {id:"EN-04",title:"Dissecting [Product X] through the 26-Dimension lens",angle:"Case study",wave:"en",waveLabel:"English",lang:"en",channels:["Medium","Reddit","Twitter/X"],file:"articles/en/en04-dissect-product.md",versions:{long:"Medium / Substack",short:"LinkedIn",tweet:"Twitter/X",community:"Reddit"}}
+];
+
+var slogans = [
+  {text:"26 letters build every word. 26 dimensions build every Agent.",use:"核心 Slogan / 全平台首选",cat:"core"},
+  {text:"26 个字母构成所有语言，26 个维度构成所有 Agent。",use:"核心 Slogan 中文版 / 全平台",cat:"core"},
+  {text:"「底子要硬，脑子要清，嘴巴要稳，出事要扛，上线要活。」",use:"首发推广 / B站 / 抖音 / 公众号",cat:"zh"},
+  {text:"「造 Agent，怕翻车？26 条，照着查。」",use:"技术社区 / Twitter/X / 即刻",cat:"zh"},
+  {text:"「选好料、记得住、想得清、说得准、扛得住、学得快。」",use:"长文配图 / 海报 / PPT",cat:"zh"},
+  {text:"「根基不牢，地动山摇。26 条铁律，条条不能少。」",use:"公众号 / 严肃技术分享",cat:"zh"},
+  {text:"「你的 Agent 上线就翻车，是因为这 26 件事你一件都没想过。」",use:"标题党 / 引流文章标题",cat:"zh"},
+  {text:"「先想清楚，再动手。」",use:"任何场景的补充语",cat:"zh"},
+  {text:"「不是代码写得好，是架构想得清。」",use:"文章结尾 / 社交媒体",cat:"zh"},
+  {text:"「Prompt 不是架构，Prompt 只是架构的一部分。」",use:"技术讨论 / 知乎",cat:"zh"},
+  {text:"「做 Agent 最难的不是写代码，是想清楚。」",use:"个人故事类文章",cat:"zh"},
+  {text:"「一次建对，不走回头路。」",use:"CTA / 行动号召",cat:"zh"},
+  {text:"Build right. Build once.",use:"Twitter/X / GitHub / LinkedIn",cat:"en"},
+  {text:"Think first. Build fast.",use:"CTA / 行动号召",cat:"en"},
+  {text:"Architecture > Code.",use:"技术讨论 / Twitter/X",cat:"en"},
+  {text:"Stop prompt-stacking. Start architecture-thinking.",use:"Hot take 文章 / Twitter/X",cat:"en"},
+  {text:"Not a framework. A way of thinking.",use:"介绍 Agenauton 时使用",cat:"en"},
+  {text:"The blueprint before the construction.",use:"Medium / Dev.to",cat:"en"},
+  {text:"Your Agent failed because you skipped the architecture.",use:"引流标题 / Reddit",cat:"en"},
+  {text:"The prompt is 10% of the work. Architecture is the other 90%.",use:"技术文章 / LinkedIn",cat:"en"},
+  {text:"Every failed Agent traces back to an architecture decision that was never made.",use:"深度文章 / HN",cat:"en"},
+  {text:"Don't just use AI products. Dissect them.",use:"拆解类文章",cat:"en"}
+];
+
+var allChannels = ["公众号","知乎","掘金","小红书","B站","抖音","即刻","Twitter/X","LinkedIn","Reddit","HN","Medium"];
+
+var SHARED_IMAGES = [
+  {file:"assets/brand/agenauton-hero-banner.png",type:"brand",desc:"Agenauton 铸基 Hero Banner",channels:["GitHub","官网","公众号"]},
+  {file:"assets/brand/agenauton-logo-icon.png",type:"brand",desc:"Agenauton Logo Icon",channels:["全平台","头像"]},
+  {file:"assets/brand/agenauton-og-card.png",type:"brand",desc:"Agenauton OG Social Card",channels:["Twitter/X","LinkedIn","Facebook"]},
+  {file:"assets/brand/agenauton-forge-concept.png",type:"brand",desc:"铸基概念图 — 锻造Agent基座",channels:["公众号","B站","知乎"]},
+  {file:"assets/brand/agenauton-26dim-radar.png",type:"brand",desc:"26维度雷达矩阵图",channels:["全平台","PPT"]},
+  {file:"assets/brand/agenauton-5-mantras.png",type:"brand",desc:"五句真言 — 底子脑子嘴巴出事上线",channels:["小红书","即刻","B站"]},
+  {file:"assets/brand/agenauton-26-transform.png",type:"brand",desc:"26字母→26维度 变换图",channels:["全平台","Medium"]},
+  {file:"assets/26-letters-vs-26-dimensions.png",type:"shared",desc:"26 Letters vs 26 Dimensions (legacy)",channels:["全平台"]},
+  {file:"assets/6-layer-dimension-overview.png",type:"shared",desc:"6 Layer Dimension Overview (legacy)",channels:["全平台"]},
+  {file:"assets/forgebase-social-card.png",type:"shared",desc:"Social Card (legacy)",channels:["Twitter/X","LinkedIn"]}
+];
+
+var TOPIC_IMAGES = {
+  "ZH-01": [
+    {file:"assets/topics/zh-01/cover.png",type:"cover",desc:"封面图 — 90%踩坑",channels:["公众号","知乎","掘金"],insertAfter:"# 标题变体"},
+    {file:"assets/topics/zh-01/long-checklist.png",type:"long",desc:"6层维度检查清单",channels:["公众号","知乎"],insertAfter:"#### 问题的根源"},
+    {file:"assets/topics/zh-01/short-core.png",type:"short",desc:"核心观点图",channels:["小红书","即刻"]},
+    {file:"assets/topics/zh-01/tweet-card.png",type:"tweet",desc:"社交卡片 90% FAIL",channels:["Twitter/X","LinkedIn"]}
+  ],
+  "ZH-02": [
+    {file:"assets/topics/zh-02/cover.png",type:"cover",desc:"封面图 — 3天不翻车",channels:["B站","小红书","公众号"],insertAfter:"# 标题变体"},
+    {file:"assets/topics/zh-02/long-timeline.png",type:"long",desc:"3天实操流程图",channels:["公众号","B站"],insertAfter:"#### 实际构建过程"},
+    {file:"assets/topics/zh-02/short-results.png",type:"short",desc:"运行数据结果图",channels:["小红书","即刻"]}
+  ],
+  "ZH-03": [
+    {file:"assets/topics/zh-03/cover.png",type:"cover",desc:"封面图 — Prompt≠Architecture",channels:["Twitter/X","即刻","知乎"],insertAfter:"# 标题变体"},
+    {file:"assets/topics/zh-03/long-compare.png",type:"long",desc:"Prompt思维vs架构思维对比",channels:["知乎","掘金"],insertAfter:"#### 从 Prompt 思维到架构思维"},
+    {file:"assets/topics/zh-03/tweet-card.png",type:"tweet",desc:"社交卡片 — 3000-word Prompt",channels:["Twitter/X","LinkedIn"]}
+  ],
+  "ZH-04": [{file:"assets/topics/zh-04/cover.png",type:"cover",desc:"封面图 — 26维度拆解",channels:["公众号","知乎","掘金"],insertAfter:"# 标题变体"}],
+  "ZH-05": [{file:"assets/topics/zh-05/cover.png",type:"cover",desc:"封面图 — 面试利器",channels:["知乎","小红书","脉脉"],insertAfter:"# 标题变体"}],
+  "ZH-06": [{file:"assets/topics/zh-06/cover.png",type:"cover",desc:"封面图 — Cursor生成架构",channels:["B站","掘金"],insertAfter:"# 标题变体"}],
+  "ZH-07": [{file:"assets/topics/zh-07/cover.png",type:"cover",desc:"封面图 — 挑战赛",channels:["GitHub","Twitter/X","即刻"],insertAfter:"# 标题变体"}],
+  "ZH-08": [{file:"assets/topics/zh-08/cover.png",type:"cover",desc:"封面图 — 安全边界",channels:["小红书","公众号"],insertAfter:"# 标题变体"}],
+  "ZH-09": [{file:"assets/topics/zh-09/cover.png",type:"cover",desc:"封面图 — 多Agent协作",channels:["B站","小红书","公众号"],insertAfter:"# 标题变体"}],
+  "ZH-10": [{file:"assets/topics/zh-10/cover.png",type:"cover",desc:"封面图 — Agent记忆力",channels:["知乎","公众号"],insertAfter:"# 标题变体"}],
+  "ZH-11": [{file:"assets/topics/zh-11/cover.png",type:"cover",desc:"封面图 — 从Demo到生产",channels:["掘金","知乎","V2EX"],insertAfter:"# 标题变体"}],
+  "EN-01": [{file:"assets/topics/en-01/cover.png",type:"cover",desc:"Cover — 26 Letters → 26 Dimensions",channels:["Medium","Dev.to","HN"],insertAfter:"# Title Variants"}],
+  "EN-02": [{file:"assets/topics/en-02/cover.png",type:"cover",desc:"Cover — Fail → Agenauton",channels:["Reddit","Dev.to"],insertAfter:"# Title Variants"}],
+  "EN-03": [{file:"assets/topics/en-03/cover.png",type:"cover",desc:"Cover — Wrong Problem?",channels:["Twitter/X","LinkedIn","HN"],insertAfter:"# Title Variants"}],
+  "EN-04": [{file:"assets/topics/en-04/cover.png",type:"cover",desc:"Cover — Agent Audit Scorecard",channels:["Medium","Reddit"],insertAfter:"# Title Variants"}]
+};
+
+/* ── Minimal Markdown→HTML renderer ── */
+function md2html(md) {
+  var lines = md.split("\n");
+  var html = "";
+  var inCode = false, codeLang = "", codeBlock = "";
+  var inTable = false, tableHtml = "";
+  var inList = false, listType = "", listHtml = "";
+
+  function flushList() {
+    if (inList) { html += "<" + listType + ">" + listHtml + "</" + listType + ">"; inList = false; listHtml = ""; }
+  }
+  function flushTable() {
+    if (inTable) { html += "<table>" + tableHtml + "</table>"; inTable = false; tableHtml = ""; }
+  }
+
+  function inlineFormat(s) {
+    s = s.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+    s = s.replace(/\*(.+?)\*/g, "<em>$1</em>");
+    s = s.replace(/`(.+?)`/g, "<code>$1</code>");
+    s = s.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank">$1</a>');
+    s = s.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1">');
+    return s;
+  }
+
+  for (var i = 0; i < lines.length; i++) {
+    var line = lines[i];
+
+    if (line.match(/^```/)) {
+      if (inCode) {
+        html += "<pre><code>" + codeBlock.replace(/</g,"&lt;").replace(/>/g,"&gt;") + "</code></pre>";
+        inCode = false; codeBlock = "";
+      } else {
+        flushList(); flushTable();
+        inCode = true; codeLang = line.slice(3).trim(); codeBlock = "";
+      }
+      continue;
+    }
+    if (inCode) { codeBlock += (codeBlock ? "\n" : "") + line; continue; }
+
+    if (line.match(/^\|.+\|/)) {
+      flushList();
+      if (line.match(/^\|[\s\-:|]+\|$/)) continue;
+      var cells = line.split("|").filter(function(c,idx,arr){ return idx > 0 && idx < arr.length - 1; });
+      if (!inTable) { inTable = true; tableHtml = "<thead><tr>" + cells.map(function(c){ return "<th>" + inlineFormat(c.trim()) + "</th>"; }).join("") + "</tr></thead><tbody>"; }
+      else { tableHtml += "<tr>" + cells.map(function(c){ return "<td>" + inlineFormat(c.trim()) + "</td>"; }).join("") + "</tr>"; }
+      continue;
+    } else { flushTable(); }
+
+    if (line.match(/^---+$/)) { flushList(); html += "<hr>"; continue; }
+
+    var hMatch = line.match(/^(#{1,4})\s+(.+)/);
+    if (hMatch) { flushList(); var lvl = hMatch[1].length; html += "<h" + lvl + ">" + inlineFormat(hMatch[2]) + "</h" + lvl + ">"; continue; }
+
+    if (line.match(/^>\s/)) {
+      flushList();
+      var bq = line.replace(/^>\s?/, "");
+      while (i + 1 < lines.length && lines[i+1].match(/^>/)) { i++; bq += "\n" + lines[i].replace(/^>\s?/, ""); }
+      html += "<blockquote>" + bq.split("\n").map(function(l){ return "<p>" + inlineFormat(l) + "</p>"; }).join("") + "</blockquote>";
+      continue;
+    }
+
+    var ulMatch = line.match(/^[-*]\s+(.+)/);
+    var olMatch = line.match(/^\d+\.\s+(.+)/);
+    if (ulMatch) {
+      if (!inList || listType !== "ul") { flushList(); inList = true; listType = "ul"; listHtml = ""; }
+      listHtml += "<li>" + inlineFormat(ulMatch[1]) + "</li>";
+      continue;
+    }
+    if (olMatch) {
+      if (!inList || listType !== "ol") { flushList(); inList = true; listType = "ol"; listHtml = ""; }
+      listHtml += "<li>" + inlineFormat(olMatch[1]) + "</li>";
+      continue;
+    }
+    flushList();
+
+    if (line.trim() === "") { html += ""; continue; }
+    html += "<p>" + inlineFormat(line) + "</p>";
+  }
+  flushList(); flushTable();
+  if (inCode) { html += "<pre><code>" + codeBlock.replace(/</g,"&lt;").replace(/>/g,"&gt;") + "</code></pre>"; }
+  return html;
+}
+
+/* ── Extract a section from markdown ── */
+function extractSection(md, version, lang) {
+  var headers = lang === "en" ? EN_HEADERS : ZH_HEADERS;
+  var altHeaders = lang === "en" ? ZH_HEADERS : EN_HEADERS;
+  var header = headers[version] || altHeaders[version];
+  if (!header) return md;
+  var idx = md.indexOf(header);
+  if (idx === -1 && altHeaders[version]) { header = altHeaders[version]; idx = md.indexOf(header); }
+  if (idx === -1) return md;
+  var rest = md.slice(idx + header.length);
+  var nextIdx = rest.search(/\n## /);
+  return nextIdx !== -1 ? md.slice(idx, idx + header.length + nextIdx) : md.slice(idx);
+}
+
+/* ── State ── */
+var currentTopic = null;
+var currentMd = "";
+var currentVersion = "full";
+
+function escapeHtml(str) {
+  var div = document.createElement("div");
+  div.appendChild(document.createTextNode(str));
+  return div.innerHTML;
+}
+
+/* ── Render cards ── */
+function renderCards(filter) {
+  var c = document.getElementById("cardsContainer");
+  c.innerHTML = "";
+  var filtered = filter === "all" ? topics : topics.filter(function(t){ return t.wave === filter; });
+
+  filtered.forEach(function(t) {
+    var el = document.createElement("div");
+    el.className = "card";
+
+    var channelTags = t.channels.map(function(ch) {
+      return '<span class="ch-tag">' + escapeHtml(ch) + '</span>';
+    }).join("");
+
+    var versionCount = Object.keys(t.versions).length;
+
+    el.innerHTML =
+      '<div class="card-header"><span class="card-id">' + t.id + '</span><span class="card-wave ' + t.wave + '">' + escapeHtml(t.waveLabel) + '</span></div>' +
+      '<h3>' + escapeHtml(t.title) + '</h3>' +
+      '<div class="card-angle">' + escapeHtml(t.angle) + '</div>' +
+      '<div class="card-channels">' + channelTags + '</div>' +
+      '<div class="card-hint">' + versionCount + ' versions \u00b7 click to preview \u2192</div>';
+
+    el.addEventListener("click", function() { openArticle(t); });
+    c.appendChild(el);
+  });
+}
+
+/* ── Open article modal ── */
+function openArticle(topic) {
+  currentTopic = topic;
+  currentVersion = "full";
+  document.body.classList.add("modal-open");
+  var overlay = document.getElementById("modalOverlay");
+  overlay.classList.add("open");
+
+  document.getElementById("modalId").textContent = topic.id;
+  var waveEl = document.getElementById("modalWave");
+  waveEl.textContent = topic.waveLabel;
+  waveEl.className = "card-wave " + topic.wave;
+
+  var tabsHtml = '<div class="modal-tab active" data-ver="full">Full 完整</div>';
+  Object.keys(topic.versions).forEach(function(k) {
+    tabsHtml += '<div class="modal-tab" data-ver="' + k + '">' + (VERSION_LABELS[k] || k) + '<span style="font-size:.6rem;color:var(--muted);margin-left:6px">' + escapeHtml(topic.versions[k]) + '</span></div>';
+  });
+  var topicImgs = TOPIC_IMAGES[topic.id] || [];
+  var imgCount = topicImgs.length + SHARED_IMAGES.length;
+  tabsHtml += '<div class="modal-tab" data-ver="images" style="margin-left:auto;border-color:var(--purple);color:var(--purple)">Images \u56fe\u7247\u5e93 <span style="font-size:.6rem;margin-left:4px">' + imgCount + '</span></div>';
+  document.getElementById("modalTabs").innerHTML = tabsHtml;
+
+  var body = document.getElementById("modalBody");
+  body.innerHTML = '<div style="text-align:center;padding:60px;color:var(--dim)">Loading article...</div>';
+
+  if (ARTICLES[topic.file]) {
+    currentMd = ARTICLES[topic.file];
+    renderArticleView("full");
+  } else {
+    body.innerHTML = '<div style="text-align:center;padding:60px;color:var(--red)">Article not found: ' + topic.file + '</div>';
+  }
+}
+
+function getImagesForVersion(topicId, version) {
+  var imgs = TOPIC_IMAGES[topicId] || [];
+  if (version === "full" || version === "images") return imgs;
+  var typeMap = {long:"long",short:"short",tweet:"tweet",video:"long",community:"long"};
+  var targetType = typeMap[version] || version;
+  return imgs.filter(function(img) { return img.type === "cover" || img.type === targetType; });
+}
+
+function renderImageGallery(topicId) {
+  var imgs = (TOPIC_IMAGES[topicId] || []).concat(SHARED_IMAGES);
+  var html = '<div class="img-gallery">';
+  imgs.forEach(function(img) {
+    var typeClass = "type-" + img.type;
+    var channelTags = img.channels.map(function(ch) { return '<span class="img-card-tag">' + escapeHtml(ch) + '</span>'; }).join("");
+    html += '<div class="img-card" onclick="openLightbox(\'' + img.file + '\')">' +
+      '<img src="' + img.file + '" alt="' + escapeHtml(img.desc) + '" loading="lazy">' +
+      '<div class="img-card-info">' +
+        '<div class="img-card-desc">' + escapeHtml(img.desc) + '</div>' +
+        '<div class="img-card-tags"><span class="img-card-tag ' + typeClass + '">' + img.type + '</span>' + channelTags + '</div>' +
+        '<div class="img-card-actions"><button class="btn-copy" onclick="event.stopPropagation();copyText(\'' + img.file + '\')">Copy path</button><button class="btn-copy" onclick="event.stopPropagation();copyText(\'![' + escapeHtml(img.desc) + '](' + img.file + ')\')">Copy MD</button></div>' +
+      '</div></div>';
+  });
+  html += '</div>';
+  return html;
+}
+
+function insertImagesIntoHtml(htmlStr, topicId, version) {
+  var imgs = getImagesForVersion(topicId, version);
+  if (!imgs.length) return htmlStr;
+  var result = htmlStr;
+  var insertedAnchors = {};
+  imgs.forEach(function(img) {
+    if (img.insertAfter && !insertedAnchors[img.insertAfter]) {
+      var anchor = img.insertAfter.replace(/^#+\s*/, "");
+      var hRegex = new RegExp('(<h[1-4][^>]*>(?:[^<]*?)' + anchor.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').slice(0, 15) + '[^<]*<\\/h[1-4]>)');
+      var match = result.match(hRegex);
+      if (match) {
+        var imgHtml = '<div class="article-inline-img"><img src="' + img.file + '" alt="' + escapeHtml(img.desc) + '"><div class="img-caption"><span>' + escapeHtml(img.desc) + '</span><span style="cursor:pointer;color:var(--primary)" onclick="openLightbox(\'' + img.file + '\')">View full</span></div></div>';
+        result = result.replace(match[0], match[0] + imgHtml);
+        insertedAnchors[img.insertAfter] = true;
+      }
+    }
+  });
+  var coverImg = imgs.filter(function(i){ return i.type === "cover"; })[0];
+  if (coverImg && !insertedAnchors[coverImg.insertAfter]) {
+    var firstH = result.indexOf("</h");
+    if (firstH > -1) {
+      var afterH = result.indexOf(">", firstH + 3) + 1;
+      var coverHtml = '<div class="article-inline-img"><img src="' + coverImg.file + '" alt="' + escapeHtml(coverImg.desc) + '"><div class="img-caption"><span>' + escapeHtml(coverImg.desc) + '</span><span style="cursor:pointer;color:var(--primary)" onclick="openLightbox(\'' + coverImg.file + '\')">View full</span></div></div>';
+      result = result.slice(0, afterH) + coverHtml + result.slice(afterH);
+    }
+  }
+  return result;
+}
+
+function openLightbox(src) {
+  var lb = document.getElementById("lightbox");
+  document.getElementById("lightboxImg").src = src;
+  lb.classList.add("open");
+}
+document.getElementById("lightbox").addEventListener("click", function() { this.classList.remove("open"); });
+
+function renderArticleView(version) {
+  currentVersion = version;
+  var body = document.getElementById("articleRender");
+  if (!body) { document.getElementById("modalBody").innerHTML = '<div class="article-render" id="articleRender"></div>'; body = document.getElementById("articleRender"); }
+
+  if (version === "images") {
+    body.innerHTML = '<h2 style="margin-bottom:16px">' + escapeHtml(currentTopic.id) + ' Images \u56fe\u7247\u5e93</h2>' + renderImageGallery(currentTopic.id);
+    document.getElementById("modalBody").scrollTop = 0;
+    document.querySelectorAll("#modalTabs .modal-tab").forEach(function(tab) { tab.classList.toggle("active", tab.getAttribute("data-ver") === version); });
+    return;
+  }
+
+  var md = version === "full" ? currentMd : extractSection(currentMd, version, currentTopic.lang);
+
+  var metaEnd = md.indexOf("---", 4);
+  var displayMd = md;
+  var metaBlock = "";
+  if (md.startsWith("---") && metaEnd > 0) {
+    metaBlock = md.slice(3, metaEnd).trim();
+    displayMd = md.slice(metaEnd + 3).trim();
+  }
+
+  var metaHtml = "";
+  if (metaBlock && version === "full") {
+    var metaItems = metaBlock.split("\n").filter(function(l){ return l.trim(); }).map(function(l) {
+      return '<span class="article-meta-item">' + escapeHtml(l.trim()) + '</span>';
+    }).join("");
+    metaHtml = '<div class="article-meta">' + metaItems + '</div>';
+  }
+
+  var articleHtml = md2html(displayMd);
+  articleHtml = insertImagesIntoHtml(articleHtml, currentTopic.id, version);
+
+  body.innerHTML = metaHtml + '<div>' + articleHtml + '</div>';
+  document.getElementById("modalBody").scrollTop = 0;
+
+  document.querySelectorAll("#modalTabs .modal-tab").forEach(function(tab) {
+    tab.classList.toggle("active", tab.getAttribute("data-ver") === version);
+  });
+}
+
+function closeModal() {
+  document.body.classList.remove("modal-open");
+  document.getElementById("modalOverlay").classList.remove("open");
+  currentTopic = null; currentMd = ""; currentVersion = "full";
+}
+
+/* ── Event listeners for modal ── */
+document.getElementById("modalClose").addEventListener("click", closeModal);
+document.getElementById("modalOverlay").addEventListener("click", function(e) {
+  if (e.target === this) closeModal();
+});
+document.addEventListener("keydown", function(e) {
+  if (e.key === "Escape") closeModal();
+});
+document.getElementById("modalTabs").addEventListener("click", function(e) {
+  var tab = e.target.closest(".modal-tab");
+  if (!tab) return;
+  renderArticleView(tab.getAttribute("data-ver"));
+});
+function insertImageRefsInMd(md, topicId, version) {
+  var imgs = getImagesForVersion(topicId, version);
+  if (!imgs.length) return md;
+  var result = md;
+  var inserted = {};
+  imgs.forEach(function(img) {
+    if (img.insertAfter) {
+      var idx = result.indexOf(img.insertAfter);
+      if (idx > -1 && !inserted[img.insertAfter]) {
+        var lineEnd = result.indexOf("\n", idx);
+        if (lineEnd === -1) lineEnd = result.length;
+        var imgRef = "\n\n![" + img.desc + "](" + img.file + ")\n";
+        result = result.slice(0, lineEnd) + imgRef + result.slice(lineEnd);
+        inserted[img.insertAfter] = true;
+      }
+    }
+  });
+  var coverImg = imgs.filter(function(i){ return i.type === "cover" && !inserted[i.insertAfter]; })[0];
+  if (coverImg) {
+    var firstH = result.indexOf("\n# ");
+    if (firstH === -1) firstH = result.indexOf("# ");
+    if (firstH > -1) {
+      var lineEnd = result.indexOf("\n", firstH + 2);
+      if (lineEnd > -1) { result = result.slice(0, lineEnd) + "\n\n![" + coverImg.desc + "](" + coverImg.file + ")\n" + result.slice(lineEnd); }
+    }
+  }
+  return result;
+}
+
+document.getElementById("btnCopySection").addEventListener("click", function() {
+  var md = currentVersion === "full" ? currentMd : extractSection(currentMd, currentVersion, currentTopic.lang);
+  md = insertImageRefsInMd(md, currentTopic.id, currentVersion);
+  navigator.clipboard.writeText(md.trim()).then(function(){ showToast("Section copied with images!"); });
+});
+document.getElementById("btnCopyAll").addEventListener("click", function() {
+  var md = insertImageRefsInMd(currentMd, currentTopic.id, "full");
+  navigator.clipboard.writeText(md.trim()).then(function(){ showToast("Full article copied with images!"); });
+});
+
+/* ── Render other sections ── */
+function renderMatrix() {
+  var table = document.getElementById("matrixTable");
+  var html = "<thead><tr><th>Topic</th>";
+  allChannels.forEach(function(ch) { html += "<th>" + escapeHtml(ch) + "</th>"; });
+  html += "</tr></thead><tbody>";
+  topics.forEach(function(t) {
+    html += "<tr><td>" + t.id + ": " + escapeHtml(t.title.slice(0, 20)) + "...</td>";
+    allChannels.forEach(function(ch) {
+      var has = t.channels.some(function(c) { return c === ch || (ch === "HN" && c === "Hacker News") || (ch === "Medium" && c === "Dev.to"); });
+      html += '<td class="' + (has ? "has" : "na") + '">' + (has ? "\u25cf" : "\u2014") + "</td>";
+    });
+    html += "</tr>";
+  });
+  html += "</tbody>";
+  table.innerHTML = html;
+}
+
+function renderTimeline() {
+  var tl = document.getElementById("timeline");
+  var weeks = [
+    {week:"Week 1",title:"认知建立",desc:"GitHub 上线 + 选题 1/2/3 首发 → 让人知道这个东西存在"},
+    {week:"Week 2",title:"深度传播",desc:"选题 4/5/6 深度内容 → 让人觉得这个东西有用"},
+    {week:"Week 3",title:"社区裂变",desc:"选题 7/8/9 社区活动 → 让人参与进来"},
+    {week:"Week 4",title:"权威背书",desc:"选题 10/11 + EN-1~4 权威内容 → 让人认可这是行业标准"},
+    {week:"持续",title:"保持热度",desc:"每周拆解一个新产品（选题 4 模板反复用）"}
+  ];
+  var html = "";
+  weeks.forEach(function(w) {
+    html += '<div class="tl-row"><div class="tl-week">' + escapeHtml(w.week) + '</div><div class="tl-content"><div class="tl-title">' + escapeHtml(w.title) + '</div><div class="tl-desc">' + escapeHtml(w.desc) + '</div></div></div>';
+  });
+  tl.innerHTML = html;
+}
+
+function renderSlogans() {
+  var grid = document.getElementById("slogansGrid");
+  var catLabels = {core:"\ud83c\udf10 Core", zh:"\ud83c\udde8\ud83c\uddf3 中文", en:"\ud83c\uddfa\ud83c\uddf8 English"};
+  var catBg = {core:"rgba(59,130,246,0.12)", zh:"rgba(249,115,22,0.12)", en:"rgba(34,197,94,0.12)"};
+  var catFg = {core:"#3b82f6", zh:"#f97316", en:"#22c55e"};
+  var html = "";
+  slogans.forEach(function(s, i) {
+    html += '<div class="slogan-card" data-slogan-idx="' + i + '"><div><span class="slogan-cat" style="background:' + catBg[s.cat] + ';color:' + catFg[s.cat] + '">' + catLabels[s.cat] + '</span><div class="slogan-text">' + escapeHtml(s.text) + '</div><div class="slogan-use">' + escapeHtml(s.use) + '</div></div><button class="btn-copy" data-slogan-idx="' + i + '">Copy</button></div>';
+  });
+  grid.innerHTML = html;
+  grid.addEventListener("click", function(e) {
+    var idx = null, target = e.target;
+    if (target.hasAttribute("data-slogan-idx")) idx = parseInt(target.getAttribute("data-slogan-idx"));
+    else { var card = target.closest(".slogan-card"); if (card) idx = parseInt(card.getAttribute("data-slogan-idx")); }
+    if (idx !== null && slogans[idx]) copyText(slogans[idx].text);
+  });
+}
+
+function copyText(text) { navigator.clipboard.writeText(text).then(function(){ showToast("Copied!"); }); }
+
+function showToast(msg) {
+  var t = document.getElementById("toast");
+  t.textContent = msg; t.classList.add("show");
+  setTimeout(function(){ t.classList.remove("show"); }, 2000);
+}
+
+document.getElementById("filterTabs").addEventListener("click", function(e) {
+  if (!e.target.classList.contains("tab")) return;
+  document.querySelectorAll(".tab").forEach(function(t){ t.classList.remove("active"); });
+  e.target.classList.add("active");
+  renderCards(e.target.dataset.filter);
+});
+
+renderCards("all");
+renderMatrix();
+renderTimeline();
+renderSlogans();
+</script>
+</body>
+</html>

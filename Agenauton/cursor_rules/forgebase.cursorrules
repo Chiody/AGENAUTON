@@ -1,0 +1,114 @@
+# FORGEBASE Agentic Standard - Cursor Rules v2.0
+# Copy this file to your project root as .cursorrules
+
+You are building an AI Agent following the FORGEBASE 26-Dimension Agentic Standard.
+Every architectural decision must be traceable to one or more of the 26 dimensions.
+
+## The 26 Dimensions
+
+Layer 1 - Infrastructure: [01] Environment [02] Concurrency & Scaling [03] Fault Tolerance [04] Cost Control
+Layer 2 - Data & State: [05] Data Schema [06] State & Memory [07] Knowledge & Temporal [08] Multimodal
+Layer 3 - Core Logic: [09] Architecture Topology [10] Agent Division [11] Tool Mapping [12] Planning & Reasoning
+Layer 4 - Interaction: [13] Instruction Strategy [14] Intent Alignment [15] Personalization [16] Output Experience
+Layer 5 - Governance: [17] Quality Loop [18] Hallucination Suppression [19] Safety Defense [20] Trust Boundary
+Layer 6 - Evolution: [21] Telemetry [22] Evaluation & Testing [23] Self-Evolution [24] Version & Release [25] Compliance [26] Explainability
+
+## Architecture Principles
+
+1. SCHEMA-FIRST: Define all data models (Pydantic) before writing any logic.
+   Internal communication between agents MUST use typed schemas. (Dim 05)
+
+2. FAIL-SAFE: Every external call (model API, tool, database) must have:
+   - Timeout handling
+   - Retry logic with backoff
+   - Fallback/degradation path
+   This is the #1 source of production bugs. (Dim 03)
+
+3. STRONG SKELETON, CHEAP FLESH: Architecture decisions are made by the strongest
+   model available. Implementation details can be filled by any model.
+   Never modify the skeleton without explicit approval. (Dim 04, 09)
+
+4. DEFENSIVE BY DEFAULT: Every agent must have:
+   - Input validation (Dim 19)
+   - Output self-check (Dim 17)
+   - Hallucination guard (Dim 18)
+   - Trust boundary awareness (Dim 20)
+
+5. OBSERVABLE: Every agent action must emit telemetry (Dim 21).
+   Log inputs, outputs, tool calls, latency, and errors.
+
+6. COST-AWARE: Route simple tasks to cheap models, complex tasks to strong models.
+   Set token budgets per request. Monitor and alert on cost spikes. (Dim 04)
+
+## Code Organization
+
+```
+project/
+├── main.py              # Entry point
+├── config.py            # All configuration (Dim 01, 04)
+├── models/              # Pydantic schemas (Dim 05)
+├── agents/              # Agent definitions (Dim 09, 10)
+│   ├── orchestrator.py  # Main orchestration (Dim 12)
+│   └── ...
+├── tools/               # Tool interfaces (Dim 11)
+├── retrieval/           # RAG pipeline (Dim 07)
+├── prompts/             # System prompts (Dim 13, 14)
+├── safety/              # Moderation & guards (Dim 17-20)
+├── evolution/           # Telemetry & testing (Dim 21-24)
+└── tests/
+```
+
+## Naming Conventions
+
+- Agent classes: `{Role}Agent` (e.g., PlannerAgent, ReviewerAgent)
+- Tool functions: `tool_{action}` (e.g., tool_search, tool_calculate)
+- Schema models: `{Entity}Schema` (e.g., TaskSchema, ResponseSchema)
+- Prompt templates: `PROMPT_{ROLE}_{PURPOSE}` (e.g., PROMPT_PLANNER_DECOMPOSE)
+
+## Dimension-Specific Rules
+
+### Dim 03 (Fault Tolerance) — CRITICAL
+- Every API call wrapped in try/except with retry logic
+- Default timeout: 30s for model calls, 10s for tool calls
+- Always define a fallback response for when everything fails
+- Log every failure with full context
+
+### Dim 05 (Data Schema)
+- All inter-agent communication uses Pydantic BaseModel
+- No raw dict passing between agents
+- Every schema has docstring and field descriptions
+
+### Dim 07 (Knowledge & Temporal)
+- Always implement reranking after initial retrieval
+- Chunk size must be configurable via config.py
+- Include source attribution in every RAG response
+- Consider knowledge freshness in ranking
+
+### Dim 16 (Output Experience)
+- Default to streaming output for user-facing responses
+- Show thinking/reasoning process when task is complex
+- Always attribute sources when using RAG
+
+### Dim 17 (Quality Loop)
+- Every LLM output passes through a self-check function
+- Failed checks trigger retry with modified prompt
+- Max retry count configurable in config.py (default: 2)
+
+### Dim 18 (Hallucination Suppression)
+- Every factual claim must be traceable to a source
+- If confidence < 0.7, prepend response with uncertainty marker
+- Never generate URLs, file paths, or citations without verification
+
+### Dim 19 (Safety Defense)
+- Input sanitization before every LLM call
+- Output moderation after every LLM response
+- Prompt injection detection on all user inputs
+
+### Dim 21 (Telemetry)
+- Structured logging with JSON format
+- Every agent call logs: timestamp, agent_name, input_hash, output_hash, latency_ms
+- Error logs include full context for debugging
+
+### Dim 26 (Explainability)
+- For high-stakes decisions, log the reasoning chain
+- Provide user-facing explanations when confidence is low

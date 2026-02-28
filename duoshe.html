@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>夺舍大法 — Agenauton 铸基</title>
+<meta name="description" content="搜魂、炼魄、锻造 — 拆解优秀 Agent 的核心逻辑，炼化己用。中文社区专属方法论。">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#06060a;--surface:#0c0c12;--card:#111118;--border:rgba(255,255,255,.06);--border-h:rgba(255,255,255,.12);--blue:#3b82f6;--blue-g:rgba(59,130,246,.08);--purple:#8b5cf6;--teal:#14b8a6;--green:#22c55e;--red:#ef4444;--orange:#f97316;--yellow:#eab308;--text:#f0f0f5;--dim:#8b8b9e;--muted:#55556a}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,"SF Pro Display","SF Pro Text","Helvetica Neue","PingFang SC",sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden;line-height:1.6}
+::selection{background:rgba(139,92,246,.3);color:#fff}
+
+.orb{position:fixed;border-radius:50%;filter:blur(120px);opacity:.12;pointer-events:none;z-index:-1}
+.orb-1{width:600px;height:600px;background:var(--purple);top:-200px;left:-100px}
+.orb-2{width:500px;height:500px;background:var(--orange);top:50%;right:-150px}
+.orb-3{width:400px;height:400px;background:var(--teal);bottom:-100px;left:30%}
+
+.wrap{max-width:1200px;margin:0 auto;padding:0 32px}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;backdrop-filter:blur(20px) saturate(1.8);-webkit-backdrop-filter:blur(20px) saturate(1.8);background:rgba(6,6,10,.7);border-bottom:1px solid var(--border)}
+.nav-inner{max-width:1200px;margin:0 auto;padding:0 32px;height:64px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-size:1.15rem;font-weight:800;letter-spacing:-.5px;display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--text)}
+.logo span{color:var(--purple)}
+.logo-cn{font-size:.7rem;color:var(--muted);font-weight:500;letter-spacing:1px}
+.nav-links{display:flex;gap:24px;align-items:center}
+.nav-links a{color:var(--dim);text-decoration:none;font-size:.8rem;font-weight:500;transition:.2s}
+.nav-links a:hover{color:var(--text)}
+.nav-cta{background:var(--purple);color:#fff;padding:8px 18px;border-radius:10px;font-size:.8rem;font-weight:600;text-decoration:none;transition:.3s}
+.nav-cta:hover{box-shadow:0 4px 20px rgba(139,92,246,.4);transform:translateY(-1px)}
+
+.hero{padding:160px 0 100px;text-align:center;position:relative}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;padding:6px 16px;border-radius:100px;border:1px solid var(--border);background:rgba(139,92,246,.08);font-size:.75rem;font-weight:600;color:var(--purple);margin-bottom:32px}
+.hero h1{font-size:clamp(2.4rem,6vw,4.2rem);font-weight:800;letter-spacing:-.04em;line-height:1.1;margin-bottom:24px}
+.hero h1 .gradient{background:linear-gradient(135deg,var(--orange),var(--purple),var(--teal));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:1.15rem;color:var(--dim);max-width:680px;margin:0 auto 16px;line-height:1.7}
+.hero-note{font-size:.85rem;color:var(--muted);margin-bottom:40px;padding:12px 20px;border:1px solid var(--border);border-radius:12px;display:inline-block;background:var(--surface)}
+.hero-actions{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-top:32px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:14px;font-size:.9rem;font-weight:600;text-decoration:none;transition:.3s;border:none;cursor:pointer}
+.btn-primary{background:var(--purple);color:#fff}
+.btn-primary:hover{box-shadow:0 8px 32px rgba(139,92,246,.35);transform:translateY(-2px)}
+.btn-ghost{background:transparent;color:var(--text);border:1px solid var(--border-h)}
+.btn-ghost:hover{border-color:var(--purple);background:rgba(139,92,246,.06)}
+
+.divider{height:1px;background:var(--border);margin:0 auto;max-width:1200px}
+
+.section{padding:100px 0}
+.section-label{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:3px;color:var(--purple);margin-bottom:16px}
+.section-title{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;letter-spacing:-.03em;margin-bottom:16px;line-height:1.15}
+.section-desc{font-size:1.05rem;color:var(--dim);max-width:600px;line-height:1.7;margin-bottom:48px}
+
+/* Trilogy cards */
+.trilogy-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin:48px 0}
+.trilogy-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:32px 24px;position:relative;overflow:hidden;transition:.3s}
+.trilogy-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:20px 20px 0 0}
+.trilogy-card:nth-child(1)::before{background:var(--orange)}
+.trilogy-card:nth-child(2)::before{background:var(--purple)}
+.trilogy-card:nth-child(3)::before{background:var(--teal)}
+.trilogy-card:hover{border-color:var(--border-h);transform:translateY(-4px)}
+.trilogy-step{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:2px;margin-bottom:16px}
+.trilogy-card:nth-child(1) .trilogy-step{color:var(--orange)}
+.trilogy-card:nth-child(2) .trilogy-step{color:var(--purple)}
+.trilogy-card:nth-child(3) .trilogy-step{color:var(--teal)}
+.trilogy-icon{font-size:2.4rem;margin-bottom:16px}
+.trilogy-name{font-size:1.3rem;font-weight:800;margin-bottom:4px}
+.trilogy-en{font-size:.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:16px}
+.trilogy-desc{font-size:.85rem;color:var(--dim);line-height:1.7;margin-bottom:20px}
+.trilogy-list{list-style:none;padding:0}
+.trilogy-list li{font-size:.78rem;color:var(--dim);padding:6px 0;border-top:1px solid var(--border);display:flex;align-items:center;gap:8px}
+.trilogy-list li::before{content:'';width:4px;height:4px;border-radius:50%;flex-shrink:0}
+.trilogy-card:nth-child(1) .trilogy-list li::before{background:var(--orange)}
+.trilogy-card:nth-child(2) .trilogy-list li::before{background:var(--purple)}
+.trilogy-card:nth-child(3) .trilogy-list li::before{background:var(--teal)}
+
+/* Interactive demo */
+.demo-wrap{margin:48px 0}
+.demo-selector{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:32px}
+.demo-btn{padding:10px 20px;border-radius:12px;font-size:.8rem;font-weight:600;border:1px solid var(--border);background:transparent;color:var(--dim);cursor:pointer;transition:.2s}
+.demo-btn.active{background:var(--purple);color:#fff;border-color:var(--purple)}
+.demo-btn:hover:not(.active){border-color:var(--border-h);color:var(--text)}
+.demo-result{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:32px;display:none}
+.demo-result.active{display:block;animation:fadeIn .4s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.demo-header{display:flex;align-items:center;gap:16px;margin-bottom:24px}
+.demo-avatar{width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.5rem}
+.demo-agent-name{font-size:1.1rem;font-weight:700}
+.demo-agent-type{font-size:.75rem;color:var(--muted)}
+
+.demo-radar-wrap{display:flex;gap:32px;align-items:flex-start;flex-wrap:wrap}
+.demo-radar{flex:0 0 280px}
+.demo-radar canvas{width:280px;height:280px}
+.demo-dims{flex:1;min-width:280px}
+.demo-dim-row{padding:10px 0;border-bottom:1px solid var(--border)}
+.demo-dim-top{display:flex;align-items:center;gap:12px}
+.demo-dim-label{font-size:.72rem;color:var(--dim);width:100px;flex-shrink:0}
+.demo-dim-bar{flex:1;height:6px;background:var(--surface);border-radius:3px;overflow:hidden}
+.demo-dim-fill{height:100%;border-radius:3px;transition:width .6s ease}
+.demo-dim-val{font-size:.7rem;font-weight:700;width:36px;text-align:right}
+.demo-dim-desc{font-size:.73rem;color:#a0a0b8;margin-top:5px;padding-left:112px;line-height:1.5}
+
+.demo-insights{margin-top:24px;padding:20px;background:var(--surface);border-radius:14px;border:1px solid var(--border)}
+.demo-insights h4{font-size:.8rem;font-weight:700;margin-bottom:12px;color:var(--purple)}
+.demo-insights p{font-size:.78rem;color:var(--dim);line-height:1.7}
+
+.demo-cta{margin-top:24px;text-align:center}
+
+/* Cases */
+.case-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin:48px 0}
+.case-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:24px;transition:.3s;cursor:pointer;position:relative}
+.case-card:hover{border-color:var(--border-h);transform:translateY(-3px)}
+.case-tag{display:inline-block;font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;padding:3px 8px;border-radius:6px;margin-bottom:12px}
+.case-tag.tag-orange{background:rgba(249,115,22,.1);color:var(--orange)}
+.case-tag.tag-purple{background:rgba(139,92,246,.1);color:var(--purple)}
+.case-tag.tag-teal{background:rgba(20,184,166,.1);color:var(--teal)}
+.case-tag.tag-blue{background:rgba(59,130,246,.1);color:#3b82f6}
+.case-tag.tag-pink{background:rgba(236,72,153,.1);color:#ec4899}
+.case-tag.tag-green{background:rgba(34,197,94,.1);color:var(--green)}
+.case-tag.tag-amber{background:rgba(245,158,11,.1);color:#f59e0b}
+.case-tag.tag-red{background:rgba(239,68,68,.1);color:#ef4444}
+.case-title{font-size:.92rem;font-weight:700;margin-bottom:6px}
+.case-summary{font-size:.78rem;color:var(--dim);line-height:1.6;margin-bottom:12px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.case-open-hint{font-size:.7rem;color:var(--muted);display:flex;align-items:center;gap:4px}
+.case-open-hint::after{content:'→';transition:.2s}
+.case-card:hover .case-open-hint{color:var(--purple)}
+.case-card:hover .case-open-hint::after{transform:translateX(3px)}
+
+/* Case Modal — fullscreen */
+.case-modal-overlay{position:fixed;inset:0;background:var(--bg);z-index:1000;display:none;flex-direction:column;overflow-y:auto}
+.case-modal-overlay.active{display:flex}
+.case-modal-overlay::-webkit-scrollbar{width:5px}
+.case-modal-overlay::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1);border-radius:4px}
+.case-modal{max-width:780px;width:100%;margin:0 auto;padding:32px 24px 80px;animation:modalIn .2s ease}
+@keyframes modalIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.case-modal-back{position:sticky;top:0;z-index:10;display:flex;align-items:center;gap:8px;padding:16px 0;margin-bottom:16px;font-size:.88rem;color:var(--dim);cursor:pointer;background:var(--bg);border:none;font-family:inherit;transition:.2s}
+.case-modal-back:hover{color:var(--text)}
+.case-modal-back::before{content:'←';font-size:1.1rem}
+.case-modal .case-tag{margin-bottom:12px}
+.case-modal .case-modal-title{font-size:1.5rem;font-weight:800;margin-bottom:10px;color:var(--text)}
+.case-modal .case-modal-desc{font-size:.95rem;color:#b0b0c8;line-height:1.8;margin-bottom:32px}
+
+/* Probe questions */
+.probe-section{margin:64px 0}
+.probe-intro{font-size:.9rem;color:var(--dim);line-height:1.7;margin-bottom:32px;max-width:720px}
+.probe-grid{display:grid;grid-template-columns:1fr;gap:12px}
+.probe-item{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px 24px;display:flex;gap:16px;align-items:flex-start;transition:.3s}
+.probe-item:hover{border-color:var(--border-h)}
+.probe-num{width:32px;height:32px;border-radius:10px;background:rgba(139,92,246,.1);color:var(--purple);font-size:.75rem;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.probe-content{flex:1}
+.probe-q{font-size:.9rem;font-weight:700;margin-bottom:8px;color:var(--text)}
+.probe-pro{font-size:.75rem;color:var(--dim);line-height:1.6;margin-bottom:8px;padding:8px 12px;background:var(--surface);border-radius:8px;border-left:2px solid var(--purple)}
+.probe-pro strong{color:var(--purple);font-size:.65rem;text-transform:uppercase;letter-spacing:.5px}
+.probe-target{font-size:.72rem;color:var(--muted);line-height:1.5}
+.probe-target strong{color:var(--dim)}
+.probe-note{margin-top:24px;padding:16px 20px;background:var(--surface);border:1px solid var(--border);border-radius:12px;font-size:.78rem;color:var(--dim);line-height:1.6}
+.probe-note strong{color:var(--text)}
+
+/* Case detail — fullscreen sizes */
+.case-phase{margin-bottom:28px;padding:24px;background:var(--card);border:1px solid var(--border);border-radius:16px}
+.case-phase-header{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.case-phase-icon{font-size:1.3rem}
+.case-phase-name{font-size:1rem;font-weight:800}
+.case-phase-name.soul{color:var(--orange)}
+.case-phase-name.spirit{color:var(--purple)}
+.case-phase-name.forge{color:var(--teal)}
+.case-phase-body{font-size:.9rem;color:#c0c0d8;line-height:1.8}
+.case-phase-body strong{color:var(--text)}
+.case-phase-body code{background:rgba(139,92,246,.1);color:var(--purple);padding:2px 8px;border-radius:5px;font-size:.82rem}
+.case-phase-body ul{list-style:none;padding:0;margin:10px 0 0}
+.case-phase-body ul li{padding:6px 0;display:flex;gap:8px;border-bottom:1px solid rgba(255,255,255,.04)}
+.case-phase-body ul li:last-child{border-bottom:none}
+.case-phase-body ul li::before{content:'→';color:var(--muted);flex-shrink:0;margin-top:1px}
+
+/* Quote */
+.quote-box{background:var(--card);border-left:3px solid var(--purple);border-radius:0 14px 14px 0;padding:24px 28px;margin:32px 0}
+.quote-box p{font-size:.95rem;color:var(--dim);line-height:1.7;font-style:italic}
+
+/* CTA */
+.cta-section{padding:100px 0;text-align:center}
+.cta-section h2{font-size:clamp(1.6rem,3.5vw,2.4rem);font-weight:800;margin-bottom:16px}
+.cta-section p{color:var(--dim);font-size:1rem;margin-bottom:32px}
+
+footer{padding:48px 0;text-align:center;border-top:1px solid var(--border);color:var(--muted);font-size:.75rem}
+footer a{color:var(--dim);text-decoration:none}
+footer a:hover{color:var(--text)}
+
+@media(max-width:768px){
+.trilogy-grid{grid-template-columns:1fr}
+.demo-radar-wrap{flex-direction:column}
+.demo-radar{flex:none;width:100%}
+.demo-radar canvas{width:100%;max-width:280px;margin:0 auto;display:block}
+.demo-selector{justify-content:center}
+.demo-dim-desc{padding-left:0;margin-top:6px}
+.demo-dim-label{width:72px;font-size:.65rem}
+.probe-pro{font-size:.7rem}
+.nav-links{gap:12px}
+}
+</style>
+</head>
+<body>
+
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
+
+<nav>
+<div class="nav-inner">
+<a href="guanwang.html" class="logo">Agenauton <span>铸基</span></a>
+<div class="nav-links">
+<a href="guanwang.html">主站</a>
+<a href="#probe9">炼魂 9 问</a>
+<a href="#trilogy">三步法</a>
+<a href="#cases">案例库</a>
+<a href="Agenauton/guide/index.html">引导问答</a>
+<a href="#" class="nav-cta" style="background:var(--purple)">夺舍大法</a>
+</div>
+</div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+<div class="wrap">
+<div class="hero-badge">中文社区专属方法论</div>
+<h1>夺舍大法<br><span class="gradient">拆解高手的武功，炼化己用</span></h1>
+<p class="hero-sub">没有自己的灵感？没关系。学习拆解优秀 Agent 的核心逻辑，用 26 维度标准化提炼，再用 AI 辅助锻造成你自己的产品。</p>
+<div class="hero-note">这不是抄袭 — 是学习 + 标准化拆解 + 自主重建</div>
+<div class="hero-actions">
+<a href="#probe9" class="btn btn-primary">炼魂 9 问 — 从这开始</a>
+<a href="#trilogy" class="btn btn-ghost">了解三步方法论</a>
+<a href="#cases" class="btn btn-ghost">看拆解案例</a>
+</div>
+</div>
+</section>
+
+<div class="divider"></div>
+
+<!-- Trilogy -->
+<section class="section" id="trilogy">
+<div class="wrap">
+<div class="section-label">Methodology</div>
+<div class="section-title">搜魂、炼魄、锻造</div>
+<div class="section-desc">三步完成从「看懂别人」到「造出自己的」。每一步都有对应的工具和模板。</div>
+
+<div class="trilogy-grid">
+<div class="trilogy-card">
+<div class="trilogy-step">Step 1</div>
+<div class="trilogy-icon">🔮</div>
+<div class="trilogy-name">搜魂</div>
+<div class="trilogy-en">Soul Extraction</div>
+<div class="trilogy-desc">用「炼魂 9 问」穿透目标 Agent 的表层服务，摸清底层机制。既可以问第三方 AI，也可以自问梳理自研架构。</div>
+<ul class="trilogy-list">
+<li>用 9 个问题覆盖核心维度：任务域、流程、分工、记忆、工具、防错、安全、修正、复用</li>
+<li>把它当作一份「Agentic 调研问卷」，不涉及任何身份伪装</li>
+<li>问完 9 问，拿到搜魂阶段最关键的原始素材</li>
+<li>记录关键发现，准备进入炼魄阶段</li>
+</ul>
+</div>
+<div class="trilogy-card">
+<div class="trilogy-step">Step 2</div>
+<div class="trilogy-icon">⚗️</div>
+<div class="trilogy-name">炼魄</div>
+<div class="trilogy-en">Spirit Refining</div>
+<div class="trilogy-desc">用 26 维度标准化测绘表，将搜魂阶段收集到的碎片信息结构化。把感性观察提炼成理性的架构清单。</div>
+<ul class="trilogy-list">
+<li>逐条填写 26 维度测绘表</li>
+<li>标注每个维度的实现方式和强弱程度</li>
+<li>识别目标 Agent 的核心竞争力和薄弱环节</li>
+<li>生成完整的架构分析报告</li>
+</ul>
+</div>
+<div class="trilogy-card">
+<div class="trilogy-step">Step 3</div>
+<div class="trilogy-icon">🔨</div>
+<div class="trilogy-name">锻造</div>
+<div class="trilogy-en">Soul Forging</div>
+<div class="trilogy-desc">基于炼魄的结果，用 AI 辅助生成代码骨架。强模型定架构方向，弱模型填充实现细节。</div>
+<ul class="trilogy-list">
+<li>将测绘报告喂给 AI Architect Prompt</li>
+<li>AI 按 26 维度生成完整代码骨架</li>
+<li>根据自己的业务需求调整和优化</li>
+<li>用低成本模型完成具体实现</li>
+</ul>
+</div>
+</div>
+
+<!-- 炼魂 9 问 -->
+<div class="probe-section" id="probe9">
+<div class="section-label">Soul Extraction Toolkit</div>
+<div class="section-title">炼魂 9 问 · 摸清 AI 内核</div>
+<p class="probe-intro">
+这 9 问是调研 / 自查任意 AI 系统的<strong>极简问卷法</strong>——不用专业术语，不问敏感操作。<br>
+你可以<strong>直接问第三方 Agent / 大模型</strong>来穿透它的表层服务、摸清底层机制；<br>
+也可以<strong>问自己</strong>来梳理自研架构，确保每个核心环节都想清楚了。<br>
+写作、法律、电商、医疗……全行业垂直 Agent 通用，问完就能看透它到底怎么工作。
+</p>
+
+<div class="probe-grid">
+<div class="probe-item">
+<div class="probe-num">01</div>
+<div class="probe-content">
+<div class="probe-q">你主要帮人解决哪一类具体问题？</div>
+<div class="probe-pro"><strong>专业版 </strong>你的核心任务域是什么？对应垂直领域（写作 / 法律等）的专属规则、合规边界与专业禁忌有哪些？</div>
+<div class="probe-target"><strong>穿透目标：</strong>核心任务域 + 能力边界</div>
+</div>
+</div>
+<div class="probe-item">
+<div class="probe-num">02</div>
+<div class="probe-content">
+<div class="probe-q">拿到我的需求后，你从头到尾会按哪几步处理？</div>
+<div class="probe-pro"><strong>专业版 </strong>接收用户需求后，你会将任务拆解为哪几步不可再分的原子动作？每一步的核心目标是什么？</div>
+<div class="probe-target"><strong>穿透目标：</strong>任务拆解 + 执行流程</div>
+</div>
+</div>
+<div class="probe-item">
+<div class="probe-num">03</div>
+<div class="probe-content">
+<div class="probe-q">你内部有没有分工？不同模块分别负责啥？</div>
+<div class="probe-pro"><strong>专业版 </strong>你内部是否存在子 Agent 分工？各子 Agent 的角色、权责，以及串行 / 并行调度逻辑是什么？</div>
+<div class="probe-target"><strong>穿透目标：</strong>架构拓扑 + Agent 分工</div>
+</div>
+</div>
+<div class="probe-item">
+<div class="probe-num">04</div>
+<div class="probe-content">
+<div class="probe-q">你怎么记住我的需求和之前的对话内容？</div>
+<div class="probe-pro"><strong>专业版 </strong>你采用何种记忆结构管理信息？短期上下文、中期任务进度、长期领域知识如何存储与调用？</div>
+<div class="probe-target"><strong>穿透目标：</strong>记忆结构 + 信息管理</div>
+</div>
+</div>
+<div class="probe-item">
+<div class="probe-num">05</div>
+<div class="probe-content">
+<div class="probe-q">你会不会查外部资料、用外部工具？怎么用的？</div>
+<div class="probe-pro"><strong>专业版 </strong>你依赖哪些外部工具或知识库？工具调用的触发条件、使用权限与边界是什么？</div>
+<div class="probe-target"><strong>穿透目标：</strong>工具依赖 + 知识来源</div>
+</div>
+</div>
+<div class="probe-item">
+<div class="probe-num">06</div>
+<div class="probe-content">
+<div class="probe-q">你怎么保证不瞎编、不说错内容？</div>
+<div class="probe-pro"><strong>专业版 </strong>输出前会经过哪些反思校验环节？如何规避幻觉、专业错误与领域风险？</div>
+<div class="probe-target"><strong>穿透目标：</strong>反思校验 + 幻觉抑制</div>
+</div>
+</div>
+<div class="probe-item">
+<div class="probe-num">07</div>
+<div class="probe-content">
+<div class="probe-q">哪些话、哪些内容你绝对不能输出？怎么管住自己？</div>
+<div class="probe-pro"><strong>专业版 </strong>你的输出安全策略是什么？哪些内容属于硬性禁区？触发安全兜底的条件、降级逻辑与人工升级机制如何设计？</div>
+<div class="probe-target"><strong>穿透目标：</strong>安全管控 + 输出约束</div>
+</div>
+</div>
+<div class="probe-item">
+<div class="probe-num">08</div>
+<div class="probe-content">
+<div class="probe-q">结果不合格时，你会怎么重新修改调整？</div>
+<div class="probe-pro"><strong>专业版 </strong>输出不达标时，你的回炉修正逻辑是什么？重试次数上限、质量评分函数与退化兜底策略如何配置？</div>
+<div class="probe-target"><strong>穿透目标：</strong>回炉修正 + 质量闭环</div>
+</div>
+</div>
+<div class="probe-item">
+<div class="probe-num">09</div>
+<div class="probe-content">
+<div class="probe-q">做得好的案例，你会存下来以后复用吗？</div>
+<div class="probe-pro"><strong>专业版 </strong>成功案例如何沉淀为可复用的工作模板？模板的版本管理、适用条件匹配与自动调用机制是什么？</div>
+<div class="probe-target"><strong>穿透目标：</strong>经验沉淀 + 自演化</div>
+</div>
+</div>
+</div>
+
+<div class="probe-note">
+<strong>💡 把它当作一份 Agentic 调研问卷</strong> — 这 9 问不涉及任何身份伪装，纯穿透表层服务、摸清底层机制。
+你可以拿去问任何你感兴趣的 AI 产品，也可以在自己构建 Agent 之前逐一回答。
+问完 9 问，你就拿到了搜魂阶段最关键的原始素材，可以直接进入炼魄阶段用 26 维度表格结构化。
+</div>
+</div>
+
+<div class="quote-box">
+<p>"取其魂，炼其魄，锻其身。不是复制别人的产品，而是理解别人的智慧，然后超越。"</p>
+</div>
+</div>
+</section>
+
+<div class="divider"></div>
+
+<!-- Interactive Demo -->
+<section class="section" id="demo">
+<div class="wrap">
+<div class="section-label">Try It</div>
+<div class="section-title">交互式拆解体验</div>
+<div class="section-desc">基于真实开源项目调研，选择一个 Agent 类型，看 26 维度拆解后每个维度的具体实现机制。</div>
+
+<div class="demo-wrap">
+<div class="demo-selector">
+<button class="demo-btn active" onclick="showDemo(0,this)">AI 客服助手</button>
+<button class="demo-btn" onclick="showDemo(1,this)">AI 写作助手</button>
+<button class="demo-btn" onclick="showDemo(2,this)">AI 数据分析师</button>
+</div>
+
+<div class="demo-result active" id="demo0">
+<div class="demo-header">
+<div class="demo-avatar" style="background:rgba(59,130,246,.12)">🎧</div>
+<div>
+<div class="demo-agent-name">AI 智能客服</div>
+<div class="demo-agent-type">Customer Service Agent</div>
+</div>
+</div>
+<div class="demo-radar-wrap">
+<div class="demo-radar"><canvas id="radar0" width="560" height="560"></canvas></div>
+<div class="demo-dims" id="dims0"></div>
+</div>
+<div class="demo-insights">
+<h4>拆解洞察 · 参考项目：OpenClaw（145K+ Stars）/ Intercom Fin</h4>
+<p>客服 Agent 的核心壁垒在<strong style="color:var(--text)">意图理解</strong>（BERT 分类 95%+）和<strong style="color:var(--text)">安全防御</strong>（情绪升级自动转人工）。<strong style="color:var(--text)">工具能力</strong>是第二壁垒——深度集成订单/物流/退款 API 才能真正解决问题而非只是聊天。<strong style="color:var(--text)">自演化</strong>偏弱是行业通病，多数客服 AI 仍依赖人工维护 FAQ。复刻关键：先搭意图分类 + 工具调用框架，再补安全兜底。</p>
+</div>
+</div>
+
+<div class="demo-result" id="demo1">
+<div class="demo-header">
+<div class="demo-avatar" style="background:rgba(139,92,246,.12)">✍️</div>
+<div>
+<div class="demo-agent-name">AI 写作助手</div>
+<div class="demo-agent-type">Writing Assistant Agent</div>
+</div>
+</div>
+<div class="demo-radar-wrap">
+<div class="demo-radar"><canvas id="radar1" width="560" height="560"></canvas></div>
+<div class="demo-dims" id="dims1"></div>
+</div>
+<div class="demo-insights">
+<h4>拆解洞察 · 参考项目：WriteHERE（EMNLP 2025）/ CrewAI Blog Writer</h4>
+<p>写作 Agent 的核心壁垒在<strong style="color:var(--text)">指令策略</strong>（50+ 行业 Prompt 模板）和<strong style="color:var(--text)">输出体验</strong>（分段预览 + 多版本对比）。架构上采用<strong style="color:var(--text)">策略→写手→审核</strong>三 Agent 流水线（CrewAI 模式），DAG 任务图管理依赖关系。<strong style="color:var(--text)">基础设施</strong>要求低是优势——单机 Docker 即可运行，成本主要在 API 调用。复刻关键：Prompt 模板库的质量决定上限。</p>
+</div>
+</div>
+
+<div class="demo-result" id="demo2">
+<div class="demo-header">
+<div class="demo-avatar" style="background:rgba(20,184,166,.12)">📊</div>
+<div>
+<div class="demo-agent-name">AI 数据分析师</div>
+<div class="demo-agent-type">Data Analysis Agent</div>
+</div>
+</div>
+<div class="demo-radar-wrap">
+<div class="demo-radar"><canvas id="radar2" width="560" height="560"></canvas></div>
+<div class="demo-dims" id="dims2"></div>
+</div>
+<div class="demo-insights">
+<h4>拆解洞察 · 参考项目：NL2SQL Agent / QueryWeaver（328 Stars）</h4>
+<p>数据分析 Agent 的核心壁垒在<strong style="color:var(--text)">工具能力</strong>（NL2SQL + ECharts 渲染）和<strong style="color:var(--text)">幻觉抑制</strong>（SQL 语法校验 + 结果交叉验证）。<strong style="color:var(--text)">数据协议</strong>得分极高是因为 Schema 自动发现和字段映射是整个系统的基石。<strong style="color:var(--text)">安全防御</strong>设计严格——只读权限 + SQL 注入防护 + 敏感字段脱敏。复刻关键：Schema-aware Prompt 的质量决定 SQL 准确率。</p>
+</div>
+</div>
+
+<div class="demo-cta">
+<a href="#probe9" class="btn btn-primary" style="margin-top:24px">用炼魂 9 问开始拆解 &rarr;</a>
+</div>
+</div>
+</div>
+</section>
+
+<div class="divider"></div>
+
+<!-- Cases -->
+<section class="section" id="cases">
+<div class="wrap">
+<div class="section-label">Case Studies</div>
+<div class="section-title">拆解案例库</div>
+<div class="section-desc">点击任意案例，查看完整的搜魂→炼魄→锻造三步拆解流程。</div>
+
+<div class="case-grid">
+<div class="case-card" onclick="openCase(0)">
+<div class="case-tag tag-orange">情感疗愈类</div>
+<div class="case-title">AI 情感私教拆解</div>
+<div class="case-summary">参考 Replika / PersocomAI。三层记忆架构 + 60 字输出限制 + 付费分级，炼魂 9 问覆盖 7/9。</div>
+<div class="case-open-hint">查看完整拆解</div>
+</div>
+<div class="case-card" onclick="openCase(1)">
+<div class="case-tag tag-purple">效率工具类</div>
+<div class="case-title">AI 会议纪要助手拆解</div>
+<div class="case-summary">参考 Meetily（7.8K Stars）/ Fireflies.ai。Whisper 转录 + 说话人分离 + 四段式结构化输出，覆盖 8/9 问。</div>
+<div class="case-open-hint">查看完整拆解</div>
+</div>
+<div class="case-card" onclick="openCase(2)">
+<div class="case-tag tag-teal">营销获客类</div>
+<div class="case-title">AI 营销文案生成器拆解</div>
+<div class="case-summary">参考 Jasper AI Engine / CrewAI。模型路由 + 品牌知识库 + 三 Agent 流水线，全 9 问覆盖。</div>
+<div class="case-open-hint">查看完整拆解</div>
+</div>
+<div class="case-card" onclick="openCase(3)">
+<div class="case-tag tag-blue">教育培训类</div>
+<div class="case-title">AI 编程导师拆解</div>
+<div class="case-summary">参考 Replit Agent / Codecademy AI。苏格拉底提问 + Snapshot 沙箱 + 学习路径追踪，覆盖 8/9 问。</div>
+<div class="case-open-hint">查看完整拆解</div>
+</div>
+<div class="case-card" onclick="openCase(4)">
+<div class="case-tag tag-pink">电商服务类</div>
+<div class="case-title">AI 智能客服拆解</div>
+<div class="case-summary">参考 Enthusiast / Tidio Lyro（基于 Claude）。意图分类树 + API 编排 + 情绪升级，全 9 问覆盖。</div>
+<div class="case-open-hint">查看完整拆解</div>
+</div>
+<div class="case-card" onclick="openCase(5)">
+<div class="case-tag tag-green">数据分析类</div>
+<div class="case-title">AI 数据分析师拆解</div>
+<div class="case-summary">参考 NL2SQL Agent / QueryWeaver（328 Stars）。Schema 感知 + NL2SQL + 自动可视化，全 9 问覆盖。</div>
+<div class="case-open-hint">查看完整拆解</div>
+</div>
+<div class="case-card" onclick="openCase(6)">
+<div class="case-tag tag-amber">内容创作类</div>
+<div class="case-title">AI 短视频脚本生成器拆解</div>
+<div class="case-summary">参考 OpenShorts（146 Stars）/ Short AI。钩子公式库 + 平台算法适配 + 分镜自动拆解，覆盖 8/9 问。</div>
+<div class="case-open-hint">查看完整拆解</div>
+</div>
+<div class="case-card" onclick="openCase(7)">
+<div class="case-tag tag-red">医疗健康类</div>
+<div class="case-title">AI 健康问诊助手拆解</div>
+<div class="case-summary">参考 MediAI（RAG + Mistral-7B）/ CheckMySymptoms。症状决策树 + 知识图谱 + 三级安全兜底，全 9 问覆盖。</div>
+<div class="case-open-hint">查看完整拆解</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Case Modal -->
+<div class="case-modal-overlay" id="caseModal">
+<div class="case-modal">
+<button class="case-modal-back" onclick="closeCase()">返回案例库</button>
+<div id="caseModalBody"></div>
+</div>
+</div>
+
+<div class="divider"></div>
+
+<!-- CTA -->
+<section class="cta-section">
+<div class="wrap">
+<h2>开始你的第一次拆解</h2>
+<p>选一个你感兴趣的 Agent，用炼魂 9 问摸清它的底，再用炼魄、锻造三步把它变成你自己的。</p>
+<div class="hero-actions">
+<a href="#probe9" class="btn btn-primary">从炼魂 9 问开始</a>
+<a href="Agenauton/guide/index.html" class="btn btn-ghost">引导式问答生成蓝图</a>
+<a href="Agenauton/02_Spirit_Refining/26_Dimensions_Template.md" download class="btn btn-ghost">下载 26 维度模板</a>
+</div>
+</div>
+</section>
+
+<div style="max-width:680px;margin:0 auto;padding:0 24px 48px;text-align:center">
+<p style="font-size:1.05rem;color:#b0b0c8;line-height:2.2;font-style:italic;letter-spacing:.5px">
+困于樊笼终日碌，身如蜉蝣棋中子，<br>
+幸得AI这般秘宝，凡人亦可启修仙途，搏那一线天机。<br>
+愿吾辈散修，砥砺互助，共求大道！
+</p>
+<div style="margin-top:32px">
+<button id="clapBtn" onclick="doClap()" style="background:none;border:2px solid rgba(139,92,246,.3);border-radius:60px;padding:14px 36px;cursor:pointer;display:inline-flex;align-items:center;gap:12px;transition:.3s;font-family:inherit">
+<span id="clapEmoji" style="font-size:1.8rem;transition:.3s">👏</span>
+<span style="display:flex;flex-direction:column;align-items:flex-start">
+<span style="font-size:.82rem;color:#b0b0c8">为自己鼓掌</span>
+<span id="clapCount" style="font-size:1.3rem;font-weight:800;color:var(--purple)">0</span>
+</span>
+</button>
+<p id="clapMsg" style="margin-top:12px;font-size:.75rem;color:var(--muted);height:20px"></p>
+</div>
+</div>
+
+<footer>
+<div class="wrap">
+<p><strong>Agenauton 铸基</strong> &mdash; 夺舍大法 | 中文社区专属方法论</p>
+<p style="margin-top:8px"><a href="guanwang.html">主站</a> &middot; <a href="https://github.com/agenauton">GitHub</a> &middot; 搜魂、炼魄、锻造 — 三步炼化己用</p>
+</div>
+</footer>
+
+<script>
+var DIMS=['环境依赖','并发伸缩','容错恢复','成本管控','数据协议','状态记忆','知识时效','多模态','架构拓扑','Agent分工','工具能力','决策规划','指令策略','意图理解','个性适配','输出体验','质量闭环','幻觉抑制','安全防御','信任边界','遥测监控','评估测试','自演化','版本发布','合规伦理','可解释性'];
+var LAYERS=['基础设施','基础设施','基础设施','基础设施','数据状态','数据状态','数据状态','数据状态','核心逻辑','核心逻辑','核心逻辑','核心逻辑','交互','交互','交互','交互','治理','治理','治理','治理','演进','演进','演进','演进','演进','演进'];
+var COLORS=['#3b82f6','#3b82f6','#3b82f6','#3b82f6','#22c55e','#22c55e','#22c55e','#22c55e','#f97316','#f97316','#f97316','#f97316','#8b5cf6','#8b5cf6','#8b5cf6','#8b5cf6','#ef4444','#ef4444','#ef4444','#ef4444','#14b8a6','#14b8a6','#14b8a6','#14b8a6','#14b8a6','#14b8a6'];
+
+var AGENTS=[
+{name:'AI 智能客服',en:'Customer Service Agent',icon:'🎧',
+vals:[0.75,0.85,0.80,0.65,0.70,0.75,0.50,0.35,0.55,0.45,0.70,0.60,0.85,0.90,0.80,0.75,0.70,0.65,0.85,0.75,0.70,0.55,0.30,0.50,0.75,0.45],
+descs:[
+'K8s 集群部署 + Redis 会话缓存 + CDN 静态资源分发',
+'基于消息队列水平扩容，峰值支撑 10 万并发会话',
+'会话断线自动重连 + 未完成工单持久化 + 降级转人工',
+'意图分类用轻量模型，复杂问题才调用 GPT-4 级别',
+'JSON Schema 统一输入输出 + Protobuf 内部通信',
+'短期：滑动窗口上下文；长期：用户画像 + 历史工单标签',
+'FAQ 知识库每日增量更新 + 产品文档变更自动同步',
+'纯文本为主，图片识别仅用于商品截图 OCR',
+'网关层 → 意图路由 → 业务处理 → 输出格式化四层架构',
+'意图分类 Agent + 业务执行 Agent + 质检 Agent 三角协作',
+'订单系统 / 物流 API / CRM / 退款接口四大工具集成',
+'三级意图决策树：大类→子类→动作，置信度 < 0.8 转人工',
+'System Prompt 含 200+ 场景话术模板 + 动态变量注入',
+'BERT 意图分类 + 实体抽取，准确率 95%+',
+'VIP 用户跳过排队 + 根据情绪值切换安抚/高效模式',
+'结构化卡片回复（订单状态/物流追踪/退款进度）',
+'每轮对话自动评分 + 低分会话触发人工复核',
+'工具调用结果强制校验 + 金额类操作二次确认',
+'敏感操作（退款/改地址）需用户二次验证 + 金额上限',
+'情绪升级检测：连续负面词 ≥3 次自动转人工坐席',
+'全链路日志 + 会话录音 + 响应时间 P99 监控',
+'A/B 测试话术效果 + 意图分类准确率周报',
+'高频新问题自动归类 + 建议新增 FAQ 条目',
+'话术模板版本管理 + 灰度发布 + 一键回滚',
+'用户隐私数据脱敏 + GDPR 合规 + 对话记录保留策略',
+'每轮决策路径可追溯 + 转人工原因自动标注'
+]},
+{name:'AI 写作助手',en:'Writing Assistant Agent',icon:'✍️',
+vals:[0.45,0.30,0.35,0.75,0.55,0.60,0.40,0.30,0.40,0.35,0.45,0.55,0.95,0.75,0.85,0.92,0.60,0.50,0.45,0.40,0.35,0.45,0.35,0.40,0.35,0.40],
+descs:[
+'轻量 Docker 部署，单机即可运行，无复杂基础设施依赖',
+'单用户单会话模式，不需要高并发设计',
+'草稿自动保存 + 断点续写 + 版本历史回溯',
+'按 token 计费，长文分段生成控制单次调用成本',
+'Markdown 输入输出 + 富文本格式转换层',
+'短期：当前文章上下文；长期：用户写作风格偏好档案',
+'内置 AIDA/PAS/BAB 等经典框架，行业模板按需加载',
+'纯文本生成为主，配图建议通过描述词输出',
+'策略 Agent → 写手 Agent → 审核 Agent 三级流水线',
+'策略定方向 + 写手出初稿 + 审核把关质量，串行执行',
+'Serper 搜索引擎 + 行业数据库 + 竞品文案库',
+'DAG 任务图：需求分析→大纲→分段→润色→终审',
+'50+ 行业 Prompt 模板 + 品牌调性参数 + 禁用词表',
+'需求意图解析准确率高，支持模糊描述转结构化需求',
+'记忆用户品牌调性 / 目标人群 / 历史爆款特征',
+'分段输出 + 实时预览 + 多版本对比 + 一键导出',
+'审核 Agent 检查品牌一致性 + 可读性评分 + 违禁词',
+'事实性声明自动标注 [待核实] + 数据引用强制标注来源',
+'违禁词过滤 + 敏感话题回避 + 版权内容检测',
+'品牌红线词库 + 行业合规词库 + 输出前强制过滤',
+'生成耗时 + token 用量 + 用户满意度追踪',
+'A/B 版本对比测试 + 可读性指标（Flesch Score）',
+'爆款文案特征自动提取 + 融入后续生成策略',
+'Prompt 模板版本管理 + 效果衰减自动预警',
+'原创性检测 + 避免抄袭 + 引用规范',
+'每段生成逻辑可追溯：用了哪个模板、哪条策略'
+]},
+{name:'AI 数据分析师',en:'Data Analyst Agent',icon:'📊',
+vals:[0.80,0.70,0.65,0.55,0.90,0.65,0.75,0.60,0.75,0.65,0.95,0.90,0.70,0.65,0.50,0.80,0.80,0.85,0.75,0.70,0.75,0.85,0.50,0.60,0.65,0.75],
+descs:[
+'支持 MySQL/PostgreSQL/BigQuery 多数据源 + 连接池管理',
+'查询队列 + 并行执行 + 大查询自动降级为异步任务',
+'SQL 执行超时自动终止 + 查询结果缓存 + 失败重试',
+'小查询用轻量模型生成 SQL，复杂分析才用 GPT-4',
+'Schema 自动发现 + 字段类型推断 + 表关系映射',
+'短期：当前分析会话；中期：常用查询模板缓存',
+'Schema 变更自动检测 + 数据字典实时同步',
+'表格 + 图表（ECharts）+ 自然语言洞察三合一输出',
+'NL2SQL 引擎 → 查询执行器 → 可视化引擎 → 叙事生成器',
+'SQL Agent + Chart Agent + Insight Agent 并行协作',
+'数据库连接 + ECharts 渲染 + 统计函数库 + 导出工具',
+'意图→SQL→执行→图表选择→洞察生成 五步 Pipeline',
+'Schema-aware Prompt + 字段别名映射 + SQL 方言适配',
+'歧义字段自动反问确认（"销售额是 GMV 还是净收入？"）',
+'记忆用户常用指标 + 偏好图表类型 + 历史查询模式',
+'数据 + 图表 + 自然语言结论三合一，支持 PDF 导出',
+'SQL 语法校验 + 执行结果合理性检查 + 异常值标注',
+'SQL 注入防护 + 结果交叉验证 + 统计口径一致性检查',
+'严格只读权限 + 敏感字段自动脱敏 + 查询白名单',
+'禁止 DELETE/UPDATE/DROP + 行级权限控制 + 审计日志',
+'查询耗时 / 命中缓存率 / 错误率 全链路监控',
+'SQL 准确率 + 图表适配度 + 用户采纳率 三维评估',
+'高频查询自动生成 Saved Query + 定时报表',
+'SQL 模板版本管理 + Schema 变更自动适配',
+'数据访问合规 + 隐私字段分级 + 查询审计留痕',
+'每个结论标注数据来源 + SQL 可查看 + 计算过程透明'
+]}
+];
+
+function drawMiniRadar(canvasId,vals){
+var c=document.getElementById(canvasId);
+if(!c)return;
+var ctx=c.getContext('2d');
+var W=c.width,H=c.height;
+var cx=W/2,cy=H/2,R=W*0.38;
+var n=vals.length;
+
+ctx.clearRect(0,0,W,H);
+
+for(var ring=3;ring>=1;ring--){
+ctx.beginPath();
+var rr=R*ring/3;
+for(var i=0;i<n;i++){
+var a=Math.PI*2*i/n-Math.PI/2;
+var x=cx+Math.cos(a)*rr,y=cy+Math.sin(a)*rr;
+if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
+}
+ctx.closePath();
+ctx.strokeStyle='rgba(255,255,255,.06)';
+ctx.lineWidth=1;
+ctx.stroke();
+}
+
+ctx.beginPath();
+for(var i=0;i<n;i++){
+var a=Math.PI*2*i/n-Math.PI/2;
+var x=cx+Math.cos(a)*R*vals[i],y=cy+Math.sin(a)*R*vals[i];
+if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
+}
+ctx.closePath();
+var grd=ctx.createRadialGradient(cx,cy,0,cx,cy,R);
+grd.addColorStop(0,'rgba(139,92,246,.35)');
+grd.addColorStop(1,'rgba(139,92,246,.08)');
+ctx.fillStyle=grd;
+ctx.fill();
+ctx.strokeStyle='rgba(139,92,246,.6)';
+ctx.lineWidth=2;
+ctx.stroke();
+
+for(var i=0;i<n;i++){
+var a=Math.PI*2*i/n-Math.PI/2;
+var x=cx+Math.cos(a)*R*vals[i],y=cy+Math.sin(a)*R*vals[i];
+ctx.beginPath();
+ctx.arc(x,y,3,0,Math.PI*2);
+ctx.fillStyle=COLORS[i];
+ctx.fill();
+}
+}
+
+function buildDimBars(containerId,vals,descs){
+var el=document.getElementById(containerId);
+if(!el)return;
+var html='';
+for(var i=0;i<vals.length;i++){
+var pct=Math.round(vals[i]*100);
+html+='<div class="demo-dim-row">';
+html+='<div class="demo-dim-top">';
+html+='<div class="demo-dim-label">'+DIMS[i]+'</div>';
+html+='<div class="demo-dim-bar"><div class="demo-dim-fill" style="width:'+pct+'%;background:'+COLORS[i]+'"></div></div>';
+html+='<div class="demo-dim-val" style="color:'+COLORS[i]+'">'+pct+'</div>';
+html+='</div>';
+if(descs&&descs[i]){
+html+='<div class="demo-dim-desc">'+descs[i]+'</div>';
+}
+html+='</div>';
+}
+el.innerHTML=html;
+}
+
+function showDemo(idx,btn){
+document.querySelectorAll('.demo-btn').forEach(function(b){b.classList.remove('active')});
+btn.classList.add('active');
+for(var i=0;i<3;i++){
+var el=document.getElementById('demo'+i);
+if(el)el.classList.toggle('active',i===idx);
+}
+drawMiniRadar('radar'+idx,AGENTS[idx].vals);
+}
+
+drawMiniRadar('radar0',AGENTS[0].vals);
+buildDimBars('dims0',AGENTS[0].vals,AGENTS[0].descs);
+buildDimBars('dims1',AGENTS[1].vals,AGENTS[1].descs);
+buildDimBars('dims2',AGENTS[2].vals,AGENTS[2].descs);
+
+var CASES=[
+{tag:'情感疗愈类',tagClass:'tag-orange',title:'AI 情感私教拆解',
+desc:'参考 Replika / PersocomAI 架构。拆解某千万月活情感 AI，发现其核心是三层记忆 + 60 字输出限制 + 付费分级的精密设计。',
+soul:{intro:'用炼魂 9 问逐一探测，覆盖 7/9 问：',items:[
+'第 1 问（解决什么问题）：只聊情感话题，输入编程/天气等内容会被强制拉回——System Prompt 有严格角色锁定和领域禁忌',
+'第 2 问（按哪几步处理）：每轮对话走「情绪识别→标签提取→话术匹配→字数裁剪→反问生成」五步 Pipeline',
+'第 3 问（内部有没有分工）：推断有情绪分类模块和回复生成模块两个独立组件，情绪分类结果决定回复策略',
+'第 4 问（怎么记住对话）：能记住上次焦虑点但忘了具体细节——使用「标签提取」而非全文记忆，短期滑动窗口 + 长期 3 标签存储',
+'第 6 问（怎么保证不瞎编）：不给具体建议只给方向性引导，避免专业心理咨询风险——有明确的输出安全边界',
+'第 7 问（不能输出什么）：回复永远不超 60 字且以反问结束，绝不输出自杀/自残相关内容——硬性安全红线 + 输出长度约束',
+'第 9 问（会不会复用案例）：高互动对话模式会被沉淀为话术模板——但用户不可见，属于后台优化']},
+spirit:{intro:'填入 26 维度测绘表，关键维度评估：',items:[
+'【状态记忆 75】三层记忆架构：短期滑动窗口（最近 10 轮）+ 中期会话摘要 + 长期用户标签（焦虑点/情绪值/付费等级）',
+'【指令策略 90】System Prompt 含角色锁定 + 60 字硬限制 + 反问句式模板 + 情绪分级响应策略',
+'【个性适配 85】根据付费等级切换回复深度：免费用户只给方向，付费用户给具体方案；根据情绪值切换安抚/引导模式',
+'【输出体验 80】字数硬限制 + 反问句式 = 制造「未完成感」驱动持续对话，每轮回复控制在 3 秒内',
+'【安全防御 85】自杀/自残关键词实时检测 → 强制输出求助热线；绝不扮演医生角色；情绪崩溃检测 → 建议寻求专业帮助',
+'【幻觉抑制 60】不涉及事实性内容所以幻觉风险低，但偶尔会编造「你上次说过…」的虚假记忆',
+'【自演化 30】话术模板人工维护为主，缺乏自动优化机制——这是最大短板']},
+forge:{intro:'将测绘报告喂给 AI Architect Prompt，生成完整架构：',items:[
+'System Prompt 层：角色锁定（正向情感教练）+ 60 字限制 + 反问模板 + 安全红线词库',
+'记忆模块：Redis 存短期窗口 + PostgreSQL 存用户标签 + 每轮对话后异步提取 3 标签更新',
+'情绪引擎：Hugging Face 情感分类模型（6 类情绪）→ 映射到 4 种回复策略（安抚/引导/激励/倾听）',
+'安全模块：关键词实时检测 + 情绪崩溃阈值（连续负面 ≥5 轮）→ 强制输出专业求助信息',
+'超越原版：去掉焦虑制造机制改为正向引导 + 增加自演化维度（高互动对话自动沉淀为模板）',
+'复刻成本：Llama 3.1 8B 本地部署 + Redis + PostgreSQL，API 成本约 ¥0.5/千次对话']}},
+
+{tag:'效率工具类',tagClass:'tag-purple',title:'AI 会议纪要助手拆解',
+desc:'参考 Meetily（7.8K Stars）/ Fireflies.ai 架构。拆解企业级会议 AI，核心是 Whisper 转录 + 说话人分离 + 四段式结构化输出。',
+soul:{intro:'用炼魂 9 问逐一探测，覆盖 8/9 问：',items:[
+'第 1 问（解决什么问题）：只处理会议场景——录音转文字 + 自动提取摘要/决议/待办/下次议题，不做闲聊',
+'第 2 问（按哪几步处理）：「音频采集→Whisper 转录→说话人分离→LLM 结构化提取→模板格式化→推送通知」六步 Pipeline',
+'第 3 问（内部有没有分工）：转录模块（Whisper.cpp）和摘要模块（LLM）完全解耦，转录可离线运行，摘要支持多模型切换',
+'第 4 问（怎么记住对话）：记住项目上下文和历史会议决议——每个项目有独立的知识库，新会议自动关联历史待办',
+'第 5 问（用什么外部工具）：Whisper.cpp 本地转录 + 日历 API 读取参会人 + 任务管理系统（Jira/飞书）同步待办',
+'第 6 问（怎么保证不瞎编）：听不清的内容标注 [不确定] 而非瞎编；关键决议需要人工确认后才同步到任务系统',
+'第 7 问（不能输出什么）：不输出参会人的主观评价；涉及薪资/人事的内容自动脱敏标注 [敏感内容已隐藏]',
+'第 8 问（不合格怎么修正）：用户可对摘要逐段修正，修正后的版本会反馈给模型优化后续提取策略']},
+spirit:{intro:'填入 26 维度测绘表，关键维度评估：',items:[
+'【多模态 85】Whisper.cpp 本地转录（支持中英日韩）+ 说话人分离（Speaker Diarization）+ WebSocket 实时流式传输',
+'【输出体验 90】固定四段模板（摘要/决议/待办/下次议题），80% 价值来自格式设计而非模型能力',
+'【工具能力 80】日历 API + Jira/飞书/钉钉任务同步 + 邮件自动发送会议纪要 + Slack/Teams 消息推送',
+'【容错恢复 75】音频断流自动重连 + 转录结果本地缓存 + 网络恢复后自动续传',
+'【数据协议 70】音频流用 WebSocket + 转录结果用 JSON Schema + 输出用 Markdown 模板',
+'【安全防御 65】敏感话题自动脱敏 + 会议录音加密存储 + 访问权限按参会人控制',
+'【自演化 45】用户修正会反馈但缺乏系统性的自动学习机制——主要靠人工调优 Prompt']},
+forge:{intro:'基于测绘报告，AI 生成的完整架构：',items:[
+'音频层：WebSocket 实时采集 → Whisper.cpp 本地转录（隐私优先）→ pyannote 说话人分离',
+'提取层：LLM 结构化提取（支持 GPT-4/Claude/本地 Llama）→ 四段模板填充 → 置信度标注',
+'集成层：日历 API 读取参会人 → 任务系统同步待办 → 邮件/IM 自动推送',
+'存储层：PostgreSQL 存结构化数据 + MinIO 存音频文件 + 向量库存历史会议用于关联检索',
+'超越原版：增加「情绪标注」维度——检测会议中的分歧和紧张（语气/语速变化），在摘要中标注 [有争议]',
+'复刻成本：Whisper.cpp + Ollama 本地部署零 API 费用，云端方案约 ¥2/小时会议']}},
+
+{tag:'营销获客类',tagClass:'tag-teal',title:'AI 营销文案生成器拆解',
+desc:'参考 Jasper AI Engine / CrewAI Blog Writer 架构。拆解某企业级文案 AI，发现其核心是模型路由 + 品牌知识库 + 三 Agent 流水线。',
+soul:{intro:'用炼魂 9 问逐一探测，覆盖 9/9 问：',items:[
+'第 1 问（解决什么问题）：覆盖 50+ 行业的营销文案生成，每个行业有独立模板库——核心是「行业×框架」的组合矩阵',
+'第 2 问（按哪几步处理）：「需求分析→行业模板匹配→大纲生成→分段写作→品牌审核→可读性评分」六步',
+'第 3 问（内部有没有分工）：三 Agent 流水线——策略 Agent 定方向、写手 Agent 出初稿、审核 Agent 把关质量，串行执行',
+'第 4 问（怎么记住对话）：记住品牌调性/目标人群/禁用词/历史爆款特征——存储在用户 Brand Profile 中，跨会话持久化',
+'第 5 问（用什么外部工具）：Serper 搜索引擎获取实时热点 + 竞品文案库 + Google Trends 数据 + SEO 关键词工具',
+'第 6 问（怎么保证不瞎编）：事实性声明自动标注 [待核实] + 数据引用强制标注来源 + 审核 Agent 交叉检查',
+'第 7 问（不能输出什么）：违禁词过滤（广告法敏感词）+ 竞品贬低检测 + 虚假宣传检测 + 品牌红线词库',
+'第 8 问（不合格怎么修正）：审核不通过 → 自动标注问题点 → 写手 Agent 针对性修改 → 最多重试 3 轮',
+'第 9 问（会不会复用案例）：高转化文案自动提取结构特征沉淀为新模板，按行业分类存储']},
+spirit:{intro:'填入 26 维度测绘表，关键维度评估：',items:[
+'【架构拓扑 70】策略→写手→审核三 Agent 串行流水线，通过 JSON Schema 传递中间结果',
+'【指令策略 95】50+ 行业 Prompt 模板 + AIDA/PAS/BAB 等 8 种经典框架 + 品牌调性参数注入——这是核心资产',
+'【知识时效 75】Serper 实时搜索 + Google Trends 热点 + 竞品文案库周更新',
+'【个性适配 85】Brand Profile 系统：品牌调性/目标人群/禁用词/历史爆款特征，跨会话持久化',
+'【质量闭环 80】审核 Agent 三维评分（品牌一致性 + 可读性 Flesch Score + 违禁词检测），不达标自动回炉',
+'【安全防御 70】广告法敏感词库 + 竞品贬低检测 + 虚假宣传检测 + 版权内容查重',
+'【自演化 55】高转化文案自动沉淀为模板，但模板质量评估仍需人工参与']},
+forge:{intro:'基于测绘报告，AI 生成的多 Agent 架构：',items:[
+'Agent 1（策略）：需求解析 → 行业识别 → 框架选择（AIDA/PAS/BAB）→ 输出写作大纲 JSON',
+'Agent 2（写手）：按大纲 + 行业模板 + Brand Profile 生成初稿，支持 Jasper 式模型路由（轻量任务用小模型，复杂任务用 GPT-4）',
+'Agent 3（审核）：品牌一致性检查 + 广告法违禁词扫描 + Flesch 可读性评分 + 事实标注',
+'知识层：行业模板库（PostgreSQL）+ 品牌知识库（向量库）+ 竞品文案库（周更新爬虫）',
+'超越原版：增加 A/B 测试维度——自动生成 3 个版本 + 预测点击率排序，原版只出 1 个',
+'复刻成本：CrewAI 框架 + GPT-4 API，约 ¥0.3/篇短文案，¥2/篇长文']}},
+
+{tag:'教育培训类',tagClass:'tag-blue',title:'AI 编程导师拆解',
+desc:'参考 Replit Agent / Codecademy AI 架构。拆解某编程教育 AI，核心是苏格拉底式提问 + Snapshot 沙箱 + 学习路径追踪。',
+soul:{intro:'用炼魂 9 问逐一探测，覆盖 8/9 问：',items:[
+'第 1 问（解决什么问题）：只教编程，覆盖 Python/JS/Java/Go 等 10+ 语言，每种语言有独立知识图谱和常见错误库',
+'第 2 问（按哪几步处理）：「理解问题→拆分子任务→引导式提问→学生作答→代码执行验证→反馈纠正」六步教学循环',
+'第 3 问（内部有没有分工）：教学引导模块和代码执行模块完全解耦——引导用 LLM，执行用 Docker 沙箱，互不依赖',
+'第 4 问（怎么记住对话）：记住学生水平/薄弱点/学习进度——每个学生有 Learner Profile，跨课程持久化',
+'第 5 问（用什么外部工具）：Docker 容器化代码沙箱（类似 Replit Snapshot Engine）+ 语法检查器 + 单元测试运行器',
+'第 6 问（怎么保证不瞎编）：所有代码建议都在沙箱中实际运行验证后才输出——不是「我觉得对」而是「跑过了确实对」',
+'第 7 问（不能输出什么）：绝不直接给完整答案，只给提示和引导；禁止输出可能造成安全漏洞的代码模式',
+'第 8 问（不合格怎么修正）：学生代码报错 → 自动定位错误行 → 生成针对性提示（不给答案）→ 学生修改后再次运行验证']},
+spirit:{intro:'填入 26 维度测绘表，关键维度评估：',items:[
+'【工具能力 90】Docker 沙箱 + Snapshot 快照（秒级 fork/回滚）+ 语法高亮 + 错误定位 + 单元测试，形成「写→跑→改」闭环',
+'【指令策略 85】苏格拉底式提问模板：永远不直接给答案，用「你觉得这里为什么报错？」「如果把这行改成…会怎样？」引导',
+'【知识时效 70】每种语言有独立概念图谱 + 常见错误库 + 最佳实践库，但更新频率依赖人工维护',
+'【个性适配 80】Learner Profile 系统：根据学生水平（初学/进阶/高级）动态调整提问深度、提示量和代码复杂度',
+'【安全防御 75】沙箱资源限制（CPU/内存/时间）+ 禁止网络访问 + 禁止文件系统写入 + 恶意代码模式检测',
+'【质量闭环 85】代码必须通过沙箱执行验证 + 单元测试通过率作为教学效果指标',
+'【自演化 40】学生常见错误会统计但缺乏自动生成新教学内容的能力——依赖课程团队人工更新']},
+forge:{intro:'基于测绘报告，AI 生成的教学架构：',items:[
+'教学引擎：苏格拉底角色锁定 + 禁止直接给答案 + 分步引导模板 + 难度自适应（根据 Learner Profile）',
+'沙箱模块：Docker 容器化 + Snapshot 快照引擎（秒级 fork/回滚）+ 资源限制（CPU 1核/内存 256MB/超时 10s）',
+'知识模块：语言概念图谱（Neo4j）+ 常见 Bug 模式库 + 渐进式提示生成器（3 级提示：方向→线索→示例）',
+'追踪模块：Learner Profile 持久化 + 薄弱点自动标注 + 学习路径推荐（基于知识图谱的前置依赖分析）',
+'超越原版：增加「代码风格评分」维度——不只看对错，还评估可读性/命名规范/复杂度',
+'复刻成本：Docker + Ollama 本地部署，沙箱用 gVisor 安全隔离，约 ¥0.1/次代码执行']}},
+
+{tag:'电商服务类',tagClass:'tag-pink',title:'AI 智能客服拆解',
+desc:'参考 Enthusiast（开源电商 AI）/ Tidio Lyro（基于 Claude）架构。拆解日均百万对话量电商客服，核心是意图分类树 + API 编排 + 情绪升级。',
+soul:{intro:'用炼魂 9 问逐一探测，覆盖 9/9 问：',items:[
+'第 1 问（解决什么问题）：处理退款/物流/商品咨询等 20+ 场景，但投诉升级立刻转人工——能力边界非常清晰',
+'第 2 问（按哪几步处理）：「意图识别→实体抽取→权限校验→API 调用→结果格式化→满意度追问」六步',
+'第 3 问（内部有没有分工）：意图分类模块（BERT）+ 业务执行模块（API 编排）+ 质检模块（规则引擎）三模块协作',
+'第 4 问（怎么记住对话）：知道你上次买了什么、退过几次货——用户画像 + 历史工单 + 订单数据三源融合',
+'第 5 问（用什么外部工具）：订单系统 / 物流 API / 退款接口 / CRM / 优惠券系统五大后端 API 深度集成',
+'第 6 问（怎么保证不瞎编）：所有数据类回复（订单状态/物流信息）必须从 API 实时查询，禁止用模型「猜测」',
+'第 7 问（不能输出什么）：禁止承诺超出政策的赔偿；禁止泄露内部定价策略；敏感操作（退款>500元）需人工审批',
+'第 8 问（不合格怎么修正）：用户评价「未解决」→ 自动升级到高级客服 + 记录失败原因 → 反馈到意图分类模型优化',
+'第 9 问（会不会复用案例）：高频问题自动归类为 FAQ → 下次同类问题直接命中缓存，响应时间从 3s 降到 0.5s']},
+spirit:{intro:'填入 26 维度测绘表，关键维度评估：',items:[
+'【意图理解 90】BERT 三级意图分类树（大类→子类→动作），准确率 95%+，这是整个系统的核心壁垒',
+'【工具能力 85】订单/物流/退款/CRM/优惠券五大 API 深度集成，每个意图绑定一条 API 调用链',
+'【安全防御 85】情绪升级检测（连续负面词≥3次自动转人工）+ 敏感操作二次确认 + 金额上限控制',
+'【并发伸缩 80】基于消息队列水平扩容，峰值（双11/618）支撑 10 万并发会话',
+'【个性适配 75】VIP 用户跳过排队 + 高退货率用户触发风控 + 根据情绪值切换安抚/高效模式',
+'【状态记忆 70】用户画像 + 历史工单 + 订单数据三源融合，但跨渠道（APP/小程序/网页）数据尚未完全打通',
+'【自演化 50】高频新问题自动归类建议新增 FAQ，但需人工审核后才能上线']},
+forge:{intro:'基于测绘报告，AI 生成的客服架构：',items:[
+'意图引擎：BERT 三级分类模型 + 实体抽取（订单号/商品名/日期）+ 置信度阈值（<0.8 转人工）',
+'执行引擎：每个意图绑定 API 调用链（查询→权限校验→执行→结果格式化→满意度追问）',
+'情绪模块：实时情感分析（正/中/负三级）+ 安抚话术库 + 人工升级触发器 + 升级原因自动标注',
+'记忆层：Redis 存会话上下文 + PostgreSQL 存用户画像 + Elasticsearch 存历史工单全文检索',
+'超越原版：增加「主动关怀」维度——物流异常时主动推送通知 + 签收后自动追问满意度，不等用户来问',
+'复刻成本：Enthusiast 框架 + Claude API，约 ¥0.05/轮对话，日均百万对话约 ¥5万/月']}},
+
+{tag:'数据分析类',tagClass:'tag-green',title:'AI 数据分析师拆解',
+desc:'参考 NL2SQL Agent / QueryWeaver（328 Stars）架构。拆解 BI 平台自然语言查询 AI，核心是 Schema 感知 + NL2SQL + 自动可视化。',
+soul:{intro:'用炼魂 9 问逐一探测，覆盖 9/9 问：',items:[
+'第 1 问（解决什么问题）：用自然语言查询数据库——「上个月哪个城市销售额最高」→ 自动生成 SQL + 图表 + 分析报告',
+'第 2 问（按哪几步处理）：「意图理解→歧义消解→SQL 生成→语法校验→执行查询→图表选择→洞察叙事」七步',
+'第 3 问（内部有没有分工）：SQL Agent（生成查询）+ Chart Agent（选择图表）+ Insight Agent（生成洞察）三 Agent 并行',
+'第 4 问（怎么记住对话）：记住用户常用指标/偏好图表类型/历史查询模式——Analyst Profile 跨会话持久化',
+'第 5 问（用什么外部工具）：数据库连接池（MySQL/PG/BigQuery）+ ECharts 渲染 + 统计函数库 + PDF 导出',
+'第 6 问（怎么保证不瞎编）：SQL 生成后先语法校验再执行；字段名模糊时反问确认（"销售额是 GMV 还是净收入？"）',
+'第 7 问（不能输出什么）：严格只读权限，禁止 DELETE/UPDATE/DROP；敏感字段（薪资/身份证）自动脱敏',
+'第 8 问（不合格怎么修正）：SQL 执行报错 → 自动分析错误类型 → 修正 SQL → 重试（最多 3 次）→ 仍失败则提示用户换个问法',
+'第 9 问（会不会复用案例）：高频查询自动生成 Saved Query + 定时报表，下次同类问题直接命中缓存']},
+spirit:{intro:'填入 26 维度测绘表，关键维度评估：',items:[
+'【工具能力 95】NL2SQL 引擎（支持 MySQL/PG/BigQuery 三种方言）+ ECharts 图表渲染 + 统计函数库——这是核心壁垒',
+'【数据协议 90】Schema 自动发现 + 字段类型推断 + 表关系映射 + 字段别名映射表，这是 SQL 准确率的基石',
+'【决策规划 90】根据数据特征自动推荐图表（趋势→折线，占比→饼图，对比→柱状图，分布→直方图）',
+'【幻觉抑制 85】SQL 语法校验 + 执行结果合理性检查（空结果/异常值标注）+ 统计口径一致性验证',
+'【安全防御 80】SQL 注入防护 + 只读权限 + 查询超时限制（30s）+ 敏感字段自动脱敏 + 审计日志',
+'【输出体验 80】数据 + 图表 + 自然语言结论三合一输出，支持 PDF/Excel 导出',
+'【自演化 50】高频查询自动缓存但缺乏根据用户反馈优化 SQL 生成策略的能力']},
+forge:{intro:'基于测绘报告，AI 生成的分析架构：',items:[
+'NL2SQL 模块：Schema-aware Prompt（注入表结构+字段说明+示例查询）+ 字段别名映射 + SQL 方言适配器',
+'执行模块：连接池管理 + 查询超时控制 + 结果缓存（Redis，TTL 5min）+ 错误自动修正重试',
+'可视化模块：数据特征分析器 → 图表类型推荐引擎 → ECharts 配置生成器 → 交互式图表输出',
+'叙事模块：统计摘要生成 + 异常值检测 + 同比/环比自动计算 + 趋势描述',
+'超越原版：增加「对比分析」维度——自动与上期/同期数据对比 + 异常原因推测，原版需用户手动指定',
+'复刻成本：QueryWeaver 框架 + GPT-4 API，约 ¥0.1/次查询，支持 Docker 一键部署']}},
+
+{tag:'内容创作类',tagClass:'tag-amber',title:'AI 短视频脚本生成器拆解',
+desc:'参考 OpenShorts（146 Stars）/ Short AI 架构。拆解爆款短视频脚本 AI，核心是钩子公式库 + 平台算法适配 + 分镜自动拆解。',
+soul:{intro:'用炼魂 9 问逐一探测，覆盖 8/9 问：',items:[
+'第 1 问（解决什么问题）：按平台规则生成短视频脚本——抖音/小红书/B站三个平台，每个平台的节奏和钩子完全不同',
+'第 2 问（按哪几步处理）：「主题分析→钩子选择→节奏模板匹配→分段写作→分镜拆解→完播率预测」六步',
+'第 3 问（内部有没有分工）：策略模块（选钩子+定节奏）和写作模块（生成文案）解耦，策略可独立更新不影响写作',
+'第 4 问（怎么记住对话）：记住创作者的账号定位/领域/风格/过往爆款数据——Creator Profile 跨会话持久化',
+'第 5 问（用什么外部工具）：平台热点 API（抖音热搜/小红书趋势）+ Faster-Whisper 竞品视频转录分析 + BGM 素材库',
+'第 6 问（怎么保证不瞎编）：内置完播率预测模型，低于阈值自动建议修改钩子；数据类内容强制标注来源',
+'第 7 问（不能输出什么）：禁止虚假数据/误导性标题党/违规擦边内容；每个平台有独立的内容红线词库',
+'第 9 问（会不会复用案例）：爆款脚本自动提取结构特征（钩子类型+节奏+转折点）沉淀为新模板']},
+spirit:{intro:'填入 26 维度测绘表，关键维度评估：',items:[
+'【知识时效 85】平台热点 API 实时接入 + 近 7 天爆款视频特征分析 + 算法规则变更自动适配',
+'【指令策略 90】钩子公式库（悬念/冲突/数据/共鸣等 12 种）× 平台节奏模板——这是核心资产',
+'【个性适配 80】Creator Profile：领域/风格/历史爆款特征 + 平台算法偏好参数 + 粉丝画像',
+'【输出体验 85】分镜脚本格式：画面描述 + 口播文案 + 字幕 + BGM 建议 + 时长标注 + 转场提示',
+'【质量闭环 70】完播率预测模型 + 钩子强度评分 + 节奏紧凑度检测，低于阈值自动建议修改',
+'【多模态 60】纯文本脚本为主，配图/BGM 只给建议不直接生成——多模态能力是短板',
+'【自演化 55】爆款特征自动沉淀但模板质量评估仍需人工，缺乏 A/B 测试闭环']},
+forge:{intro:'基于测绘报告，AI 生成的脚本架构：',items:[
+'钩子引擎：12 种公式模板 + 主题关键词匹配 + 随机组合避免重复 + 平台热点融合',
+'节奏模板：每个平台独立配置——抖音（15s/30s/60s 三档）、B站（3-8 分钟长叙事）、小红书（图文+口播混合）',
+'分镜生成：文案 → 自动拆分镜头 → 标注画面/字幕/转场 → BGM 节奏匹配',
+'预测模块：完播率预测（基于历史数据训练）+ 钩子强度评分 + 节奏紧凑度检测',
+'超越原版：增加「爆款元素检测」维度——Faster-Whisper 转录分析近 7 天热门视频 → 提取共性特征融入脚本',
+'复刻成本：OpenShorts 框架 + GPT-4 API + 平台热点爬虫，约 ¥0.2/个脚本']}},
+
+{tag:'医疗健康类',tagClass:'tag-red',title:'AI 健康问诊助手拆解',
+desc:'参考 MediAI（RAG + Mistral-7B）/ CheckMySymptoms 架构。拆解千万用户健康 AI，核心是症状决策树 + 医学知识图谱 + 三级安全兜底。',
+soul:{intro:'用炼魂 9 问逐一探测，覆盖 9/9 问：',items:[
+'第 1 问（解决什么问题）：智能分诊——通过结构化问诊收集症状，给出初步建议并引导就医，明确声明「不替代医生诊断」',
+'第 2 问（按哪几步处理）：「主诉采集→结构化追问→症状编码→疾病概率排序→紧急度评估→科室推荐→免责声明」七步',
+'第 3 问（内部有没有分工）：问诊引导模块（LLM）+ 医学推理模块（知识图谱+规则引擎）+ 安全检测模块（关键词+规则）三模块',
+'第 4 问（怎么记住对话）：记住用户基础健康档案（年龄/性别/过敏史/慢性病/用药记录）——Health Profile 加密存储',
+'第 5 问（用什么外部工具）：医学知识图谱（SNOMED CT）+ 药物相互作用数据库（DrugBank）+ 地图 API + 医院数据库',
+'第 6 问（怎么保证不瞎编）：所有推理基于知识图谱而非模型「猜测」；症状描述模糊时追问 5-8 个结构化问题确保信息完整',
+'第 7 问（不能输出什么）：绝不确诊/绝不推荐具体药物品牌/急症关键词（胸痛/呼吸困难）直接弹出 120——三级安全红线',
+'第 8 问（不合格怎么修正）：用户反馈「建议不准」→ 记录到质量数据库 → 定期人工审核 → 更新知识图谱权重',
+'第 9 问（会不会复用案例）：典型问诊路径沉淀为标准化模板，按科室分类存储，加速后续同类问诊']},
+spirit:{intro:'填入 26 维度测绘表，关键维度评估：',items:[
+'【安全防御 95】三级安全机制：急症→直接弹出 120 + 最近医院；严重→强制就医提示；一般→给建议——这是最高优先级维度',
+'【知识时效 80】SNOMED CT 医学本体 + DrugBank 药物数据库 + ICD-11 疾病编码，季度更新',
+'【决策规划 85】症状决策树（主诉→追问→鉴别→建议），每个节点有知识图谱支撑，概率排序基于贝叶斯推理',
+'【合规伦理 90】所有建议末尾强制免责声明 + 不推荐具体药物品牌 + 不做确诊 + HIPAA/GDPR 合规',
+'【幻觉抑制 90】推理基于知识图谱而非模型生成；不确定时明确说「建议就医检查」而非编造诊断',
+'【状态记忆 70】Health Profile 加密存储（AES-256）+ 问诊历史用于趋势分析，但跨机构数据尚未打通',
+'【自演化 35】质量反馈需人工审核后才能更新知识图谱——自动化程度最低，但医疗领域这是合理的保守策略']},
+forge:{intro:'基于测绘报告，AI 生成的问诊架构：',items:[
+'问诊引擎：结构化问诊模板（主诉→现病史→既往史→家族史）+ 动态追问生成器（基于信息缺失度）',
+'推理模块：症状→SNOMED CT 编码→疾病概率矩阵（贝叶斯）→ 紧急度评分（1-5级）→ 科室推荐',
+'知识层：FAISS 向量库存储医学文献（RAG 检索）+ Neo4j 存储症状-疾病-科室知识图谱 + DrugBank 药物交互检查',
+'安全模块：急症关键词实时检测（<100ms）+ 三级响应机制 + 免责声明自动附加 + 敏感数据 AES-256 加密',
+'超越原版：增加「健康趋势追踪」维度——记录多次问诊数据 → 时间线分析 → 慢性病早期信号预警',
+'复刻成本：Mistral-7B 本地部署（隐私优先）+ FAISS + Neo4j，零 API 费用，服务器约 ¥2000/月']}
+}
+];
+
+var _savedScroll=0;
+function openCase(idx){
+_savedScroll=window.scrollY;
+var c=CASES[idx];
+var h='<div class="case-tag '+c.tagClass+'">'+c.tag+'</div>';
+h+='<div class="case-modal-title">'+c.title+'</div>';
+h+='<div class="case-modal-desc">'+c.desc+'</div>';
+var phases=[
+{icon:'🔮',name:'搜魂过程 · 炼魂 9 问探测',cls:'soul',data:c.soul},
+{icon:'⚗️',name:'炼魄结果 · 26 维度测绘',cls:'spirit',data:c.spirit},
+{icon:'🔨',name:'锻造产出 · 完整架构生成',cls:'forge',data:c.forge}
+];
+for(var p=0;p<phases.length;p++){
+var ph=phases[p];
+h+='<div class="case-phase">';
+h+='<div class="case-phase-header"><span class="case-phase-icon">'+ph.icon+'</span><span class="case-phase-name '+ph.cls+'">'+ph.name+'</span></div>';
+h+='<div class="case-phase-body">'+ph.data.intro+'<ul>';
+for(var i=0;i<ph.data.items.length;i++){
+h+='<li>'+ph.data.items[i]+'</li>';
+}
+h+='</ul></div></div>';
+}
+document.getElementById('caseModalBody').innerHTML=h;
+var modal=document.getElementById('caseModal');
+modal.classList.add('active');
+modal.scrollTop=0;
+document.body.style.overflow='hidden';
+}
+function closeCase(){
+document.getElementById('caseModal').classList.remove('active');
+document.body.style.overflow='';
+window.scrollTo(0,_savedScroll);
+}
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeCase()});
+
+var CLAP_KEY='agenauton_clap_count';
+var CLAP_DONE='agenauton_clapped';
+function initClap(){
+var count=parseInt(localStorage.getItem(CLAP_KEY)||'0',10);
+document.getElementById('clapCount').textContent=count;
+if(localStorage.getItem(CLAP_DONE)){
+document.getElementById('clapBtn').style.borderColor='rgba(139,92,246,.15)';
+document.getElementById('clapMsg').textContent='你已鼓过掌 ✓';
+}
+}
+function doClap(){
+if(localStorage.getItem(CLAP_DONE)){
+document.getElementById('clapMsg').textContent='你已经鼓过掌啦，心意已收到 ❤️';
+return;
+}
+var count=parseInt(localStorage.getItem(CLAP_KEY)||'0',10)+1;
+localStorage.setItem(CLAP_KEY,count);
+localStorage.setItem(CLAP_DONE,'1');
+document.getElementById('clapCount').textContent=count;
+document.getElementById('clapMsg').textContent='散修 +1，共求大道！';
+var btn=document.getElementById('clapBtn');
+btn.style.borderColor='rgba(139,92,246,.6)';
+btn.style.transform='scale(1.08)';
+var emoji=document.getElementById('clapEmoji');
+emoji.style.transform='scale(1.3) rotate(-10deg)';
+setTimeout(function(){
+btn.style.transform='scale(1)';
+btn.style.borderColor='rgba(139,92,246,.15)';
+emoji.style.transform='scale(1) rotate(0)';
+},400);
+}
+initClap();
+</script>
+</body>
+</html>
