@@ -59,7 +59,7 @@ Thank you for your interest in Agenauton! We welcome contributions of all kinds.
 
 ### 6. Improve the Website 改进官网
 
-- `guanwang.html` — 官网首页
+- `index.html` — 官网首页
 - `duoshe.html` — 夺舍大法页面
 - `zhujiliushi.html` — 铸基六式页面
 - `Agenauton/guide/index.html` — 在线引导
@@ -87,7 +87,7 @@ Thank you for your interest in Agenauton! We welcome contributions of all kinds.
 
 | 文件 | 用途 |
 |------|------|
-| `guanwang.html` | 官网首页 |
+| `index.html` | 官网首页 |
 | `duoshe.html` | 夺舍大法（商业拆解） |
 | `zhujiliushi.html` | 铸基六式（从想法到产品） |
 | `lang.js` | 全站双语切换 |

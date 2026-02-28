@@ -8,7 +8,7 @@
 |------|---------|-----------|
 | `Lianhun-Agent-Protocol/` | 最早的"炼魂协议"四步法 | → `Agenauton/01-05` 各模块 |
 | `Agent-RE-Protocol/` | 逆向工程协议（英文版） | → `Agenauton/01_Soul_Extraction/` |
-| `Agentic-Foundry-2026/` | 三条用户路径（模仿/构建/企业） | → 官网 `guanwang.html` 三区入口 |
+| `Agentic-Foundry-2026/` | 三条用户路径（模仿/构建/企业） | → 官网 `index.html` 三区入口 |
 
 ---
 

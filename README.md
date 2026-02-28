@@ -24,7 +24,7 @@
 
 | 你想做什么 | 去哪里 |
 |-----------|--------|
-| **2 分钟了解全貌** | [官网 guanwang.html](guanwang.html) |
+| **2 分钟了解全貌** | [官网 index.html](index.html) |
 | **有想法，想落地** | [铸基六式 zhujiliushi.html](zhujiliushi.html) — 聊找理，投定铸 |
 | **没想法，先学别人** | [夺舍大法 duoshe.html](duoshe.html) — 搜魂 · 炼魄 · 锻造 |
 | **在线生成蓝图** | [交互式引导 guide/index.html](Agenauton/guide/index.html) — 8 题出蓝图 |
@@ -41,7 +41,7 @@ git clone https://github.com/agenauton/agenauton.git
 cd agenauton
 
 # 打开官网
-open guanwang.html
+open index.html
 
 # 或打开在线引导
 open Agenauton/guide/index.html
@@ -64,7 +64,7 @@ cp Agenauton/03_Soul_Forging/ai_architect_prompt.md your_project/
 
 ```
 .
-├── guanwang.html              # 官网首页（中英双语）
+├── index.html              # 官网首页（中英双语）
 ├── duoshe.html                # 夺舍大法 — 商业拆解方法论
 ├── zhujiliushi.html           # 铸基六式 — 从想法到产品的六步法
 ├── lang.js                    # 全站双语切换模块

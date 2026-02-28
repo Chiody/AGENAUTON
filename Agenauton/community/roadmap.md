@@ -16,7 +16,7 @@
 - [x] Defensive Lab 防御实验室
 - [x] Glossary 术语表
 - [x] Bilingual README 双语README
-- [x] Official Website 官网 (guanwang.html)
+- [x] Official Website 官网 (index.html)
 - [x] Full bilingual support (zh/en) 全站中英双语 + 自动检测 + 手动切换
 - [x] Agent Autopsy page 夺舍大法页面 (duoshe.html) + 炼魂9问 + 案例库
 - [x] Forge Flow page 铸基六式页面 (zhujiliushi.html) + 实战案例

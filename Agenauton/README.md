@@ -236,7 +236,7 @@ Six architectural layers. Twenty-six dimensions. One standard.
 
 ```
 .
-├── guanwang.html                      # 官网首页（中英双语）
+├── index.html                      # 官网首页（中英双语）
 ├── duoshe.html                        # 夺舍大法 — 商业拆解方法论
 ├── zhujiliushi.html                   # 铸基六式 — 从想法到产品的六步法
 ├── lang.js                            # 全站双语切换模块
@@ -297,7 +297,7 @@ Six architectural layers. Twenty-six dimensions. One standard.
 - [x] 交互式在线引导（8 题生成蓝图）
 - [x] 防御实验室
 - [x] 双语 README
-- [x] 官网 (guanwang.html) + 中英双语
+- [x] 官网 (index.html) + 中英双语
 - [x] 夺舍大法页面 + 炼魂 9 问 + 案例库
 - [x] 铸基六式页面 + 实战案例
 - [x] 交互式 26 维度雷达图
