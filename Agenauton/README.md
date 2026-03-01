@@ -96,7 +96,7 @@ curl -s https://agenauton.com/skill.md | pbcopy
 下载 [26 维度清单模板](./02_Spirit_Refining/26_Dimensions_Template.md)，逐条思考和填写。填完你就有了一份完整的 Agent 架构蓝图。
 
 ```bash
-git clone https://github.com/agenauton/agenauton.git
+git clone https://github.com/Chiody/AGENAUTON.git
 cd agenauton
 
 # 打开在线引导

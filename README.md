@@ -37,7 +37,7 @@
 ## 快速开始
 
 ```bash
-git clone https://github.com/agenauton/agenauton.git
+git clone https://github.com/Chiody/AGENAUTON.git
 cd agenauton
 
 # 打开官网
